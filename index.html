@@ -31,13 +31,14 @@
 body{
   background:var(--bg); color:var(--ink);
   font-family:"Plus Jakarta Sans",Helvetica,Arial,sans-serif;
-  padding:40px 16px; display:flex; justify-content:center; align-items:flex-start;
-  min-height:100vh;
+  padding:40px 16px; min-height:100vh;
+  /* block + auto margins, not flex: a flex item defaults to min-width:auto
+     and refuses to shrink below its content, which overflowed on phones */
 }
 .card{
-  width:100%; max-width:520px; background:var(--card);
+  width:100%; max-width:520px; margin:0 auto; background:var(--card);
   border:1px solid var(--line); border-radius:16px;
-  padding:36px 32px 30px; text-align:center;
+  padding:36px 32px 30px; text-align:center; overflow-wrap:break-word;
 }
 .logo{width:62px;height:62px;border-radius:15px;display:block;margin:0 auto 18px}
 .mark{font-size:22px;font-weight:800;letter-spacing:-.4px;color:var(--ink)}
@@ -53,6 +54,7 @@ p.lead{font-size:14.5px;line-height:1.6;color:var(--mute);margin-bottom:26px}
   text-decoration:none;border-radius:11px;padding:15px 20px;margin-bottom:11px;
   border:1px solid transparent;text-align:left;
 }
+.dl>span:first-child{min-width:0}
 .dl .t{display:block;font-size:15px;font-weight:700;line-height:1.25}
 .dl .s{display:block;font-size:11.5px;font-weight:500;margin-top:3px;opacity:.82}
 .dl .ar{font-size:17px;font-weight:700;flex:none}
