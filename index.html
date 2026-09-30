@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IndicoStay · Convite a Parceiros</title>
+<meta name="description" content="Documento de apresentação para alojamentos parceiros da IndicoStay. Disponível em português e inglês.">
+<meta property="og:title" content="IndicoStay · Convite a Parceiros">
+<meta property="og:description" content="Documento de apresentação para alojamentos parceiros da IndicoStay.">
+<link rel="icon" href="./indicostay-logo.png?v=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --teal:#0E7C7B; --teal-d:#0B3B3A; --coral:#FF6B4A; --coral-d:#E8505B;
+  --ink:#16212B; --mute:#5D6C72; --bg:#F2F7F7; --card:#FFFFFF; --line:#DFE9E9;
+  --chip:#F4FAFA; --chip-line:#D3E7E6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#E9F1F1; --mute:#93A8AB; --bg:#071A1A; --card:#0E2727; --line:#1E3E3E;
+    --chip:#122F2F; --chip-line:#1E4443; --teal:#3FA9A6;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#E9F1F1; --mute:#93A8AB; --bg:#071A1A; --card:#0E2727; --line:#1E3E3E;
+  --chip:#122F2F; --chip-line:#1E4443; --teal:#3FA9A6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Plus Jakarta Sans",Helvetica,Arial,sans-serif;
+  padding:40px 16px; display:flex; justify-content:center; align-items:flex-start;
+  min-height:100vh;
+}
+.card{
+  width:100%; max-width:520px; background:var(--card);
+  border:1px solid var(--line); border-radius:16px;
+  padding:36px 32px 30px; text-align:center;
+}
+.logo{width:62px;height:62px;border-radius:15px;display:block;margin:0 auto 18px}
+.mark{font-size:22px;font-weight:800;letter-spacing:-.4px;color:var(--ink)}
+.kicker{
+  display:inline-block;margin-top:9px;font-size:10px;font-weight:700;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--teal);
+}
+h1{font-size:20px;line-height:1.34;font-weight:800;letter-spacing:-.3px;margin:20px 0 10px}
+p.lead{font-size:14.5px;line-height:1.6;color:var(--mute);margin-bottom:26px}
+
+.dl{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  text-decoration:none;border-radius:11px;padding:15px 20px;margin-bottom:11px;
+  border:1px solid transparent;text-align:left;
+}
+.dl .t{font-size:15px;font-weight:700;line-height:1.25}
+.dl .s{font-size:11.5px;font-weight:500;margin-top:2px;opacity:.82}
+.dl .ar{font-size:17px;font-weight:700;flex:none}
+.dl.pt{background:linear-gradient(135deg,var(--coral),var(--coral-d));color:#fff}
+.dl.en{background:var(--chip);border-color:var(--chip-line);color:var(--ink)}
+.dl:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+/* no hover transforms: they stick on touch devices */
+@media (hover:hover){ .dl:hover{opacity:.92} }
+
+.meta{
+  margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:11.5px;line-height:1.7;color:var(--mute)
+}
+.meta a{color:var(--teal);text-decoration:none;font-weight:600}
+@media (max-width:420px){
+  body{padding:24px 14px}
+  .card{padding:28px 20px 24px}
+  h1{font-size:18px}
+}
+</style>
+</head>
+<body>
+<main class="card">
+  <img class="logo" src="./indicostay-logo.png?v=1" alt="IndicoStay" width="62" height="62">
+  <div class="mark">IndicoStay</div>
+  <div class="kicker">Convite a Parceiros · 2026/27</div>
+
+  <h1>A plataforma de reservas onde o hóspede paga em meticais.</h1>
+  <p class="lead">Documento de uma página sobre a IndicoStay para alojamentos parceiros. Escolha a versão que prefere descarregar.</p>
+
+  <a class="dl pt" href="./IndicoStay-Parceiros-PT.pdf?v=1" download>
+    <span><span class="t">Português</span><span class="s">Convite a parceiros · PDF, 1 página</span></span>
+    <span class="ar" aria-hidden="true">&darr;</span>
+  </a>
+
+  <a class="dl en" href="./IndicoStay-Parceiros-EN.pdf?v=1" download>
+    <span><span class="t">English</span><span class="s">Partner invitation · PDF, 1 page</span></span>
+    <span class="ar" aria-hidden="true">&darr;</span>
+  </a>
+
+  <div class="meta">
+    IndicoStay · Moçambique<br>
+    <a href="https://indicostay.com">indicostay.com</a> ·
+    <a href="mailto:business@indicostay.com">business@indicostay.com</a> ·
+    <a href="https://wa.me/27810639868">WhatsApp +27 81 063 9868</a>
+  </div>
+</main>
+</body>
+</html>
