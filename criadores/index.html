@@ -203,7 +203,8 @@ const PRESETS={
 const DEF={hosts:0,hrev:150000,start:0,pico:2,noite:8000};
 const RATE=0.05, WIN=6, NAMES=["Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez","Jan"];
 const $=id=>document.getElementById(id);
-const fmt=n=>Math.round(n).toLocaleString('pt-PT').replace(/ | /g,'.')+' MZN';
+const grp=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const fmt=n=>grp(n)+' MZN';
 const fmtShort=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' M':n>=1e3?Math.round(n/1e3)+' mil':Math.round(n)+'';
 const ids=["seg","conv","val","est","hosts","hrev","start","pico","noite"];
 function setVals(o){for(const k in o){$(k).value=o[k]}}
@@ -233,7 +234,7 @@ function simulate(v,s){
 function read(){const v={};ids.forEach(k=>v[k]=parseFloat($(k).value));return v}
 function render(){
   const v=read();
-  $("o-seg").textContent=v.seg.toLocaleString('pt-PT').replace(/ | /g,'.');
+  $("o-seg").textContent=grp(v.seg);
   $("o-conv").textContent=v.conv.toFixed(1).replace('.',',');
   $("o-val").textContent=fmt(v.val);
   $("o-est").textContent=String(v.est).replace('.',',');
