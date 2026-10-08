@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador de Ganhos · IndicoStay Criadores</title>
+<meta name="description" content="Simula quanto podes ganhar como criador fundador IndicoStay: 5% de cada estadia das pessoas que entram pelo teu link.">
+<link rel="icon" href="../indicostay-logo.png">
+<style>
+:root{
+  --navy:#071c3f; --navy2:#0b2d5c; --gold:#e5a823; --gold2:#f3c862; --cream:#f6f1e8;
+  --ink:#10213d; --muted:#5d6b82; --line:#e3dccf; --card:#ffffff; --good:#1f8a5b;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header{background:var(--navy);color:#fff;padding:28px 0 34px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.06em;font-size:13px;color:var(--gold)}
+.brand img{width:40px;height:40px;border-radius:8px}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.08;margin:18px 0 10px}
+header p{color:#c9d4e6;max-width:640px;margin:0}
+.pill{display:inline-block;background:var(--gold);color:var(--navy);font-weight:700;border-radius:999px;padding:6px 14px;font-size:13px;margin-top:18px}
+main{padding:24px 0 48px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.card h2{font-size:18px;margin:0 0 4px}
+.card .sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.presets button{flex:1 1 90px;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:10px 8px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
+.presets button b{display:block;font-size:15px}
+.presets button.on{border-color:var(--navy2);background:var(--navy2);color:#fff}
+.field{margin-bottom:16px}
+.field label{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-weight:600}
+.field label output{color:var(--navy2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.field small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+input[type=range]{width:100%;accent-color:var(--gold);height:28px}
+details{border-top:1px solid var(--line);margin-top:6px;padding-top:12px}
+summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--navy2)}
+.big{background:var(--navy);color:#fff;border-radius:16px;padding:22px;margin-bottom:16px}
+.big .lbl{color:var(--gold);font-size:12px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
+.big .num{font-size:clamp(34px,6vw,48px);font-weight:800;line-height:1.1;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.big .note{color:#c9d4e6;font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
+@media (max-width:520px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi .v{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.kpi .k{font-size:12.5px;color:var(--muted)}
+.chart{display:flex;align-items:flex-end;gap:5px;height:190px;padding:8px 0 0;border-bottom:1px solid var(--line)}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative}
+.bar .s1{background:var(--navy2);border-radius:5px 5px 0 0}
+.bar .s2{background:var(--gold)}
+.bar.dec .s1{background:#123f7d}
+.months{display:flex;gap:5px;margin-top:6px}
+.months span{flex:1;text-align:center;font-size:11px;color:var(--muted)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.tip{font-size:12.5px;color:var(--muted);margin-top:8px;min-height:18px}
+.stack{width:100%;border-collapse:collapse;font-size:14px}
+.stack td{padding:9px 0;border-bottom:1px solid var(--line)}
+.stack td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:10px}
+.stack tr.tot td{border-bottom:0;font-size:16px;color:var(--navy2)}
+.late{background:#fff7e3;border:1px solid #f0d58f;border-radius:14px;padding:16px;margin-top:16px}
+.late b{color:#8a5a00}
+.how{margin-top:20px}
+.how ol{padding-left:20px;margin:8px 0 0}
+.how li{margin-bottom:6px}
+.cta{display:inline-block;margin-top:14px;background:var(--gold);color:var(--navy);font-weight:800;text-decoration:none;border-radius:999px;padding:12px 22px}
+footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand"><img src="../indicostay-logo.png" alt="">INDICOSTAY · PROGRAMA DE CRIADORES</div>
+    <h1>Quanto vale a tua comunidade?</h1>
+    <p>Cada pessoa que entra na IndicoStay pelo teu link paga-te 5% de todas as estadias que concluir durante 6 meses. Move os controlos e vê o teu primeiro ano.</p>
+    <span class="pill">Fase fundadora · 10 vagas</span>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <div class="grid">
+    <section class="card" aria-label="Dados da simulação">
+      <h2>O teu perfil</h2>
+      <p class="sub">Escolhe um ponto de partida e ajusta à tua realidade.</p>
+      <div class="presets" role="group" aria-label="Perfis prontos">
+        <button type="button" data-p="micro"><b>Micro</b>5 mil seguidores</button>
+        <button type="button" data-p="medio" class="on"><b>Médio</b>20 mil seguidores</button>
+        <button type="button" data-p="grande"><b>Grande</b>80 mil seguidores</button>
+      </div>
+
+      <div class="field">
+        <label for="seg">Seguidores reais <output id="o-seg"></output></label>
+        <input id="seg" type="range" min="1000" max="200000" step="1000">
+      </div>
+      <div class="field">
+        <label for="conv">Novos clientes por mês, por cada 1.000 seguidores <output id="o-conv"></output></label>
+        <input id="conv" type="range" min="0.1" max="3" step="0.1">
+        <small>Pessoas que se registam pelo teu link e fazem pelo menos uma reserva.</small>
+      </div>
+      <div class="field">
+        <label for="val">Valor médio de cada estadia <output id="o-val"></output></label>
+        <input id="val" type="range" min="4000" max="60000" step="1000">
+        <small>Exemplo: 2 noites a 6.000 MZN = 12.000 MZN.</small>
+      </div>
+      <div class="field">
+        <label for="est">Estadias por cliente em 6 meses <output id="o-est"></output></label>
+        <input id="est" type="range" min="1" max="4" step="0.5">
+      </div>
+
+      <details>
+        <summary>Recomendar alojamentos (opcional)</summary>
+        <p class="sub" style="margin-top:8px">Conheces alguém com casa, lodge ou hotel? Recebes 5% de todas as estadias desse alojamento durante os primeiros 6 meses.</p>
+        <div class="field">
+          <label for="hosts">Alojamentos que recomendas <output id="o-hosts"></output></label>
+          <input id="hosts" type="range" min="0" max="10" step="1">
+        </div>
+        <div class="field">
+          <label for="hrev">Reservas por mês de cada alojamento <output id="o-hrev"></output></label>
+          <input id="hrev" type="range" min="20000" max="500000" step="10000">
+        </div>
+      </details>
+
+      <details>
+        <summary>Mais opções</summary>
+        <div class="field" style="margin-top:10px">
+          <label for="start">Mês em que começas <output id="o-start"></output></label>
+          <input id="start" type="range" min="0" max="3" step="1">
+          <small>Dezembro é a época mais forte do ano para reservas em Moçambique.</small>
+        </div>
+        <div class="field">
+          <label for="pico">Força do pico de dezembro <output id="o-pico"></output></label>
+          <input id="pico" type="range" min="1" max="3" step="0.5">
+        </div>
+        <div class="field">
+          <label for="noite">Valor de uma noite numa estadia de criador <output id="o-noite"></output></label>
+          <input id="noite" type="range" min="3000" max="30000" step="1000">
+          <small>Nível Criador: 1 a 2 noites por trimestre, para duas pessoas, pagas pelo anfitrião.</small>
+        </div>
+      </details>
+    </section>
+
+    <section aria-label="Resultado">
+      <div class="big">
+        <div class="lbl">Comissão no primeiro ano</div>
+        <div class="num" id="r-ano">0 MZN</div>
+        <div class="note" id="r-note"></div>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="v" id="r-mes">0</div><div class="k">por mês, ao fim de 6 meses</div></div>
+        <div class="kpi"><div class="v" id="r-cli">0</div><div class="k">clientes no teu link em 12 meses</div></div>
+        <div class="kpi"><div class="v" id="r-best">0</div><div class="k">melhor mês</div></div>
+      </div>
+
+      <div class="card">
+        <h2>Mês a mês</h2>
+        <p class="sub">A comissão acumula: os clientes de cada mês continuam a pagar-te durante 6 meses, enquanto entram novos.</p>
+        <div class="chart" id="chart" role="img" aria-label="Gráfico de ganhos por mês"></div>
+        <div class="months" id="months"></div>
+        <div class="legend"><span><i style="background:var(--navy2)"></i>Clientes do teu link</span><span><i style="background:var(--gold)"></i>Alojamentos recomendados</span></div>
+        <div class="tip" id="tip">Toca numa barra para ver o valor.</div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>O que recebes no total</h2>
+        <p class="sub">Dinheiro e experiências no primeiro ano, no nível Criador.</p>
+        <table class="stack">
+          <tr><td>Comissão das estadias pelo teu link</td><td id="s-link"></td></tr>
+          <tr><td>Comissão dos alojamentos recomendados</td><td id="s-host"></td></tr>
+          <tr><td>Estadias para dois, pagas pelo anfitrião (4 trimestres)</td><td id="s-stay"></td></tr>
+          <tr><td>Os teus conteúdos promovidos nos anúncios da IndicoStay, com o teu link</td><td>Incluído</td></tr>
+          <tr class="tot"><td>Valor total do teu primeiro ano</td><td id="s-tot"></td></tr>
+        </table>
+      </div>
+
+      <div class="late" id="late"></div>
+
+      <div class="card how">
+        <h2>Como funciona</h2>
+        <ol>
+          <li>Recebes o teu link e código pessoais no dia da aprovação.</li>
+          <li>Quem se regista pelo teu link fica ligado a ti durante 6 meses.</li>
+          <li>Cada estadia concluída nesse período gera 5% para ti, visível no teu painel.</li>
+          <li>Pagamento a cada 30 dias.</li>
+        </ol>
+        <a class="cta" href="https://indicostay.com/conta/afiliado/candidatura">Quero uma das 10 vagas</a>
+      </div>
+    </section>
+  </div>
+</div>
+</main>
+<footer><div class="wrap">Simulação ilustrativa com os valores que escolheste. Não é uma promessa de rendimento: o resultado real depende da tua comunidade, do conteúdo e das reservas concluídas. Comissão de 5% sobre o valor das estadias concluídas.</div></footer>
+
+<script>
+const PRESETS={
+  micro:{seg:5000,conv:1,val:12000,est:1.5},
+  medio:{seg:20000,conv:0.5,val:12000,est:1.5},
+  grande:{seg:80000,conv:0.3,val:15000,est:1.5}
+};
+const DEF={hosts:0,hrev:150000,start:0,pico:2,noite:8000};
+const RATE=0.05, WIN=6, NAMES=["Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez","Jan"];
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.round(n).toLocaleString('pt-PT').replace(/ | /g,'.')+' MZN';
+const fmtShort=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' M':n>=1e3?Math.round(n/1e3)+' mil':Math.round(n)+'';
+const ids=["seg","conv","val","est","hosts","hrev","start","pico","noite"];
+function setVals(o){for(const k in o){$(k).value=o[k]}}
+function seasonal(calIdx,pico){return NAMES[calIdx]==="Dez"?pico:1}
+
+// earnings for 12 months starting at calendar offset s (0 = Nov 2026)
+function simulate(v,s){
+  const newPerMonth=v.seg/1000*v.conv;
+  const perCustMonth=v.est/WIN*v.val*RATE;
+  const months=[];
+  let customers=0;
+  for(let m=0;m<12;m++){
+    const cal=s+m;
+    const joined=newPerMonth*seasonal(cal,v.pico);
+    customers+=joined;
+    months.push({cal,joined,link:0,host:0});
+  }
+  // each cohort pays for WIN months (including the month it joins)
+  months.forEach((c,i)=>{
+    for(let k=i;k<Math.min(12,i+WIN);k++){
+      months[k].link+=c.joined*perCustMonth;
+    }
+  });
+  months.forEach((c,i)=>{ if(i<WIN) c.host=v.hosts*v.hrev*RATE*seasonal(c.cal,v.pico); });
+  return {months,customers};
+}
+function read(){const v={};ids.forEach(k=>v[k]=parseFloat($(k).value));return v}
+function render(){
+  const v=read();
+  $("o-seg").textContent=v.seg.toLocaleString('pt-PT').replace(/ | /g,'.');
+  $("o-conv").textContent=v.conv.toFixed(1).replace('.',',');
+  $("o-val").textContent=fmt(v.val);
+  $("o-est").textContent=String(v.est).replace('.',',');
+  $("o-hosts").textContent=v.hosts;
+  $("o-hrev").textContent=fmt(v.hrev);
+  $("o-start").textContent=NAMES[v.start]+(v.start<2?" 2026":" 2027");
+  $("o-pico").textContent="x"+String(v.pico).replace('.',',');
+  $("o-noite").textContent=fmt(v.noite);
+
+  const r=simulate(v,v.start);
+  const link=r.months.reduce((a,m)=>a+m.link,0), host=r.months.reduce((a,m)=>a+m.host,0);
+  const tot=link+host, stay=4*1.5*v.noite;
+  const best=r.months.reduce((a,m)=>Math.max(a,m.link+m.host),0);
+  $("r-ano").textContent=fmt(tot);
+  $("r-note").textContent="Com "+Math.round(v.seg/1000*v.conv)+" novos clientes por mês pelo teu link"+(v.hosts?" e "+v.hosts+" alojamento"+(v.hosts>1?"s":"")+" recomendado"+(v.hosts>1?"s":""):"")+".";
+  $("r-mes").textContent=fmtShort(r.months[5].link+r.months[5].host);
+  $("r-cli").textContent=Math.round(r.customers);
+  $("r-best").textContent=fmtShort(best);
+  $("s-link").textContent=fmt(link);$("s-host").textContent=fmt(host);
+  $("s-stay").textContent=fmt(stay);$("s-tot").textContent=fmt(tot+stay);
+
+  const ch=$("chart"), mo=$("months");ch.innerHTML="";mo.innerHTML="";
+  r.months.forEach(m=>{
+    const b=document.createElement("div");b.className="bar"+(NAMES[m.cal]==="Dez"?" dec":"");
+    const t=m.link+m.host;
+    b.innerHTML='<div class="s2" style="height:'+(best?m.host/best*100:0)+'%;border-radius:5px 5px 0 0"></div><div class="s1" style="height:'+(best?m.link/best*100:0)+'%;border-radius:'+(m.host?'0':'5px 5px 0 0')+'"></div>';
+    b.title=NAMES[m.cal]+": "+fmt(t);
+    b.addEventListener("click",()=>{$("tip").textContent=NAMES[m.cal]+": "+fmt(t)+" ("+fmt(m.link)+" do link"+(m.host?", "+fmt(m.host)+" dos alojamentos":"")+")"});
+    ch.appendChild(b);
+    const s=document.createElement("span");s.textContent=NAMES[m.cal];mo.appendChild(s);
+  });
+
+  // cost of starting one month later (same 12-month window, Nov 2026 to Oct 2027)
+  const now=simulate(v,0), later=simulate(v,1);
+  const nowTot=now.months.reduce((a,m)=>a+m.link+m.host,0);
+  const laterTot=later.months.slice(0,11).reduce((a,m)=>a+m.link+m.host,0);
+  const diff=Math.max(0,nowTot-laterTot);
+  $("late").innerHTML="<b>Começar em novembro em vez de dezembro</b> vale "+fmt(diff)+" a mais até outubro de 2027, com estes valores. Quem já tem o link ativo antes da época festiva apanha as reservas de dezembro.";
+}
+document.querySelectorAll(".presets button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".presets button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
+  setVals(PRESETS[b.dataset.p]);render();
+}));
+ids.forEach(k=>$(k).addEventListener("input",()=>{if(["seg","conv","val","est"].includes(k))document.querySelectorAll(".presets button").forEach(x=>x.classList.remove("on"));render()}));
+setVals(PRESETS.medio);setVals(DEF);render();
+</script>
+</body>
+</html>
