@@ -42,7 +42,7 @@ summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--navy2)}
 .big .lbl{color:var(--gold);font-size:12px;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
 .big .num{font-size:clamp(34px,6vw,48px);font-weight:800;line-height:1.1;margin:6px 0 4px;font-variant-numeric:tabular-nums}
 .big .note{color:#c9d4e6;font-size:14px}
-.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
 @media (max-width:520px){.kpis{grid-template-columns:1fr 1fr}}
 .kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
 .kpi .v{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
@@ -113,14 +113,18 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <input id="seg" type="range" min="1000" max="200000" step="1000">
       </div>
       <div class="field">
-        <label for="conv">Novos clientes por mês, por cada 1.000 seguidores <output id="o-conv"></output></label>
-        <input id="conv" type="range" min="0.1" max="3" step="0.1">
-        <small>Pessoas que se registam pelo teu link e fazem pelo menos uma reserva.</small>
+        <label for="conv">% dos teus seguidores que reservam por mês <output id="o-conv"></output></label>
+        <input id="conv" type="range" min="0.01" max="0.5" step="0.01">
+        <small id="o-convp">Pessoas que se registam pelo teu link e fazem pelo menos uma reserva.</small>
       </div>
       <div class="field">
-        <label for="val">Valor médio de cada estadia <output id="o-val"></output></label>
-        <input id="val" type="range" min="4000" max="60000" step="1000">
-        <small>Exemplo: 2 noites a 6.000 MZN = 12.000 MZN.</small>
+        <label for="ppn">Preço médio por noite <output id="o-ppn"></output></label>
+        <input id="ppn" type="range" min="2000" max="40000" step="500">
+      </div>
+      <div class="field">
+        <label for="nts">Noites por estadia <output id="o-nts"></output></label>
+        <input id="nts" type="range" min="1" max="10" step="1">
+        <small id="o-val">Cada estadia vale 2 noites × 6.000 MZN = 12.000 MZN.</small>
       </div>
       <div class="field">
         <label for="est">Estadias por cliente em 6 meses <output id="o-est"></output></label>
@@ -149,24 +153,20 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
           <label for="pico">Força do pico de dezembro <output id="o-pico"></output></label>
           <input id="pico" type="range" min="1" max="3" step="0.5">
         </div>
-        <div class="field">
-          <label for="noite">Valor de uma noite numa estadia de criador <output id="o-noite"></output></label>
-          <input id="noite" type="range" min="3000" max="30000" step="1000">
-          <small>Nível Criador: 1 a 2 noites por trimestre, para duas pessoas, pagas pelo anfitrião.</small>
-        </div>
       </details>
     </section>
 
     <section aria-label="Resultado">
       <div class="big">
-        <div class="lbl">Comissão no primeiro ano</div>
+        <div class="lbl">Por mês, a partir do 6.º mês</div>
         <div class="num" id="r-ano">0 MZN</div>
         <div class="note" id="r-note"></div>
       </div>
       <div class="kpis">
-        <div class="kpi"><div class="v" id="r-mes">0</div><div class="k">por mês, ao fim de 6 meses</div></div>
-        <div class="kpi"><div class="v" id="r-cli">0</div><div class="k">clientes no teu link em 12 meses</div></div>
-        <div class="kpi"><div class="v" id="r-best">0</div><div class="k">melhor mês</div></div>
+        <div class="kpi"><div class="v" id="r-1">0</div><div class="k">em 1 mês</div></div>
+        <div class="kpi"><div class="v" id="r-3">0</div><div class="k">em 3 meses</div></div>
+        <div class="kpi"><div class="v" id="r-6">0</div><div class="k">em 6 meses</div></div>
+        <div class="kpi"><div class="v" id="r-12">0</div><div class="k">em 1 ano</div></div>
       </div>
 
       <div class="card">
@@ -179,14 +179,13 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
       </div>
 
       <div class="card" style="margin-top:16px">
-        <h2>O que recebes no total</h2>
-        <p class="sub">Dinheiro e experiências no primeiro ano, no nível Criador.</p>
+        <h2>O que recebes no primeiro ano</h2>
+        <p class="sub">O dinheiro que recebes, e as noites que ficam por conta do anfitrião.</p>
         <table class="stack">
-          <tr><td>Comissão das estadias pelo teu link</td><td id="s-link"></td></tr>
+          <tr class="tot"><td>Dinheiro: comissão das estadias pelo teu link</td><td id="s-link"></td></tr>
           <tr hidden><td>Co-host</td><td id="s-host"></td></tr>
-          <tr><td>Estadias para dois, pagas pelo anfitrião (4 trimestres)</td><td id="s-stay"></td></tr>
+          <tr><td>Estadias grátis para dois<br><small class="sub" id="s-staynote" style="margin:0"></small></td><td id="s-stay"></td></tr>
           <tr><td>Os teus conteúdos promovidos nos anúncios da IndicoStay, com o teu link</td><td>Incluído</td></tr>
-          <tr class="tot"><td>Valor total do teu primeiro ano</td><td id="s-tot"></td></tr>
         </table>
       </div>
 
@@ -210,17 +209,17 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
 
 <script>
 const PRESETS={
-  micro:{seg:5000,conv:1,val:12000,est:1.5},
-  medio:{seg:20000,conv:0.5,val:12000,est:1.5},
-  grande:{seg:80000,conv:0.3,val:15000,est:1.5}
+  micro:{seg:5000,conv:0.1,ppn:6000,nts:2,est:1.5},
+  medio:{seg:20000,conv:0.05,ppn:6000,nts:2,est:1.5},
+  grande:{seg:80000,conv:0.03,ppn:7500,nts:2,est:1.5}
 };
-const DEF={start:0,pico:2,noite:8000};
+const DEF={start:0,pico:2};
 const FEE=0.15, GUEST=0.03, WIN=6, NAMES=["Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez","Jan"];
 const $=id=>document.getElementById(id);
 const grp=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 const fmt=n=>grp(n)+' MZN';
 const fmtShort=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' M':n>=1e3?Math.round(n/1e3)+' mil':Math.round(n)+'';
-const ids=["seg","conv","val","est","chosts","cmin","cpct","cnights","start","pico","noite"];
+const ids=["seg","conv","ppn","nts","est","chosts","cmin","cpct","cnights","start","pico"];
 let TERMS="f";
 function setVals(o){for(const k in o){$(k).value=o[k]}}
 function dec(cal,pico){return NAMES[cal]==="Dez"?pico:1}
@@ -235,7 +234,7 @@ function ladder(v){
 }
 // 12 months from calendar offset s (0 = Nov 2026); terms "f" founder, "l" later
 function simulate(v,s,terms){
-  const newPerMonth=v.seg/1000*v.conv, staysPerCust=v.est/WIN;
+  const newPerMonth=v.seg*v.conv/100, staysPerCust=v.est/WIN;
   const L=ladder(v), months=[];
   let customers=0;
   for(let m=0;m<12;m++){const cal=s+m;const j=newPerMonth*dec(cal,v.pico);customers+=j;months.push({cal,joined:j,stays:0,link:0,host:0})}
@@ -250,12 +249,14 @@ function simulate(v,s,terms){
   return {months,customers,L};
 }
 const tot=r=>r.months.reduce((a,m)=>a+m.link+m.host,0);
-function read(){const v={};ids.forEach(k=>v[k]=parseFloat($(k).value));return v}
+function read(){const v={};ids.forEach(k=>v[k]=parseFloat($(k).value));v.val=v.ppn*v.nts;return v}
 function render(){
   const v=read();
   $("o-seg").textContent=grp(v.seg);
-  $("o-conv").textContent=v.conv.toFixed(1).replace('.',',');
-  $("o-val").textContent=fmt(v.val);
+  $("o-conv").textContent=v.conv.toFixed(2).replace('.',',')+"%";
+  $("o-convp").textContent="= "+Math.round(v.seg*v.conv/100)+" pessoas por mês que se registam pelo teu link e reservam.";
+  $("o-ppn").textContent=fmt(v.ppn);$("o-nts").textContent=v.nts;
+  $("o-val").textContent="Cada estadia vale "+v.nts+(v.nts>1?" noites":" noite")+" × "+fmt(v.ppn)+" = "+fmt(v.val)+".";
   $("o-est").textContent=String(v.est).replace('.',',');
   $("o-chosts").textContent=v.chosts;
   $("o-cmin").textContent=fmt(v.cmin);
@@ -263,22 +264,23 @@ function render(){
   $("o-cnights").textContent=v.cnights;
   $("o-start").textContent=NAMES[v.start]+(v.start<2?" 2026":" 2027");
   $("o-pico").textContent="x"+String(v.pico).replace('.',',');
-  $("o-noite").textContent=fmt(v.noite);
+
 
   const r=simulate(v,v.start,TERMS);
   const L=r.L;
   $("l-pub").textContent=fmt(L.pub);$("l-guest").textContent=fmt(L.guest);
   $("l-owner").textContent=fmt(L.owner);$("l-me").textContent=fmt(L.me);
   const link=r.months.reduce((a,m)=>a+m.link,0), host=r.months.reduce((a,m)=>a+m.host,0);
-  const total=link+host, stay=4*1.5*v.noite;
+  const total=link+host, stay=TERMS==="f"?4*1.5*v.ppn:0;
   const best=r.months.reduce((a,m)=>Math.max(a,m.link+m.host),0);
-  $("r-ano").textContent=fmt(total);
-  $("r-note").textContent=(TERMS==="f"?"Como fundador, ":"Depois das 10 vagas, ")+"com "+Math.round(v.seg/1000*v.conv)+" novos clientes por mês pelo teu link"+(v.chosts?" e "+v.chosts+" alojamento"+(v.chosts>1?"s":"")+" como co-host":"")+".";
-  $("r-mes").textContent=fmtShort(r.months[5].link+r.months[5].host);
-  $("r-cli").textContent=Math.round(r.customers);
-  $("r-best").textContent=fmtShort(best);
+  const upto=n=>r.months.slice(0,n).reduce((x,m)=>x+m.link+m.host,0);
+  $("r-ano").textContent=fmt(r.months[5].link+r.months[5].host);
+  $("r-note").textContent=(TERMS==="f"?"Como fundador, ":"Depois das 10 vagas, ")+"com "+Math.round(v.seg*v.conv/100)+" novos clientes por mês pelo teu link. Em 1 ano: "+fmt(total)+".";
+  $("r-1").textContent=fmtShort(upto(1));$("r-3").textContent=fmtShort(upto(3));
+  $("r-6").textContent=fmtShort(upto(6));$("r-12").textContent=fmtShort(upto(12));
+  $("s-staynote").textContent=TERMS==="f"?"1 estadia por trimestre × 1,5 noites (1 a 2) × "+fmt(v.ppn)+" por noite. Não é dinheiro: é o valor das noites que não pagas.":"Desbloqueia quando chegares ao nível Criador (3 estadias concluídas).";
   $("s-link").textContent=fmt(link);$("s-host").textContent=fmt(host);
-  $("s-stay").textContent=fmt(stay);$("s-tot").textContent=fmt(total+stay);
+  $("s-stay").textContent=fmt(stay);
 
   const ch=$("chart"), mo=$("months");ch.innerHTML="";mo.innerHTML="";
   r.months.forEach(m=>{
