@@ -64,6 +64,17 @@ summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--navy2)}
 .late{background:#fff7e3;border:1px solid #f0d58f;border-radius:14px;padding:16px;margin-top:16px}
 .late b{color:#8a5a00}
 .how{margin-top:20px}
+.seg2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.seg2 button{flex:1 1 140px;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;font:inherit;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.seg2 button b{display:block;font-size:14.5px}
+.seg2 button.on{border-color:var(--gold);background:#fff7e3}
+.ladder{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 12px}
+.ladder td{padding:6px 0;border-bottom:1px dashed var(--line)}
+.ladder td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:8px}
+.ladder tr.me td{color:var(--good)}
+.ab{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.ab label{flex:1 1 150px;display:flex;gap:8px;align-items:flex-start;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;font-size:13px;cursor:pointer;background:#fff}
+.ab input{margin-top:3px;accent-color:var(--gold)}
 .how ol{padding-left:20px;margin:8px 0 0}
 .how li{margin-bottom:6px}
 .cta{display:inline-block;margin-top:14px;background:var(--gold);color:var(--navy);font-weight:800;text-decoration:none;border-radius:999px;padding:12px 22px}
@@ -92,6 +103,11 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <button type="button" data-p="grande"><b>Grande</b>80 mil seguidores</button>
       </div>
 
+      <h2 style="font-size:15px">As tuas condições</h2>
+      <div class="seg2" role="group" aria-label="Condições de comissão">
+        <button type="button" data-t="f" class="on"><b>Fundador</b>5% em todas as estadias</button>
+        <button type="button" data-t="l"><b>Depois das 10 vagas</b>5% nas primeiras 10 estadias, depois 3%</button>
+      </div>
       <div class="field">
         <label for="seg">Seguidores reais <output id="o-seg"></output></label>
         <input id="seg" type="range" min="1000" max="200000" step="1000">
@@ -111,18 +127,16 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <input id="est" type="range" min="1" max="4" step="0.5">
       </div>
 
-      <details>
-        <summary>Recomendar alojamentos (opcional)</summary>
-        <p class="sub" style="margin-top:8px">Conheces alguém com casa, lodge ou hotel? Recebes 5% de todas as estadias desse alojamento durante os primeiros 6 meses.</p>
-        <div class="field">
-          <label for="hosts">Alojamentos que recomendas <output id="o-hosts"></output></label>
-          <input id="hosts" type="range" min="0" max="10" step="1">
-        </div>
-        <div class="field">
-          <label for="hrev">Reservas por mês de cada alojamento <output id="o-hrev"></output></label>
-          <input id="hrev" type="range" min="20000" max="500000" step="10000">
-        </div>
-      </details>
+      <div class="late" style="margin:0 0 4px">
+        <b>Conheces alguém com casa, lodge ou hotel?</b> Como co-host ganhas uma parte de cada noite reservada, além da tua comissão de criador.
+        <a href="../co-host/" style="display:block;margin-top:8px;font-weight:700;color:var(--navy2)">Abrir o simulador de co-host →</a>
+      </div>
+      <div hidden>
+        <input id="chosts" type="hidden" value="0"><input id="cmin" type="hidden" value="7500"><input id="cpct" type="hidden" value="10"><input id="cnights" type="hidden" value="0">
+        <input type="radio" name="cbase" id="cbaseA" value="A" checked><input type="radio" name="cbase" id="cbaseB" value="B">
+        <output id="o-chosts"></output><output id="o-cmin"></output><output id="o-cpct"></output><output id="o-cnights"></output>
+        <span id="l-pub"></span><span id="l-guest"></span><span id="l-owner"></span><span id="l-me"></span>
+      </div>
 
       <details>
         <summary>Mais opções</summary>
@@ -160,7 +174,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <p class="sub">A comissão acumula: os clientes de cada mês continuam a pagar-te durante 6 meses, enquanto entram novos.</p>
         <div class="chart" id="chart" role="img" aria-label="Gráfico de ganhos por mês"></div>
         <div class="months" id="months"></div>
-        <div class="legend"><span><i style="background:var(--navy2)"></i>Clientes do teu link</span><span><i style="background:var(--gold)"></i>Alojamentos recomendados</span></div>
+        <div class="legend"><span><i style="background:var(--navy2)"></i>Clientes do teu link</span></div>
         <div class="tip" id="tip">Toca numa barra para ver o valor.</div>
       </div>
 
@@ -169,7 +183,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <p class="sub">Dinheiro e experiências no primeiro ano, no nível Criador.</p>
         <table class="stack">
           <tr><td>Comissão das estadias pelo teu link</td><td id="s-link"></td></tr>
-          <tr><td>Comissão dos alojamentos recomendados</td><td id="s-host"></td></tr>
+          <tr hidden><td>Co-host</td><td id="s-host"></td></tr>
           <tr><td>Estadias para dois, pagas pelo anfitrião (4 trimestres)</td><td id="s-stay"></td></tr>
           <tr><td>Os teus conteúdos promovidos nos anúncios da IndicoStay, com o teu link</td><td>Incluído</td></tr>
           <tr class="tot"><td>Valor total do teu primeiro ano</td><td id="s-tot"></td></tr>
@@ -183,7 +197,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <ol>
           <li>Recebes o teu link e código pessoais no dia da aprovação.</li>
           <li>Quem se regista pelo teu link fica ligado a ti durante 6 meses.</li>
-          <li>Cada estadia concluída nesse período gera 5% para ti, visível no teu painel.</li>
+          <li>Cada estadia concluída nesse período gera comissão para ti: 5% em tudo para os 10 fundadores. Depois das 10 vagas, 5% nas primeiras 10 estadias e 3% a seguir.</li>
           <li>Pagamento a cada 30 dias.</li>
         </ol>
         <a class="cta" href="https://indicostay.com/conta/afiliado/candidatura">Quero uma das 10 vagas</a>
@@ -192,7 +206,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
   </div>
 </div>
 </main>
-<footer><div class="wrap">Simulação ilustrativa com os valores que escolheste. Não é uma promessa de rendimento: o resultado real depende da tua comunidade, do conteúdo e das reservas concluídas. Comissão de 5% sobre o valor das estadias concluídas.</div></footer>
+<footer><div class="wrap">Simulação ilustrativa com os valores que escolheste. Não é uma promessa de rendimento: o resultado real depende da tua comunidade, do conteúdo e das reservas concluídas. Comissão calculada sobre o valor das estadias concluídas, sem a taxa de serviço do hóspede.</div></footer>
 
 <script>
 const PRESETS={
@@ -200,37 +214,42 @@ const PRESETS={
   medio:{seg:20000,conv:0.5,val:12000,est:1.5},
   grande:{seg:80000,conv:0.3,val:15000,est:1.5}
 };
-const DEF={hosts:0,hrev:150000,start:0,pico:2,noite:8000};
-const RATE=0.05, WIN=6, NAMES=["Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez","Jan"];
+const DEF={start:0,pico:2,noite:8000};
+const FEE=0.15, GUEST=0.03, WIN=6, NAMES=["Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez","Jan"];
 const $=id=>document.getElementById(id);
 const grp=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 const fmt=n=>grp(n)+' MZN';
 const fmtShort=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' M':n>=1e3?Math.round(n/1e3)+' mil':Math.round(n)+'';
-const ids=["seg","conv","val","est","hosts","hrev","start","pico","noite"];
+const ids=["seg","conv","val","est","chosts","cmin","cpct","cnights","start","pico","noite"];
+let TERMS="f";
 function setVals(o){for(const k in o){$(k).value=o[k]}}
-function seasonal(calIdx,pico){return NAMES[calIdx]==="Dez"?pico:1}
+function dec(cal,pico){return NAMES[cal]==="Dez"?pico:1}
+function base(){return $("cbaseB").checked?"B":"A"}
 
-// earnings for 12 months starting at calendar offset s (0 = Nov 2026)
-function simulate(v,s){
-  const newPerMonth=v.seg/1000*v.conv;
-  const perCustMonth=v.est/WIN*v.val*RATE;
-  const months=[];
-  let customers=0;
-  for(let m=0;m<12;m++){
-    const cal=s+m;
-    const joined=newPerMonth*seasonal(cal,v.pico);
-    customers+=joined;
-    months.push({cal,joined,link:0,host:0});
-  }
-  // each cohort pays for WIN months (including the month it joins)
-  months.forEach((c,i)=>{
-    for(let k=i;k<Math.min(12,i+WIN);k++){
-      months[k].link+=c.joined*perCustMonth;
-    }
-  });
-  months.forEach((c,i)=>{ if(i<WIN) c.host=v.hosts*v.hrev*RATE*seasonal(c.cal,v.pico); });
-  return {months,customers};
+// co-host price ladder, built upwards from the owner's minimum
+function ladder(v){
+  const c=v.cpct/100;
+  const pub=base()==="A"? v.cmin/(1-FEE-c) : v.cmin/((1-FEE)*(1-c));
+  const me=base()==="A"? pub*c : pub*(1-FEE)*c;
+  return {pub,guest:pub*(1+GUEST),owner:v.cmin,me};
 }
+// 12 months from calendar offset s (0 = Nov 2026); terms "f" founder, "l" later
+function simulate(v,s,terms){
+  const newPerMonth=v.seg/1000*v.conv, staysPerCust=v.est/WIN;
+  const L=ladder(v), months=[];
+  let customers=0;
+  for(let m=0;m<12;m++){const cal=s+m;const j=newPerMonth*dec(cal,v.pico);customers+=j;months.push({cal,joined:j,stays:0,link:0,host:0})}
+  months.forEach((c,i)=>{for(let k=i;k<Math.min(12,i+WIN);k++)months[k].stays+=c.joined*staysPerCust});
+  let done=0;
+  months.forEach(m=>{
+    if(terms==="f"){m.link=m.stays*v.val*0.05}
+    else{const at5=Math.max(0,Math.min(m.stays,10-done));m.link=at5*v.val*0.05+(m.stays-at5)*v.val*0.03}
+    done+=m.stays;
+    m.host=v.chosts*v.cnights*L.me*dec(m.cal,v.pico);
+  });
+  return {months,customers,L};
+}
+const tot=r=>r.months.reduce((a,m)=>a+m.link+m.host,0);
 function read(){const v={};ids.forEach(k=>v[k]=parseFloat($(k).value));return v}
 function render(){
   const v=read();
@@ -238,23 +257,28 @@ function render(){
   $("o-conv").textContent=v.conv.toFixed(1).replace('.',',');
   $("o-val").textContent=fmt(v.val);
   $("o-est").textContent=String(v.est).replace('.',',');
-  $("o-hosts").textContent=v.hosts;
-  $("o-hrev").textContent=fmt(v.hrev);
+  $("o-chosts").textContent=v.chosts;
+  $("o-cmin").textContent=fmt(v.cmin);
+  $("o-cpct").textContent=v.cpct+"%";
+  $("o-cnights").textContent=v.cnights;
   $("o-start").textContent=NAMES[v.start]+(v.start<2?" 2026":" 2027");
   $("o-pico").textContent="x"+String(v.pico).replace('.',',');
   $("o-noite").textContent=fmt(v.noite);
 
-  const r=simulate(v,v.start);
+  const r=simulate(v,v.start,TERMS);
+  const L=r.L;
+  $("l-pub").textContent=fmt(L.pub);$("l-guest").textContent=fmt(L.guest);
+  $("l-owner").textContent=fmt(L.owner);$("l-me").textContent=fmt(L.me);
   const link=r.months.reduce((a,m)=>a+m.link,0), host=r.months.reduce((a,m)=>a+m.host,0);
-  const tot=link+host, stay=4*1.5*v.noite;
+  const total=link+host, stay=4*1.5*v.noite;
   const best=r.months.reduce((a,m)=>Math.max(a,m.link+m.host),0);
-  $("r-ano").textContent=fmt(tot);
-  $("r-note").textContent="Com "+Math.round(v.seg/1000*v.conv)+" novos clientes por mês pelo teu link"+(v.hosts?" e "+v.hosts+" alojamento"+(v.hosts>1?"s":"")+" recomendado"+(v.hosts>1?"s":""):"")+".";
+  $("r-ano").textContent=fmt(total);
+  $("r-note").textContent=(TERMS==="f"?"Como fundador, ":"Depois das 10 vagas, ")+"com "+Math.round(v.seg/1000*v.conv)+" novos clientes por mês pelo teu link"+(v.chosts?" e "+v.chosts+" alojamento"+(v.chosts>1?"s":"")+" como co-host":"")+".";
   $("r-mes").textContent=fmtShort(r.months[5].link+r.months[5].host);
   $("r-cli").textContent=Math.round(r.customers);
   $("r-best").textContent=fmtShort(best);
   $("s-link").textContent=fmt(link);$("s-host").textContent=fmt(host);
-  $("s-stay").textContent=fmt(stay);$("s-tot").textContent=fmt(tot+stay);
+  $("s-stay").textContent=fmt(stay);$("s-tot").textContent=fmt(total+stay);
 
   const ch=$("chart"), mo=$("months");ch.innerHTML="";mo.innerHTML="";
   r.months.forEach(m=>{
@@ -262,23 +286,26 @@ function render(){
     const t=m.link+m.host;
     b.innerHTML='<div class="s2" style="height:'+(best?m.host/best*100:0)+'%;border-radius:5px 5px 0 0"></div><div class="s1" style="height:'+(best?m.link/best*100:0)+'%;border-radius:'+(m.host?'0':'5px 5px 0 0')+'"></div>';
     b.title=NAMES[m.cal]+": "+fmt(t);
-    b.addEventListener("click",()=>{$("tip").textContent=NAMES[m.cal]+": "+fmt(t)+" ("+fmt(m.link)+" do link"+(m.host?", "+fmt(m.host)+" dos alojamentos":"")+")"});
+    b.addEventListener("click",()=>{$("tip").textContent=NAMES[m.cal]+": "+fmt(t)+" ("+fmt(m.link)+" do link"+(m.host?", "+fmt(m.host)+" como co-host":"")+")"});
     ch.appendChild(b);
-    const s=document.createElement("span");s.textContent=NAMES[m.cal];mo.appendChild(s);
+    const sp=document.createElement("span");sp.textContent=NAMES[m.cal];mo.appendChild(sp);
   });
 
-  // cost of starting one month later (same 12-month window, Nov 2026 to Oct 2027)
-  const now=simulate(v,0), later=simulate(v,1);
-  const nowTot=now.months.reduce((a,m)=>a+m.link+m.host,0);
-  const laterTot=later.months.slice(0,11).reduce((a,m)=>a+m.link+m.host,0);
-  const diff=Math.max(0,nowTot-laterTot);
-  $("late").innerHTML="<b>Começar em novembro em vez de dezembro</b> vale "+fmt(diff)+" a mais até outubro de 2027, com estes valores. Quem já tem o link ativo antes da época festiva apanha as reservas de dezembro.";
+  // what waiting costs: founder terms vs after the 10 places, same inputs
+  const f=simulate(v,0,"f"), l=simulate(v,0,"l");
+  const gap=Math.max(0,tot(f)-tot(l));
+  $("late").innerHTML="<b>Ser fundador vale "+fmt(gap)+" a mais</b> no primeiro ano, com estes valores, do que entrar depois das 10 vagas. Os lugares de fundador fecham quando as 10 vagas estiverem preenchidas.";
 }
 document.querySelectorAll(".presets button").forEach(b=>b.addEventListener("click",()=>{
   document.querySelectorAll(".presets button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
   setVals(PRESETS[b.dataset.p]);render();
 }));
+document.querySelectorAll(".seg2 button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".seg2 button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
+  TERMS=b.dataset.t;render();
+}));
 ids.forEach(k=>$(k).addEventListener("input",()=>{if(["seg","conv","val","est"].includes(k))document.querySelectorAll(".presets button").forEach(x=>x.classList.remove("on"));render()}));
+["cbaseA","cbaseB"].forEach(k=>$(k).addEventListener("change",render));
 setVals(PRESETS.medio);setVals(DEF);render();
 </script>
 </body>
