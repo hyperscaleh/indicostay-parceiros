@@ -64,6 +64,11 @@ summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--navy2)}
 .late{background:#fff7e3;border:1px solid #f0d58f;border-radius:14px;padding:16px;margin-top:16px}
 .late b{color:#8a5a00}
 .how{margin-top:20px}
+.funnel{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;font-size:13px}
+.funnel span{background:#f3efe6;border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-variant-numeric:tabular-nums}
+.funnel span b{display:block;font-size:15px;color:var(--navy2)}
+.funnel span.end{background:#fff7e3;border-color:#f0d58f}
+.funnel i{font-style:normal;color:var(--muted)}
 .seg2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
 .seg2 button{flex:1 1 140px;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;font:inherit;font-size:13.5px;cursor:pointer;color:var(--ink)}
 .seg2 button b{display:block;font-size:14.5px}
@@ -98,9 +103,9 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
       <h2>O teu perfil</h2>
       <p class="sub">Escolhe um ponto de partida e ajusta à tua realidade.</p>
       <div class="presets" role="group" aria-label="Perfis prontos">
-        <button type="button" data-p="micro"><b>Micro</b>5 mil seguidores</button>
-        <button type="button" data-p="medio" class="on"><b>Médio</b>20 mil seguidores</button>
-        <button type="button" data-p="grande"><b>Grande</b>80 mil seguidores</button>
+        <button type="button" data-p="micro"><b>Micro</b>25 mil visualizações</button>
+        <button type="button" data-p="medio" class="on"><b>Médio</b>50 mil visualizações</button>
+        <button type="button" data-p="grande"><b>Grande</b>120 mil visualizações</button>
       </div>
 
       <h2 style="font-size:15px">As tuas condições</h2>
@@ -109,13 +114,18 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <button type="button" data-t="l"><b>Depois das 10 vagas</b>5% nas primeiras 10 estadias, depois 3%</button>
       </div>
       <div class="field">
-        <label for="seg">Seguidores reais <output id="o-seg"></output></label>
-        <input id="seg" type="range" min="1000" max="200000" step="1000">
+        <label for="seg">Visualizações por mês dos conteúdos com o teu link <output id="o-seg"></output></label>
+        <input id="seg" type="range" min="5000" max="500000" step="5000">
+        <small>Soma das visualizações dos teus posts, reels e stories num mês.</small>
       </div>
       <div class="field">
-        <label for="conv">% dos teus seguidores que reservam por mês <output id="o-conv"></output></label>
-        <input id="conv" type="range" min="0.01" max="0.5" step="0.01">
-        <small id="o-convp">Pessoas que se registam pelo teu link e fazem pelo menos uma reserva.</small>
+        <label for="ctr">% que clica no teu link <output id="o-ctr"></output></label>
+        <input id="ctr" type="range" min="0.2" max="5" step="0.1">
+      </div>
+      <div class="field">
+        <label for="conv">% dos cliques que reservam <output id="o-conv"></output></label>
+        <input id="conv" type="range" min="0.5" max="10" step="0.5">
+        <div class="funnel" id="o-convp" aria-live="polite"></div>
       </div>
       <div class="field">
         <label for="ppn">Preço médio por noite <output id="o-ppn"></output></label>
@@ -209,9 +219,9 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
 
 <script>
 const PRESETS={
-  micro:{seg:5000,conv:0.1,ppn:6000,nts:2,est:1.5},
-  medio:{seg:20000,conv:0.05,ppn:6000,nts:2,est:1.5},
-  grande:{seg:80000,conv:0.03,ppn:7500,nts:2,est:1.5}
+  micro:{seg:25000,ctr:1,conv:2,ppn:6000,nts:2,est:1.5},
+  medio:{seg:50000,ctr:1,conv:2,ppn:6000,nts:2,est:1.5},
+  grande:{seg:120000,ctr:1,conv:2,ppn:7500,nts:2,est:1.5}
 };
 const DEF={start:0,pico:2};
 const FEE=0.15, GUEST=0.03, WIN=6, NAMES=["Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez","Jan"];
@@ -219,7 +229,7 @@ const $=id=>document.getElementById(id);
 const grp=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 const fmt=n=>grp(n)+' MZN';
 const fmtShort=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' M':n>=1e3?Math.round(n/1e3)+' mil':Math.round(n)+'';
-const ids=["seg","conv","ppn","nts","est","chosts","cmin","cpct","cnights","start","pico"];
+const ids=["seg","ctr","conv","ppn","nts","est","chosts","cmin","cpct","cnights","start","pico"];
 let TERMS="f";
 function setVals(o){for(const k in o){$(k).value=o[k]}}
 function dec(cal,pico){return NAMES[cal]==="Dez"?pico:1}
@@ -234,7 +244,7 @@ function ladder(v){
 }
 // 12 months from calendar offset s (0 = Nov 2026); terms "f" founder, "l" later
 function simulate(v,s,terms){
-  const newPerMonth=v.seg*v.conv/100, staysPerCust=v.est/WIN;
+  const newPerMonth=v.seg*v.ctr/100*v.conv/100, staysPerCust=v.est/WIN;
   const L=ladder(v), months=[];
   let customers=0;
   for(let m=0;m<12;m++){const cal=s+m;const j=newPerMonth*dec(cal,v.pico);customers+=j;months.push({cal,joined:j,stays:0,link:0,host:0})}
@@ -252,9 +262,10 @@ const tot=r=>r.months.reduce((a,m)=>a+m.link+m.host,0);
 function read(){const v={};ids.forEach(k=>v[k]=parseFloat($(k).value));v.val=v.ppn*v.nts;return v}
 function render(){
   const v=read();
-  $("o-seg").textContent=grp(v.seg);
-  $("o-conv").textContent=v.conv.toFixed(2).replace('.',',')+"%";
-  $("o-convp").textContent="= "+Math.round(v.seg*v.conv/100)+" pessoas por mês que se registam pelo teu link e reservam.";
+  $("o-seg").textContent=grp(v.seg);$("o-ctr").textContent=String(v.ctr).replace(".",",")+"%";
+  $("o-conv").textContent=String(v.conv).replace('.',',')+"%";
+  const clicks=v.seg*v.ctr/100, cust=clicks*v.conv/100;
+  $("o-convp").innerHTML='<span><b>'+grp(v.seg)+'</b>visualizações</span><i>→</i><span><b>'+grp(clicks)+'</b>cliques no link</span><i>→</i><span class="end"><b>'+grp(cust)+'</b>clientes por mês</span>';
   $("o-ppn").textContent=fmt(v.ppn);$("o-nts").textContent=v.nts;
   $("o-val").textContent="Cada estadia vale "+v.nts+(v.nts>1?" noites":" noite")+" × "+fmt(v.ppn)+" = "+fmt(v.val)+".";
   $("o-est").textContent=String(v.est).replace('.',',');
@@ -275,7 +286,7 @@ function render(){
   const best=r.months.reduce((a,m)=>Math.max(a,m.link+m.host),0);
   const upto=n=>r.months.slice(0,n).reduce((x,m)=>x+m.link+m.host,0);
   $("r-ano").textContent=fmt(r.months[5].link+r.months[5].host);
-  $("r-note").textContent=(TERMS==="f"?"Como fundador, ":"Depois das 10 vagas, ")+"com "+Math.round(v.seg*v.conv/100)+" novos clientes por mês pelo teu link. Em 1 ano: "+fmt(total)+".";
+  $("r-note").textContent=(TERMS==="f"?"Como fundador, ":"Depois das 10 vagas, ")+"com "+Math.round(v.seg*v.ctr/100*v.conv/100)+" novos clientes por mês pelo teu link. Em 1 ano: "+fmt(total)+".";
   $("r-1").textContent=fmtShort(upto(1));$("r-3").textContent=fmtShort(upto(3));
   $("r-6").textContent=fmtShort(upto(6));$("r-12").textContent=fmtShort(upto(12));
   $("s-staynote").textContent=TERMS==="f"?"1 estadia por trimestre, de 1 ou 2 noites: 4 a 8 noites por ano × "+fmt(v.ppn)+" por noite. Não é dinheiro: é o valor das noites que não pagas.":"Desbloqueia quando chegares ao nível Criador (3 estadias concluídas).";
@@ -306,7 +317,7 @@ document.querySelectorAll(".seg2 button").forEach(b=>b.addEventListener("click",
   document.querySelectorAll(".seg2 button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
   TERMS=b.dataset.t;render();
 }));
-ids.forEach(k=>$(k).addEventListener("input",()=>{if(["seg","conv","val","est"].includes(k))document.querySelectorAll(".presets button").forEach(x=>x.classList.remove("on"));render()}));
+ids.forEach(k=>$(k).addEventListener("input",()=>{if(["seg","ctr","conv","ppn","nts","est"].includes(k))document.querySelectorAll(".presets button").forEach(x=>x.classList.remove("on"));render()}));
 ["cbaseA","cbaseB"].forEach(k=>$(k).addEventListener("change",render));
 setVals(PRESETS.medio);setVals(DEF);render();
 </script>
