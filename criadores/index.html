@@ -271,16 +271,16 @@ function render(){
   $("l-pub").textContent=fmt(L.pub);$("l-guest").textContent=fmt(L.guest);
   $("l-owner").textContent=fmt(L.owner);$("l-me").textContent=fmt(L.me);
   const link=r.months.reduce((a,m)=>a+m.link,0), host=r.months.reduce((a,m)=>a+m.host,0);
-  const total=link+host, stay=TERMS==="f"?4*1.5*v.ppn:0;
+  const total=link+host, stayLo=TERMS==="f"?4*v.ppn:0, stayHi=TERMS==="f"?8*v.ppn:0;
   const best=r.months.reduce((a,m)=>Math.max(a,m.link+m.host),0);
   const upto=n=>r.months.slice(0,n).reduce((x,m)=>x+m.link+m.host,0);
   $("r-ano").textContent=fmt(r.months[5].link+r.months[5].host);
   $("r-note").textContent=(TERMS==="f"?"Como fundador, ":"Depois das 10 vagas, ")+"com "+Math.round(v.seg*v.conv/100)+" novos clientes por mês pelo teu link. Em 1 ano: "+fmt(total)+".";
   $("r-1").textContent=fmtShort(upto(1));$("r-3").textContent=fmtShort(upto(3));
   $("r-6").textContent=fmtShort(upto(6));$("r-12").textContent=fmtShort(upto(12));
-  $("s-staynote").textContent=TERMS==="f"?"1 estadia por trimestre × 1,5 noites (1 a 2) × "+fmt(v.ppn)+" por noite. Não é dinheiro: é o valor das noites que não pagas.":"Desbloqueia quando chegares ao nível Criador (3 estadias concluídas).";
+  $("s-staynote").textContent=TERMS==="f"?"1 estadia por trimestre, de 1 ou 2 noites: 4 a 8 noites por ano × "+fmt(v.ppn)+" por noite. Não é dinheiro: é o valor das noites que não pagas.":"Desbloqueia quando chegares ao nível Criador (3 estadias concluídas).";
   $("s-link").textContent=fmt(link);$("s-host").textContent=fmt(host);
-  $("s-stay").textContent=fmt(stay);
+  $("s-stay").textContent=stayHi?grp(stayLo)+" a "+fmt(stayHi):"0 MZN";
 
   const ch=$("chart"), mo=$("months");ch.innerHTML="";mo.innerHTML="";
   r.months.forEach(m=>{
