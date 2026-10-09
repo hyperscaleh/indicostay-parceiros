@@ -48,7 +48,8 @@ input[type=range]{width:100%;accent-color:var(--gold);height:28px}
 .pub{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff7e3;border:1px solid #f0d58f;border-radius:12px;padding:14px 16px;margin-top:14px}
 .pub b{font-size:22px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
-@media (max-width:520px){.kpis{grid-template-columns:1fr 1fr}}
+.k4{grid-template-columns:repeat(4,minmax(0,1fr));margin:0 0 16px}
+@media (max-width:520px){.kpis,.k4{grid-template-columns:1fr 1fr}}
 .kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
 .kpi .v{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
 .kpi .k{font-size:12.5px;color:var(--muted)}
@@ -113,6 +114,12 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <div class="num" id="r-month">0 MZN</div>
         <div class="note" id="r-note"></div>
       </div>
+      <div class="kpis k4">
+        <div class="kpi"><div class="v" id="t1">0</div><div class="k">em 1 mês</div></div>
+        <div class="kpi"><div class="v" id="t3">0</div><div class="k">em 3 meses</div></div>
+        <div class="kpi"><div class="v" id="t6">0</div><div class="k">em 6 meses</div></div>
+        <div class="kpi"><div class="v" id="t12">0</div><div class="k">em 1 ano</div></div>
+      </div>
 
       <div class="card">
         <h2>Para onde vai o dinheiro de cada noite</h2>
@@ -125,7 +132,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <div class="legend">
           <div><span><i style="background:var(--owner)"></i>O dono recebe</span><b id="l-own"></b></div>
           <div><span><i style="background:var(--gold)"></i>Tu recebes</span><b id="l-me"></b></div>
-          <div><span><i style="background:var(--navy2)"></i>IndicoStay e pagamentos</span><b id="l-is"></b></div>
+          <div><span><i style="background:var(--navy2)"></i>IndicoStay e pagamentos (15% + 3% do preço)</span><b id="l-is"></b></div>
         </div>
         <div class="pub"><span>Preço a publicar por noite na IndicoStay</span><b id="l-pub"></b></div>
         <details class="steps" open>
@@ -136,8 +143,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
 
       <div class="kpis">
         <div class="kpi"><div class="v" id="k-night">0</div><div class="k">por noite reservada</div></div>
-        <div class="kpi"><div class="v" id="k-year">0</div><div class="k">num ano</div></div>
-        <div class="kpi"><div class="v" id="k-plus">0</div><div class="k">a mais por mês se as noites vierem do teu link de criador</div></div>
+        <div class="kpi" style="grid-column:span 2"><div class="v" id="k-plus">0</div><div class="k">a mais por mês, como criador, se essas noites vierem do teu link (5% do preço)</div></div>
       </div>
 
       <div class="card how" style="margin-top:16px">
@@ -186,7 +192,7 @@ function render(){
     'O dono recebe o resto: '+fmt(left)+' menos '+fmt(me)+' = <b>'+fmt(own)+'</b>.',
     'O hóspede paga o preço mais 3% de taxa de serviço: <b>'+fmt(guest)+'</b>. Esses 3% ficam com a IndicoStay e não mexem no teu valor nem no do dono.'
   ].map(x=>'<li>'+x+'</li>').join("");
-  $("k-night").textContent=short(me);$("k-year").textContent=short(month*12);
+  $("k-night").textContent=short(me);[1,3,6,12].forEach(n=>$("t"+n).textContent=short(month*n));
   $("k-plus").textContent=short(pub*CREATOR*nights*props);
 }
 function setBase(b){BASE=b;$("bA").classList.toggle("on",b==="A");$("bB").classList.toggle("on",b==="B");render()}
