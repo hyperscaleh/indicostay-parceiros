@@ -144,7 +144,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
       </div>
       <div class="field">
         <label for="est">Estadias por cliente em 6 meses <output id="o-est"></output></label>
-        <input id="est" type="range" min="1" max="4" step="0.5">
+        <input id="est" type="range" min="1" max="4" step="1">
       </div>
 
       <div class="late" style="margin:0 0 4px">
@@ -225,9 +225,9 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
 
 <script>
 const PRESETS={
-  micro:{seg:25000,ctr:1,conv:2,ppn:6000,nts:2,est:1.5},
-  medio:{seg:50000,ctr:1,conv:2,ppn:6000,nts:2,est:1.5},
-  grande:{seg:120000,ctr:1,conv:2,ppn:7500,nts:2,est:1.5}
+  micro:{seg:25000,ctr:1,conv:2,ppn:6000,nts:2,est:2},
+  medio:{seg:50000,ctr:1,conv:2,ppn:6000,nts:2,est:2},
+  grande:{seg:120000,ctr:1,conv:2,ppn:7500,nts:2,est:2}
 };
 const DEF={start:0,pico:2};
 const FEE=0.15, GUEST=0.03, WIN=6, NAMES=["Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez","Jan"];
@@ -274,7 +274,7 @@ function render(){
   $("o-convp").innerHTML='<span><b>'+grp(v.seg)+'</b>visualizações</span><i>→</i><span><b>'+grp(clicks)+'</b>cliques no link</span><i>→</i><span class="end"><b>'+grp(cust)+'</b>clientes por mês</span>';
   $("o-ppn").textContent=fmt(v.ppn);$("o-nts").textContent=v.nts;
   $("o-val").textContent="Cada estadia vale "+v.nts+(v.nts>1?" noites":" noite")+" × "+fmt(v.ppn)+" = "+fmt(v.val)+".";
-  $("o-est").textContent=String(v.est).replace('.',',');
+  $("o-est").textContent=v.est;
   $("o-chosts").textContent=v.chosts;
   $("o-cmin").textContent=fmt(v.cmin);
   $("o-cpct").textContent=v.cpct+"%";
