@@ -332,7 +332,17 @@ function render(){
   // what waiting costs: founder terms vs after the 10 places, same inputs
   const f=simulate(v,0,"f"), l=simulate(v,0,"l");
   const gap=Math.max(0,tot(f)-tot(l));
-  $("late").innerHTML="<b>Ser fundador vale "+fmt(gap)+" a mais</b> no primeiro ano, com estes valores, do que entrar depois das 10 vagas. Os lugares de fundador fecham quando as 10 vagas estiverem preenchidas.";
+  const nStays=f.months.reduce((a,m)=>a+m.stays,0), nCust=f.customers;
+  const first=Math.min(10,nStays), rest=Math.max(0,nStays-10), n=x=>grp(x);
+  $("late").innerHTML="<b>Ser fundador vale "+fmt(gap)+" a mais</b> no primeiro ano, com estes valores, do que entrar depois das 10 vagas. Os lugares de fundador fecham quando as 10 vagas estiverem preenchidas."+
+  '<details class="how2" open style="margin-top:10px"><summary>De onde vêm estes valores</summary>'+
+  '<table class="ladder" style="margin-top:8px">'+
+  '<tr><td>Pessoas que reservam pelo teu link em 12 meses</td><td>'+n(nCust)+'</td></tr>'+
+  '<tr><td>Estadias concluídas por essas pessoas nesses 12 meses ('+v.est+' cada, nos 6 meses)</td><td>'+n(nStays)+'</td></tr>'+
+  '<tr><td>Valor de cada estadia</td><td>'+fmt(v.val)+'</td></tr>'+
+  '<tr><td><b>Fundador:</b> '+n(nStays)+' estadias × '+fmt(v.val)+' × 5%</td><td>'+fmt(tot(f))+'</td></tr>'+
+  '<tr><td><b>Depois das 10 vagas:</b> '+n(first)+' estadias a 5% ('+fmt(first*v.val*0.05)+') + '+n(rest)+' estadias a 3% ('+fmt(rest*v.val*0.03)+')</td><td>'+fmt(tot(l))+'</td></tr>'+
+  '<tr class="me"><td><b>Diferença:</b> '+n(rest)+' estadias × '+fmt(v.val)+' × 2%</td><td>'+fmt(gap)+'</td></tr></table></details>';
 }
 document.querySelectorAll(".presets button").forEach(b=>b.addEventListener("click",()=>{
   document.querySelectorAll(".presets button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
