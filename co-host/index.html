@@ -52,6 +52,10 @@ input[type=range]{width:100%;accent-color:var(--gold);height:28px}
 .kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
 .kpi .v{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
 .kpi .k{font-size:12.5px;color:var(--muted)}
+.steps{margin-top:14px;font-size:14px}
+.steps summary{cursor:pointer;font-weight:700;color:var(--navy2)}
+.steps ol{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
+.steps li b{font-variant-numeric:tabular-nums}
 .how ol{padding-left:20px;margin:8px 0 0}.how li{margin-bottom:6px}
 .cta{display:inline-block;margin-top:12px;background:var(--gold);color:var(--navy);font-weight:800;text-decoration:none;border-radius:999px;padding:12px 22px}
 a{color:var(--navy2)}
@@ -124,6 +128,10 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
           <div><span><i style="background:var(--navy2)"></i>IndicoStay e pagamentos</span><b id="l-is"></b></div>
         </div>
         <div class="pub"><span>Preço a publicar por noite na IndicoStay</span><b id="l-pub"></b></div>
+        <details class="steps" open>
+          <summary>Como chegámos a estes números</summary>
+          <ol id="steps"></ol>
+        </details>
       </div>
 
       <div class="kpis">
@@ -169,6 +177,15 @@ function render(){
   $("r-guest").textContent="O hóspede paga "+fmt(guest)+" por noite.";
   [["sp-own",own],["sp-me",me],["sp-is",is]].forEach(([id,val])=>{const w=val/guest*100;$(id).style.width=w+"%";$(id).textContent=w>8?Math.round(w)+"%":""});
   $("l-own").textContent=fmt(own);$("l-me").textContent=fmt(me);$("l-is").textContent=fmt(is);$("l-pub").textContent=fmt(pub);
+  const fee=pub*FEE, left=pub-fee, pc=Math.round(c*100)+"%";
+  $("steps").innerHTML=[
+    'Preço publicado por noite: <b>'+fmt(pub)+'</b>, calculado para o dono receber os '+fmt(own)+' que quer.',
+    'A IndicoStay retira 15% do preço: <b>'+fmt(fee)+'</b>. Ficam <b>'+fmt(left)+'</b> para o dono e para ti.',
+    BASE==="A" ? 'A tua parte é '+pc+' do preço da noite: '+pc+' de '+fmt(pub)+' = <b>'+fmt(me)+'</b>.'
+               : 'A tua parte é '+pc+' do que ficou: '+pc+' de '+fmt(left)+' = <b>'+fmt(me)+'</b>.',
+    'O dono recebe o resto: '+fmt(left)+' menos '+fmt(me)+' = <b>'+fmt(own)+'</b>.',
+    'O hóspede paga o preço mais 3% de taxa de serviço: <b>'+fmt(guest)+'</b>. Esses 3% ficam com a IndicoStay e não mexem no teu valor nem no do dono.'
+  ].map(x=>'<li>'+x+'</li>').join("");
   $("k-night").textContent=short(me);$("k-year").textContent=short(month*12);
   $("k-plus").textContent=short(pub*CREATOR*nights*props);
 }
