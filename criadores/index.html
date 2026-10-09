@@ -64,6 +64,14 @@ summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--navy2)}
 .late{background:#fff7e3;border:1px solid #f0d58f;border-radius:14px;padding:16px;margin-top:16px}
 .late b{color:#8a5a00}
 .how{margin-top:20px}
+.how2{margin-top:14px;font-size:14px}
+.how2 summary{cursor:pointer;font-weight:700;color:var(--navy2)}
+.how2 p{margin:8px 0}
+.tbl2{overflow-x:auto}
+.tbl2 table{border-collapse:collapse;width:100%;min-width:420px;font-size:13.5px}
+.tbl2 th,.tbl2 td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.tbl2 th:first-child,.tbl2 td:first-child{text-align:left}
+.tbl2 th{font-size:11.5px;color:var(--muted);font-weight:600}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
 .two label{display:block;font-size:14px;font-weight:600}
 .pct{display:flex;align-items:center;gap:8px;margin-top:6px}
@@ -192,6 +200,11 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <div class="months" id="months"></div>
         <div class="legend"><span><i style="background:var(--navy2)"></i>Clientes do teu link</span></div>
         <div class="tip" id="tip">Toca numa barra para ver o valor.</div>
+        <details class="how2" open>
+          <summary>Como se chega a estes números</summary>
+          <p id="how2-text"></p>
+          <div class="tbl2"><table id="how2-table"></table></div>
+        </details>
       </div>
 
       <div class="card" style="margin-top:16px">
@@ -290,6 +303,12 @@ function render(){
   const link=r.months.reduce((a,m)=>a+m.link,0), host=r.months.reduce((a,m)=>a+m.host,0);
   const total=link+host, stayLo=TERMS==="f"?4*v.ppn:0, stayHi=TERMS==="f"?8*v.ppn:0;
   const best=r.months.reduce((a,m)=>Math.max(a,m.link+m.host),0);
+  const perStay=v.val*(TERMS==="f"?0.05:0.05);
+  const perClient=v.est*v.val*0.05, perClientMonth=perClient/WIN;
+  $("how2-text").textContent="Cada cliente do teu link faz "+v.est+(v.est>1?" estadias":" estadia")+" nos 6 meses. Cada estadia vale "+fmt(v.val)+" e a tua comissão é 5%, ou seja "+fmt(perStay)+" por estadia. Cada cliente gera "+fmt(perClient)+" em 6 meses, cerca de "+fmt(perClientMonth)+" por mês. Os clientes vão-se acumulando: no mês 6 ainda contam os dos meses anteriores."+(TERMS==="l"?" Depois das 10 vagas, as tuas primeiras 10 estadias pagam 5% e as seguintes 3%.":"");
+  let rows='<tr><th>Mês</th><th>Clientes novos</th><th>Clientes a gerar comissão</th><th>Comissão do mês</th></tr>';
+  r.months.forEach((m,i)=>{let act=0;for(let j=Math.max(0,i-WIN+1);j<=i;j++)act+=r.months[j].joined;rows+='<tr><td>'+(i+1)+'.º mês ('+NAMES[m.cal]+')</td><td>'+grp(m.joined)+'</td><td>'+grp(act)+'</td><td><b>'+fmt(m.link+m.host)+'</b></td></tr>'});
+  $("how2-table").innerHTML=rows;
   const upto=n=>r.months.slice(0,n).reduce((x,m)=>x+m.link+m.host,0);
   $("r-ano").textContent=fmt(r.months[5].link+r.months[5].host);
   $("r-note").textContent=(TERMS==="f"?"Como fundador, ":"Depois das 10 vagas, ")+"com "+Math.round(v.seg*v.ctr/100*v.conv/100)+" novos clientes por mês pelo teu link. Em 1 ano: "+fmt(total)+".";

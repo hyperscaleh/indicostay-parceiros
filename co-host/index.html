@@ -88,12 +88,9 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
 
       <div class="field">
         <p class="step"><i>2</i>Qual é a tua parte?</p>
-        <label for="pct"><span class="sub" style="margin:0">Percentagem que combinas com o dono</span><output id="o-pct"></output></label>
-        <input id="pct" type="range" min="5" max="30" step="1" value="10">
-        <div class="ab" role="group" aria-label="Como se calcula a tua parte" style="margin-top:8px">
-          <button type="button" id="bA" class="on"><b>Sobre o preço da noite</b>Opção A, melhor para ti</button>
-          <button type="button" id="bB"><b>Depois da taxa IndicoStay</b>Opção B, melhor para o dono</button>
-        </div>
+        <label for="pct"><span class="sub" style="margin:0">Percentagem do preço da noite que combinas com o dono</span><output id="o-pct"></output></label>
+        <input id="pct" type="range" min="1" max="50" step="1" value="10">
+        <small>A percentagem é livre: negoceias com o dono a que quiseres. É calculada sobre o preço da noite publicado na IndicoStay.</small>
       </div>
 
       <div class="field">
@@ -168,12 +165,12 @@ const $=id=>document.getElementById(id);
 const grp=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 const fmt=n=>grp(n)+' MZN';
 const short=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' M':n>=1e4?Math.round(n/1e3)+' mil':grp(n);
-let BASE="A";
+
 function render(){
   const own=+$("own").value, c=+$("pct").value/100, nights=+$("nights").value, props=+$("props").value;
   // price is built upwards from what the owner wants, so the owner always gets the agreed amount
-  const pub = BASE==="A" ? own/(1-FEE-c) : own/((1-FEE)*(1-c));
-  const me  = BASE==="A" ? pub*c : pub*(1-FEE)*c;
+  const pub = own/(1-FEE-c);
+  const me  = pub*c;
   const guest=pub*(1+GUEST), is=guest-own-me;
   const month=me*nights*props;
   $("o-own").textContent=fmt(own);$("o-pct").textContent=Math.round(c*100)+"%";
@@ -187,16 +184,13 @@ function render(){
   $("steps").innerHTML=[
     'Preço publicado por noite: <b>'+fmt(pub)+'</b>, calculado para o dono receber os '+fmt(own)+' que quer.',
     'A IndicoStay retira 15% do preço: <b>'+fmt(fee)+'</b>. Ficam <b>'+fmt(left)+'</b> para o dono e para ti.',
-    BASE==="A" ? 'A tua parte é '+pc+' do preço da noite: '+pc+' de '+fmt(pub)+' = <b>'+fmt(me)+'</b>.'
-               : 'A tua parte é '+pc+' do que ficou: '+pc+' de '+fmt(left)+' = <b>'+fmt(me)+'</b>.',
+    'A tua parte é '+pc+' do preço da noite: '+pc+' de '+fmt(pub)+' = <b>'+fmt(me)+'</b>.',
     'O dono recebe o resto: '+fmt(left)+' menos '+fmt(me)+' = <b>'+fmt(own)+'</b>.',
     'O hóspede paga o preço mais 3% de taxa de serviço: <b>'+fmt(guest)+'</b>. Esses 3% ficam com a IndicoStay e não mexem no teu valor nem no do dono.'
   ].map(x=>'<li>'+x+'</li>').join("");
   $("k-night").textContent=short(me);[1,3,6,12].forEach(n=>$("t"+n).textContent=short(month*n));
   $("k-plus").textContent=short(pub*CREATOR*nights*props);
 }
-function setBase(b){BASE=b;$("bA").classList.toggle("on",b==="A");$("bB").classList.toggle("on",b==="B");render()}
-$("bA").addEventListener("click",()=>setBase("A"));$("bB").addEventListener("click",()=>setBase("B"));
 ["own","pct","nights","props"].forEach(k=>$(k).addEventListener("input",render));
 render();
 </script>
