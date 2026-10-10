@@ -407,6 +407,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
         <div class="fld"><label for="v-oc">Ocupação atual %</label><input id="v-oc" type="number" min="0" max="100" step="1" value="40"></div>
         <div class="fld"><label for="v-nt">Noites por estadia</label><input id="v-nt" type="number" min="1" max="10" step="1" value="2"></div>
       </div>
+      <div class="fld"><label for="v-price">Preço por noite do seu alojamento (MZN)</label><input id="v-price" type="number" min="0" step="500" value="6000"></div>
     </div>
     <div class="a" style="--d:.35s">
       <div class="path" id="v-path"></div>
@@ -416,8 +417,12 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
         <div class="tile"><b id="vt3">0</b><span>Estadias suas em 6 meses</span></div>
         <div class="tile gold"><b id="vt4">0</b><span>Ocupação com a rede</span></div>
       </div>
+      <div class="tiles" style="grid-template-columns:repeat(2,1fr);margin-top:2px">
+        <div class="tile gold"><b id="vt5">0</b><span>Receita estimada em 6 meses, vinda da rede</span></div>
+        <div class="tile"><b id="vt6">0</b><span>Em média, por mês</span></div>
+      </div>
       <div class="occ"><div class="occb"><div class="occ0" id="oc0"></div><div class="occ1" id="oc1"></div></div><div class="occl"><span>Hoje: <b id="oc0v">40%</b></span><span>Com a rede: <b id="oc1v">0%</b></span></div></div>
-      <p class="small" style="margin-top:10px">Simulação com hipóteses suas. A visibilidade reparte-se pelos alojamentos da zona, sem favorecer ninguém. Não é uma promessa de resultados.</p>
+      <p class="small" style="margin-top:10px">Simulação com hipóteses suas, incluindo o seu preço por noite. A visibilidade reparte-se pelos alojamentos da zona. Receita bruta, antes da comissão da plataforma. Não é uma promessa de resultados.</p>
     </div>
   </div>
   <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>09</span></div>
@@ -668,9 +673,10 @@ function renderV(){
   $('v-path').innerHTML='<span>'+grp(views)+' visualizações</span>&rarr;<span>'+grp(clicks)+' cliques</span>&rarr;<span class="end"><b>'+one(cl)+' clientes por mês</b></span>';
   tween($('vt1'),cl,function(n){return one(n)});tween($('vt2'),st6);tween($('vt3'),mine,function(n){return one(n)});
   tween($('vt4'),oc1,function(n){return one(n)+'%'});
+  var pr2=num('v-price'),rev6=mine*nt*pr2;tween($('vt5'),rev6,function(n){return grp(n)+' MZN'});tween($('vt6'),rev6/6,function(n){return grp(n)+' MZN'});
   $('oc0').style.width=oc+'%';$('oc1').style.width=oc1+'%';$('oc0v').textContent=one(oc)+'%';$('oc1v').textContent=one(oc1)+'%';
 }
-['v-cr','v-vw','v-ctr','v-bk','v-pr','v-rm','v-oc','v-nt'].forEach(function(i){$(i).addEventListener('input',renderV)});
+['v-cr','v-vw','v-ctr','v-bk','v-pr','v-rm','v-oc','v-nt','v-price'].forEach(function(i){$(i).addEventListener('input',renderV)});
 
 /* 10: price */
 function renderC(){
