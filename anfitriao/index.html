@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indico Hospitality · Para anfitriões</title>
+<meta name="description" content="Apresentação interativa do ecossistema Indico Hospitality e da IndicoStay para anfitriões.">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{--navy:#071c3f;--navy2:#0b2d5c;--card:#143a6e;--gold:#e5a823;--gold2:#f3c862;--cream:#f6f1e8;--ink:#10213d;--muted:#5d6b82;--soft:#c9d4e6;--line:#e3dccf;--blue:#3f78c7;
+--display:"Archivo","Helvetica Neue",Arial,sans-serif;--body:"Source Sans 3","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#050f22;overflow:hidden;font-family:var(--body);color:var(--ink)}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;overflow:hidden;border-radius:6px;background:var(--navy)}
+.s{position:absolute;inset:0;padding:58px 76px 64px;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility .45s;overflow:hidden}
+.s.on{opacity:1;visibility:visible}
+.dark{background:var(--navy);color:#fff}.navy{background:var(--navy2);color:#fff}.cream{background:var(--cream)}.gold{background:var(--gold);color:var(--navy)}
+.logo{position:absolute;top:34px;right:70px;width:62px;height:62px;border-radius:9px}
+.foot{position:absolute;left:76px;right:76px;bottom:22px;display:flex;justify-content:space-between;font:700 12px var(--body);letter-spacing:.07em;color:#7d8aa3}
+.dark .foot,.navy .foot{color:#8fa0bd}.gold .foot{color:#7a5a12}
+.k{font:700 13px var(--body);letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:0 0 10px}.gold .k{color:var(--navy)}
+h1{font:800 46px/1.06 var(--display);margin:0 0 18px;letter-spacing:-.01em;max-width:960px;text-wrap:balance}
+h1.xl{font-size:68px;line-height:1.02}
+h2,h3{font-family:var(--display);margin:0}
+.lead{font-size:20px;line-height:1.45;color:var(--muted);max-width:820px;margin:0}.dark .lead,.navy .lead{color:var(--soft)}
+.row{display:flex;gap:22px}.col{flex:1 1 0;min-width:0}
+.card{background:#fff;border-radius:18px;padding:24px 26px;transition:transform .25s ease,box-shadow .25s ease}
+.dark .card,.navy .card{background:var(--card);color:#fff}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.18)}
+.card h3{font-size:21px;margin:0 0 8px}.card p{font-size:16px;line-height:1.45;margin:0;color:var(--muted)}.dark .card p,.navy .card p{color:var(--soft)}
+.num{font:800 38px var(--display);color:var(--gold);margin-bottom:6px}
+.chip{display:inline-block;background:var(--gold);color:var(--navy);border-radius:999px;font:800 15px var(--body);padding:8px 20px}
+.tick{list-style:none;padding:0;margin:14px 0 0}.tick li{font-size:17px;margin:0 0 10px;padding-left:26px;position:relative;line-height:1.35}
+.tick li:before{content:"";position:absolute;left:0;top:7px;width:12px;height:12px;border-radius:50%;background:var(--gold)}
+.small{font-size:13px;color:var(--muted)}.dark .small,.navy .small{color:#9fb0cc}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 24px;font:800 16px var(--body);cursor:pointer;background:var(--gold);color:var(--navy);text-decoration:none;transition:transform .2s,filter .2s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:#fff;border:2px solid var(--gold)}
+/* animation */
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes slideL{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes kb{from{transform:scale(1.0)}to{transform:scale(1.08)}}
+.s .a{opacity:0}
+.s.play .a{animation:rise .6s cubic-bezier(.2,.8,.2,1) var(--d,0s) both}
+.s.play .a.pop{animation-name:pop}
+.s.play .a.sl{animation-name:slideL}
+.st{opacity:0;transform:scale(.85);pointer-events:none;transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+.st.show{opacity:1;transform:none;pointer-events:auto}
+/* chrome */
+#bar{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;justify-content:center;gap:14px;color:#9fb0cc;font:700 13px var(--body);opacity:.35;transition:opacity .25s;z-index:5}
+#bar:hover{opacity:1}
+#bar button{background:#10264d;color:#fff;border:1px solid #27457a;border-radius:8px;width:34px;height:30px;cursor:pointer;font-size:15px}
+#bar button:hover{background:#1b3a70}
+#prog{position:fixed;left:0;top:0;height:4px;background:var(--gold);width:0;transition:width .4s;z-index:6}
+#notes{position:fixed;left:50%;transform:translateX(-50%);bottom:54px;max-width:860px;width:calc(100% - 40px);background:rgba(7,28,63,.96);color:#fff;border:1px solid #27457a;border-radius:14px;padding:14px 18px;font:400 16px/1.45 var(--body);display:none;z-index:7}
+#notes.show{display:block}#notes b{color:var(--gold)}
+#hint{position:fixed;right:18px;bottom:56px;background:rgba(7,28,63,.95);color:#c9d4e6;border:1px solid #27457a;border-radius:12px;padding:10px 14px;font:600 13px var(--body);z-index:7;transition:opacity .6s}
+kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-radius:5px;padding:1px 6px;font:700 12px var(--body);color:#fff}
+/* slide specific */
+.hero{position:absolute;right:0;top:0;bottom:0;width:530px;object-fit:cover;animation:kb 14s ease-in-out infinite alternate}
+.herowrap{position:absolute;right:0;top:0;bottom:0;width:530px;overflow:hidden}
+.flow{display:flex;align-items:center;gap:12px}
+.fbox{flex:1;background:var(--card);border-radius:14px;padding:12px 16px;text-align:center}
+.fbox small{display:block;font:700 11px var(--body);color:var(--gold);letter-spacing:.08em}
+.fbox b{font-size:16px;display:block}.fbox em{font:800 16px var(--body);font-style:normal;color:var(--gold)}
+.fop{font:800 26px var(--display);color:var(--gold)}
+.bubbles{display:flex;align-items:center;justify-content:center;gap:20px;height:360px;margin-top:6px}
+.bub{border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--card);border:3px solid var(--blue)}
+.bub b{font:800 12px var(--body);letter-spacing:.08em;color:var(--gold)}.bub strong{font:800 40px/1.05 var(--display)}.bub span{font-size:14px;color:var(--soft);font-weight:600}
+.bub.b2{background:var(--gold);color:var(--navy);border-color:var(--gold2)}.bub.b2 b,.bub.b2 span{color:var(--navy)}
+.bub.b3{border-color:var(--gold)}
+.mult{text-align:center;font:800 14px var(--body);color:var(--gold)}.mult i{display:block;font:800 30px var(--display);font-style:normal;line-height:1}
+.tabs{display:flex;gap:10px;margin:6px 0 14px}
+.tab{border:2px solid #cfc6b4;background:#fff;border-radius:999px;padding:9px 22px;font:800 16px var(--body);color:var(--ink);cursor:pointer}
+.tab.on{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.lv{display:grid;grid-template-columns:200px repeat(3,1fr);gap:0;background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.lv>div{padding:15px 18px;border-bottom:1px solid var(--line);font-size:17px;line-height:1.3;transition:background .3s,color .3s}
+.lv>div:nth-last-child(-n+4){border-bottom:0}
+.lv .h{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lv .rl{font-weight:700;color:var(--navy2)}.lv .rl small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.lv .c.hl{background:#fff4d3}.lv .h.hl{background:var(--gold);color:var(--navy)}
+.sim{display:grid;grid-template-columns:400px 1fr;gap:26px;align-items:start}
+.panel{background:#fff;border-radius:18px;padding:18px 22px;border:1px solid var(--line)}
+.fld{margin-bottom:12px}.fld label{display:flex;justify-content:space-between;font:700 14px var(--body);margin-bottom:4px}
+.fld input[type=number]{width:100%;font:800 20px var(--body);color:var(--navy2);border:2px solid var(--line);border-radius:10px;padding:7px 12px}
+.fld input[type=range]{width:100%;accent-color:var(--gold)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chipb{border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font:800 14px var(--body);cursor:pointer;color:var(--ink)}.chipb.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.seg{display:flex;gap:8px;margin-bottom:12px}.seg button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px;font:800 14px var(--body);cursor:pointer;color:var(--ink)}
+.seg button.on{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.path{display:flex;align-items:center;gap:8px;font:700 14px var(--body);margin-bottom:12px;flex-wrap:wrap}
+.path span{background:#f3efe6;border:1px solid var(--line);border-radius:10px;padding:6px 12px}.path span.end{background:#fff4d3;border-color:#f0d58f}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}.tile b{display:block;font:800 25px var(--display);color:var(--navy2);white-space:nowrap}.tile span{font-size:13px;color:var(--muted);font-weight:600}
+.tile.gold{background:var(--navy2);border-color:var(--navy2)}.tile.gold b{color:var(--gold)}.tile.gold span{color:var(--soft)}
+.chart{display:flex;align-items:flex-end;gap:6px;height:215px;border-bottom:2px solid var(--line);padding-top:6px}
+.chart .bar{flex:1;background:var(--navy2);border-radius:6px 6px 0 0;height:0;transition:height .6s cubic-bezier(.2,.8,.2,1);position:relative}
+.chart .bar.dec{background:var(--blue)}
+.chart .bar:hover::after{content:attr(data-v);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font:700 12px var(--body);padding:3px 8px;border-radius:6px;white-space:nowrap}
+.mlab{display:flex;gap:6px;margin-top:4px}.mlab span{flex:1;text-align:center;font-size:11px;color:var(--muted)}
+.gbars{display:flex;align-items:flex-end;gap:16px;height:270px;border-bottom:2px solid #3a5a8c;margin-top:8px}
+.gb{flex:1;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.gb .v{font:700 15px var(--body);color:var(--soft);margin-bottom:5px}
+.gb .b{background:var(--blue);border-radius:8px 8px 0 0;height:0;transition:height .9s cubic-bezier(.2,.8,.2,1)}
+.gb.last .b{background:var(--gold)}.gb.last .v{color:var(--gold)}
+.glab{display:flex;gap:16px;margin-top:6px;color:var(--soft);font-size:14px}.glab span{flex:1;text-align:center}
+.cmp{display:grid;grid-template-columns:1fr;gap:12px;margin-top:6px}
+.cbar{background:var(--card);border-radius:14px;padding:12px 18px}
+.cbar .t{display:flex;justify-content:space-between;font:800 15px var(--body);margin-bottom:6px}.cbar .t em{font-style:normal;color:var(--gold);font-size:24px}
+.cbar .tr{height:20px;background:#0d2b57;border-radius:10px;overflow:hidden}.cbar .fi{height:100%;background:var(--gold);width:0;transition:width .5s;border-radius:10px}
+.cbar.l .fi{background:var(--blue)}
+.big3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.qa{background:var(--card);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.qa button{width:100%;text-align:left;background:none;border:0;color:#fff;font:800 17px var(--body);padding:13px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.qa button:after{content:"+";font-size:24px;color:var(--gold);transition:transform .25s}.qa.open button:after{transform:rotate(45deg)}
+.qa div{max-height:0;overflow:hidden;color:var(--soft);font-size:15px;line-height:1.45;padding:0 18px;transition:max-height .35s ease,padding .35s}
+.qa.open div{max-height:130px;padding:0 18px 14px}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.done{display:none;position:absolute;top:12px;right:14px;width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--navy);font:800 16px/28px var(--body);text-align:center}
+.card.chk{cursor:pointer;position:relative;user-select:none}.card.chk.ok .done{display:block}.card.chk.ok{outline:3px solid var(--gold)}
+@media (prefers-reduced-motion:reduce){.s .a,.s.play .a,.st{animation:none!important;opacity:1;transform:none;transition:none}.hero{animation:none}.gb .b,.chart .bar{transition:none}}
+
+/* ---- host deck additions ---- */
+.hubwrap{display:grid;grid-template-columns:560px 1fr;gap:26px;align-items:center;height:520px}
+#hub{width:560px;height:500px;overflow:visible}
+.hn{cursor:pointer;transition:transform .25s}
+.hn circle{fill:#143a6e;stroke:#3f78c7;stroke-width:3;transition:fill .25s,stroke .25s}
+.hn text{fill:#fff;font:800 13px Archivo,Arial,sans-serif;text-anchor:middle;pointer-events:none}
+.hn:hover circle,.hn.on circle{fill:#1b4a8a;stroke:#e5a823}
+.hn.core circle{fill:#e5a823;stroke:#f3c862}.hn.core text{fill:#071c3f}
+.hn.on circle{stroke-width:5}
+.hubl line{animation:dash 1.6s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-22}}
+.hubpanel{background:var(--card);border-radius:18px;padding:24px 26px;min-height:300px}
+.hubpanel h3{font-size:26px;margin:0 0 6px;color:var(--gold)}
+.hubpanel .one{font-size:18px;line-height:1.4;color:#fff;margin:0 0 12px}
+.hubpanel ul{margin:0;padding:0;list-style:none}.hubpanel li{font-size:16px;color:var(--soft);padding:5px 0 5px 22px;position:relative;line-height:1.35}
+.hubpanel li:before{content:"";position:absolute;left:0;top:12px;width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.hubpanel .lk{margin-top:12px;font:700 14px var(--body);color:var(--gold2)}
+.phone{position:absolute;right:140px;top:96px;width:280px;height:540px;border-radius:40px;background:#050f22;border:6px solid #27457a;padding:14px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.pscr{background:#fff;border-radius:28px;height:100%;overflow:hidden;color:var(--ink)}
+.pscr img{width:100%;height:240px;object-fit:cover;display:block}
+.pbody{padding:16px 18px}.pbody b{display:block;font:800 19px var(--display)}.pbody span{font-size:12px;color:var(--muted)}
+.pr{margin:14px 0 10px;font-size:15px;color:var(--muted)}.pr em{font:800 24px var(--display);font-style:normal;color:var(--navy2)}
+.pay{display:flex;gap:8px;margin-bottom:14px}.pay i{font:800 13px var(--body);font-style:normal;background:#fff4d3;border:1px solid #f0d58f;border-radius:999px;padding:5px 12px;color:var(--navy)}
+.pbtn{background:var(--gold);color:var(--navy);text-align:center;font:800 17px var(--body);border-radius:14px;padding:13px}
+.stairs{display:flex;align-items:flex-end;gap:14px;height:450px;margin-top:6px;border-bottom:3px solid var(--line)}
+.stair{flex:1;background:var(--navy2);color:#fff;border-radius:16px 16px 0 0;padding:14px 16px;overflow:hidden}
+.stair b{font:800 30px var(--display);color:var(--gold);display:block;line-height:1}
+.stair h3{font-size:18px;margin:6px 0 4px}.stair p{font-size:14px;line-height:1.35;margin:0;color:var(--soft)}
+.stair.gold{background:var(--gold);color:var(--navy)}.stair.gold b{color:var(--navy)}.stair.gold p{color:var(--navy)}
+.vis{width:100%;height:340px;margin-top:0}
+.vis .cr circle{fill:#143a6e;stroke:#3f78c7;stroke-width:3}.vis .cr text{fill:#fff;font:800 14px Archivo,Arial;text-anchor:middle}
+.vl{fill:#9fb0cc;font:700 14px "Source Sans 3",Arial;text-anchor:middle}
+.flowl path{stroke-dasharray:8 8;animation:dash 1.4s linear infinite}
+.lvc{transition:transform .25s,box-shadow .25s,outline .25s}
+.lvc.hl{outline:4px solid var(--gold);transform:translateY(-6px)}
+.gl{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:4px 0 8px}
+.navy .chipb,.dark .chipb{background:#0d2b57;border-color:#27457a;color:#fff}
+.navy .chipb.on,.dark .chipb.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.navy .path span,.dark .path span{background:#0d2b57;border-color:#27457a;color:#fff}
+.navy .path span.end,.dark .path span.end{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.navy .tile,.dark .tile{background:var(--card);border-color:#27457a}
+.navy .tile b,.dark .tile b{color:#fff}.navy .tile span,.dark .tile span{color:var(--soft)}
+.navy .tile.gold,.dark .tile.gold{background:var(--gold);border-color:var(--gold)}.navy .tile.gold b,.dark .tile.gold b,.navy .tile.gold span,.dark .tile.gold span{color:var(--navy)}
+.navy .panel{background:var(--card);border-color:#27457a;color:#fff}
+.match{background:var(--card);border-radius:18px;padding:22px 24px;border-left:6px solid var(--gold)}
+.match .t{font:700 12px var(--body);letter-spacing:.08em;color:var(--gold);text-transform:uppercase}
+.match h3{font-size:24px;margin:4px 0 8px}.match p{font-size:16px;line-height:1.45;color:var(--soft);margin:0 0 8px}
+.occ{margin-top:6px}.occb{position:relative;height:34px;background:#e9e2d2;border-radius:17px;overflow:hidden}
+.occ1{position:absolute;left:0;top:0;bottom:0;background:var(--gold);width:0;transition:width .5s;border-radius:17px}
+.occ0{position:absolute;left:0;top:0;bottom:0;background:var(--navy2);width:0;transition:width .5s;border-radius:17px;z-index:2}
+.occl{display:flex;justify-content:space-between;font-size:15px;margin-top:6px}
+.split{display:flex;height:46px;border-radius:12px;overflow:hidden;margin-top:6px}
+.split div{transition:width .4s}
+.splitl{display:flex;gap:18px;margin-top:8px;font-size:15px;flex-wrap:wrap}.splitl i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px}.splitl b{color:var(--gold)}
+.ol{margin:10px 0 0;padding-left:22px}.ol li{font-size:16px;margin-bottom:8px;line-height:1.35;color:var(--soft)}
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gi{position:relative;border-radius:14px;overflow:hidden;height:172px;transition:opacity .35s,transform .35s,filter .35s}
+.gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.gi:hover img{transform:scale(1.08)}
+.gi.dim{opacity:.18;filter:grayscale(1);transform:scale(.97)}
+.gi div{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(7,28,63,.92));color:#fff}
+.gi b{display:block;font:800 14px var(--display)}.gi span{font-size:12px;color:var(--gold2)}
+.expg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.expg span{background:#0d2b57;border:1px solid #27457a;border-radius:10px;padding:10px 12px;font:700 14px var(--body)}
+.plan{display:flex;flex-wrap:wrap;gap:10px}
+.plan .chipb{background:#fff;border:2px solid var(--navy);color:var(--navy);font-size:16px;padding:10px 18px}
+.plan .chipb.on{background:var(--navy);color:#fff}
+.cream .card .chipb{background:#fff}
+
+.strip{position:absolute;left:76px;right:76px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:100%;gap:12px;overflow:hidden;border-radius:14px}
+.strip img{width:100%;height:100%;object-fit:cover;border-radius:14px;display:block}
+.strip .il{position:absolute;right:10px;top:8px;background:rgba(7,28,63,.8);color:#fff;font:700 11px var(--body);padding:3px 9px;border-radius:999px}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="stage">
+
+<!-- 1 CAPA -->
+<section class="s dark" data-n="Abra com calma. Uma frase: a IndicoStay é a porta de entrada de um ecossistema inteiro para o alojamento. Pergunte quantos quartos tem e como recebe reservas hoje.">
+  <img class="logo a" src="img/logo.png" alt="">
+  <div style="position:absolute;left:76px;top:70px;width:660px">
+    <p class="k a" style="--d:.1s">Indico Hospitality · Para anfitriões</p>
+    <h1 class="xl a" style="--d:.2s;margin-top:120px;font-size:60px">Um parceiro para tudo o que o seu alojamento precisa</h1>
+    <p class="lead a" style="--d:.4s;font-size:21px;max-width:580px">Comece pela IndicoStay, a app de reservas. Cresça com criadores que levam o seu alojamento a quem já os segue.</p>
+    <p class="a" style="--d:.6s;margin-top:26px"><span class="chip">Reservas · Visibilidade · Ocupação</span></p>
+  </div>
+  <div class="herowrap"><img class="hero" src="img/hero.jpg" alt=""></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span style="margin-right:560px">01</span></div>
+</section>
+
+<!-- 2 PROBLEMA -->
+<section class="s cream" data-n="Não comece por preço nem por dezembro. Comece pela procura que ele perde: meio da semana, época baixa e o hóspede que não transfere para um número desconhecido. Diga como contabilidade, nunca como acusação.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Onde a procura se perde</p>
+  <h1 class="a" style="--d:.1s;font-size:42px">Quem tem o melhor produto muitas vezes não tem onde o vender</h1>
+  <div class="row" style="margin-top:26px;align-items:stretch">
+    <div class="col card a" style="--d:.25s"><div class="num" style="color:var(--navy2)">1</div><h3>Meio da semana e época baixa</h3><p>Nos picos enche sozinho. É nos outros dias que o quarto fica vazio e ninguém sabe que ele existe.</p></div>
+    <div class="col card a" style="--d:.4s"><div class="num" style="color:var(--navy2)">2</div><h3>O hóspede que desistiu</h3><p>Viu as fotos, gostou, mas não quis transferir dinheiro para o número de um desconhecido. Essa reserva ficou por fazer.</p></div>
+    <div class="col card a" style="--d:.55s"><div class="num" style="color:var(--navy2)">3</div><h3>A casa que não aparece</h3><p>Sem site e sem presença onde o hóspede procura, o alojamento só existe para quem já o conhece.</p></div>
+  </div>
+  <div class="row a" style="--d:.8s;margin-top:22px;gap:16px">
+    <div class="tile gold" style="flex:1"><b>68%</b><span>dos 833 alojamentos que analisámos não têm website</span></div>
+    <div class="tile gold" style="flex:1"><b>80%</b><span>são contactáveis por WhatsApp</span></div>
+    <div class="tile" style="flex:2;display:flex;align-items:center"><span style="font-size:15px">Fonte: análise interna IndicoStay à nossa lista de alojamentos em Maputo, Bilene e Inhambane, 2026.</span></div>
+  </div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>02</span></div>
+</section>
+
+<!-- 3 ECOSSISTEMA HUB -->
+<section class="s dark" data-n="Clique em cada círculo para abrir. Mensagem: a IndicoStay é a entrada, o resto é opcional e independente. Anunciar na IndicoStay não obriga a contratar nada.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">O ecossistema</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:6px">Uma entrada. Quatro divisões. Uma rede de criadores.</h1>
+  <div class="hubwrap">
+    <svg id="hub" viewBox="0 0 560 500" class="a" style="--d:.2s">
+      <g stroke="#3a5a8c" stroke-width="2" stroke-dasharray="5 6" class="hubl">
+        <line x1="280" y1="250" x2="280" y2="62"/><line x1="280" y1="250" x2="458" y2="192"/><line x1="280" y1="250" x2="390" y2="400"/><line x1="280" y1="250" x2="170" y2="400"/><line x1="280" y1="250" x2="102" y2="192"/>
+      </g>
+      <g class="hn" data-k="criadores" transform="translate(280 62)"><circle r="50"/><text y="-4">Rede de</text><text y="14">criadores</text></g>
+      <g class="hn" data-k="gestao" transform="translate(458 192)"><circle r="50"/><text y="-4">Gestão &amp;</text><text y="14">Formação</text></g>
+      <g class="hn" data-k="supply" transform="translate(390 400)"><circle r="50"/><text y="-4">Supply &amp;</text><text y="14">Procurement</text></g>
+      <g class="hn" data-k="dev" transform="translate(170 400)"><circle r="50"/><text y="-4">Developments</text><text y="14">&amp; Design</text></g>
+      <g class="hn" data-k="exp" transform="translate(102 192)"><circle r="50"/><text y="-4">Experiências</text><text y="14">&amp; Concierge</text></g>
+      <g class="hn core on" data-k="app" transform="translate(280 250)"><circle r="68"/><text y="-2" style="font-size:19px">IndicoStay</text><text y="18" style="font-size:12px">a porta de entrada</text></g>
+    </svg>
+    <div class="hubpanel a" style="--d:.4s" id="hubp"></div>
+  </div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>03</span></div>
+</section>
+
+<!-- 4 APP -->
+<section class="s navy" data-n="Mostre o indicostay.com. O ponto: o hóspede paga com M-Pesa ou e-Mola pela plataforma, e o dono recebe pela plataforma. Resolve o hóspede que desistiu. O cartão do telemóvel é um exemplo ilustrativo.">
+  <img class="logo" src="img/logo.png" alt="">
+  <div style="position:absolute;left:76px;top:58px;width:640px">
+    <p class="k a">A porta de entrada</p>
+    <h1 class="a" style="--d:.1s;font-size:40px">IndicoStay: a app que põe o seu alojamento à venda</h1>
+    <ul class="tick a" style="--d:.3s">
+      <li>Fica visível para quem procura onde ficar em Moçambique</li>
+      <li>O hóspede paga com <b>M-Pesa</b> ou <b>e-Mola</b>, sem cartão internacional</li>
+      <li>O dono recebe pela plataforma, sem transferências para números desconhecidos</li>
+      <li>Fala com o hóspede e gere a reserva no portal do anfitrião</li>
+    </ul>
+    <p class="a" style="--d:.6s;margin-top:20px"><a class="btn" href="https://indicostay.com" target="_blank" rel="noopener">Abrir indicostay.com &#8599;</a></p>
+  </div>
+  <div class="phone a pop" style="--d:.4s">
+    <div class="pscr">
+      <img src="img/c4.jpg" alt="">
+      <div class="pbody"><b>Casa de praia · Bilene</b><span>Exemplo ilustrativo</span>
+        <div class="pr"><em>6.000 MZN</em> / noite</div>
+        <div class="pay"><i>M-Pesa</i><i>e-Mola</i></div>
+        <div class="pbtn">Reservar</div></div>
+    </div>
+  </div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span style="margin-right:380px">04</span></div>
+</section>
+
+<!-- 5 ESCADA -->
+<section class="s cream" data-steps="4" data-n="Carregue na seta para a direita para subir cada degrau. Repita: cada degrau é opcional. Ninguém precisa de subir todos.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">A escada do anfitrião</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:0">Comece por baixo. Suba quando fizer sentido.</h1>
+  <div class="stairs">
+    <div class="stair a" style="--d:.2s;height:150px"><b>1</b><h3>Listar</h3><p>Entra na IndicoStay e começa a receber reservas</p></div>
+    <div class="stair st" data-step="1" style="height:220px"><b>2</b><h3>Ganhar visibilidade</h3><p>Criadores levam o alojamento ao público deles</p></div>
+    <div class="stair st" data-step="2" style="height:290px"><b>3</b><h3>Operar melhor</h3><p>Receção, housekeeping, receitas e formação da equipa</p></div>
+    <div class="stair st" data-step="3" style="height:360px"><b>4</b><h3>Equipar e renovar</h3><p>Têxteis, amenities, uniformes, mobiliário e interiores</p></div>
+    <div class="stair st gold" data-step="4" style="height:430px"><b>5</b><h3>Crescer</h3><p>Novos conceitos, spa e wellness, experiências e concierge</p></div>
+  </div>
+  <p class="small a" style="--d:.8s;margin-top:12px">Os serviços da Indico Hospitality são independentes e opcionais. Anunciar na IndicoStay não exige contratar nenhum.</p>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>05</span></div>
+</section>
+
+<!-- 6 VISIBILIDADE -->
+<section class="s dark" data-n="Este é o grande diferencial. Os criadores têm a sua própria audiência e trabalham, direta ou indiretamente, para dar visibilidade à app. Cada um traz o público dele para o mesmo sítio onde o seu alojamento está.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">A grande vantagem</p>
+  <h1 class="a" style="--d:.05s;font-size:40px;margin-bottom:0">Os criadores trazem o público deles até ao seu alojamento</h1>
+  <svg viewBox="0 0 1100 400" class="vis a" style="--d:.2s" aria-label="Diagrama: criadores, seguidores, IndicoStay, o seu alojamento">
+    <defs><clipPath id="cp"><circle cx="965" cy="200" r="78"/></clipPath></defs>
+    <g stroke="#3f78c7" stroke-width="2.5" fill="none" class="flowl">
+      <path d="M215 70 C 380 70, 400 200, 560 200"/><path d="M215 200 L 560 200"/><path d="M215 330 C 380 330, 400 200, 560 200"/>
+      <path d="M690 200 L 885 200" stroke="#e5a823" stroke-width="3.5"/>
+    </g>
+    <g class="cr"><circle cx="150" cy="70" r="50"/><text x="150" y="68">Criador</text><text x="150" y="86">A</text></g>
+    <g class="cr"><circle cx="150" cy="200" r="50"/><text x="150" y="198">Criador</text><text x="150" y="216">B</text></g>
+    <g class="cr"><circle cx="150" cy="330" r="50"/><text x="150" y="328">Criador</text><text x="150" y="346">C</text></g>
+    <g fill="#c9d4e6" opacity=".7"><circle cx="40" cy="20" r="5"/><circle cx="70" cy="8" r="4"/><circle cx="215" cy="22" r="5"/><circle cx="238" cy="52" r="4"/><circle cx="28" cy="160" r="5"/><circle cx="18" cy="205" r="4"/><circle cx="240" cy="180" r="5"/><circle cx="246" cy="222" r="4"/><circle cx="40" cy="378" r="5"/><circle cx="205" cy="384" r="5"/><circle cx="238" cy="352" r="4"/></g>
+    <text x="150" y="395" text-anchor="middle" class="vl">Seguidores de cada criador</text>
+    <g><rect x="560" y="140" width="130" height="120" rx="20" fill="#e5a823"/><text x="625" y="192" text-anchor="middle" style="font:800 20px Archivo,Arial;fill:#071c3f">Indico</text><text x="625" y="216" text-anchor="middle" style="font:800 20px Archivo,Arial;fill:#071c3f">Stay</text></g>
+    <image href="img/c4.jpg" x="887" y="122" width="156" height="156" clip-path="url(#cp)" preserveAspectRatio="xMidYMid slice"/>
+    <circle cx="965" cy="200" r="78" fill="none" stroke="#e5a823" stroke-width="4"/>
+    <text x="965" y="305" text-anchor="middle" class="vl" style="fill:#f3c862">O seu alojamento</text>
+    <text x="625" y="290" text-anchor="middle" class="vl">Um só sítio para reservar</text>
+  </svg>
+  <p class="lead a" style="--d:.7s;font-size:18px;margin-top:26px">Mais criadores a partilhar significa mais pessoas a ver a app. Mais pessoas a ver a app significa mais procura para si.</p>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>06</span></div>
+</section>
+
+<!-- 7 REDE DE CRIADORES -->
+<section class="s cream" data-n="Escolha um nível para o destacar. Reforce: a comissão do criador é paga pela IndicoStay, não é descontada ao anfitrião. O interesse do criador é o mesmo do anfitrião, só ganha quando há reserva concluída.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">A rede de criadores</p>
+  <h1 class="a" style="--d:.1s;font-size:40px">Um programa inteiro a trabalhar pela visibilidade</h1>
+  <div class="tabs a" style="--d:.2s">
+    <button class="tab" data-c="1">Parceiro</button><button class="tab on" data-c="2">Criador</button><button class="tab" data-c="3">Rosto IndicoStay</button>
+  </div>
+  <div class="row" id="lvl" style="align-items:stretch">
+    <div class="col card lvc a" data-c="1" style="--d:.3s"><h3>Parceiro</h3><p>Partilha o link da app nos stories, posts e reels. Cada pessoa que se regista fica ligada a ele durante 6 meses.</p><p class="small" style="margin-top:10px">Presença constante, sem esforço de produção.</p></div>
+    <div class="col card lvc a" data-c="2" style="--d:.45s"><h3>Criador</h3><p>Produz conteúdo sobre alojamentos verificados e destinos. Os criadores fundadores entram diretamente neste nível.</p><p class="small" style="margin-top:10px">Conteúdo que mostra o seu alojamento por dentro.</p></div>
+    <div class="col card lvc a" data-c="3" style="--d:.6s"><h3>Rosto IndicoStay</h3><p>Convite pelos resultados. Presença contínua e ligação mais forte a alojamentos e campanhas.</p><p class="small" style="margin-top:10px">A cara que o público associa ao seu hotel.</p></div>
+  </div>
+  <div class="row a" style="--d:.8s;margin-top:34px;gap:16px">
+    <div class="tile" style="flex:1"><b style="font-size:20px">Só ganham com reservas</b><span>O interesse do criador é o mesmo que o seu</span></div>
+    <div class="tile" style="flex:1"><b style="font-size:20px">Comissão paga pela IndicoStay</b><span>Não é descontada ao anfitrião</span></div>
+    <div class="tile" style="flex:1"><b style="font-size:20px">Resultados medidos</b><span>Cliques, registos e reservas no painel</span></div>
+  </div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>07</span></div>
+</section>
+
+<!-- 8 ROSTO DO HOTEL -->
+<section class="s navy" data-n="Escolha com o anfitrião: destino, público e formato. A resposta muda. Diga que as condições de cada caso acertam-se uma a uma com o hotel e com o criador, e que o criador não tem exclusividade.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Escolha quem dá a cara pelo seu hotel</p>
+  <h1 class="a" style="--d:.05s;font-size:36px;margin-bottom:10px">Monte a parceria com o perfil certo de criador</h1>
+  <div class="sim" style="grid-template-columns:480px 1fr;gap:24px">
+    <div class="panel a" style="--d:.2s;background:var(--card);border-color:#27457a;color:#fff">
+      <div class="gl">Onde fica o seu alojamento</div>
+      <div class="chips" data-g="dest"><button class="chipb on" data-v="Maputo">Maputo</button><button class="chipb" data-v="Bilene">Bilene</button><button class="chipb" data-v="Inhambane">Inhambane</button><button class="chipb" data-v="Ponta do Ouro">Ponta do Ouro</button><button class="chipb" data-v="Tofo e Vilanculos">Tofo e Vilanculos</button></div>
+      <div class="gl">Que público quer atrair</div>
+      <div class="chips" data-g="pub"><button class="chipb on" data-v="casais">Casais</button><button class="chipb" data-v="famílias">Famílias</button><button class="chipb" data-v="aventura">Aventura</button><button class="chipb" data-v="bem-estar">Bem-estar</button></div>
+      <div class="gl">Que tipo de parceria</div>
+      <div class="chips" data-g="fmt"><button class="chipb on" data-v="0">Estadia por conteúdo</button><button class="chipb" data-v="1">Rosto do hotel</button><button class="chipb" data-v="2">Campanha de evento</button></div>
+    </div>
+    <div class="a" style="--d:.35s">
+      <div class="match" id="match"></div>
+      <div class="path" id="m-steps" style="margin-top:12px"></div>
+      <a class="btn" id="m-wa" href="#" target="_blank" rel="noopener" style="margin-top:6px">Pedir esta parceria no WhatsApp &#8599;</a>
+    </div>
+  </div>
+  <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c2.jpg" alt=""><img src="img/c4.jpg" alt=""><img src="img/c6.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>08</span></div>
+</section>
+
+<!-- 9 SIMULADOR OCUPAÇÃO -->
+<section class="s cream" data-n="Mexa nos cursores com o anfitrião. A conta é honesta: a visibilidade da rede reparte-se por todos os alojamentos da zona. Veja o que muda na ocupação dele. É uma simulação, não uma promessa.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Simulador de ocupação</p>
+  <h1 class="a" style="--d:.05s;font-size:34px;margin-bottom:10px">O que a visibilidade da rede pode fazer pela sua ocupação</h1>
+  <div class="sim" style="grid-template-columns:420px 1fr">
+    <div class="panel a" style="--d:.2s">
+      <div class="fld"><label for="v-cr">Criadores ativos na rede <b id="v-crv">5</b></label><input id="v-cr" type="range" min="1" max="20" value="5"></div>
+      <div class="fld"><label for="v-vw">Visualizações por criador, por mês <b id="v-vwv">50.000</b></label><input id="v-vw" type="range" min="10000" max="300000" step="10000" value="50000"></div>
+      <div class="two">
+        <div class="fld"><label for="v-ctr">% que clica</label><input id="v-ctr" type="number" min="0" max="100" step="0.1" value="1"></div>
+        <div class="fld"><label for="v-bk">% que reserva</label><input id="v-bk" type="number" min="0" max="100" step="0.1" value="2"></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label for="v-pr">Alojamentos na sua zona</label><input id="v-pr" type="number" min="1" step="1" value="20"></div>
+        <div class="fld"><label for="v-rm">Quartos seus</label><input id="v-rm" type="number" min="1" step="1" value="6"></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label for="v-oc">Ocupação atual %</label><input id="v-oc" type="number" min="0" max="100" step="1" value="40"></div>
+        <div class="fld"><label for="v-nt">Noites por estadia</label><input id="v-nt" type="number" min="1" max="10" step="1" value="2"></div>
+      </div>
+    </div>
+    <div class="a" style="--d:.35s">
+      <div class="path" id="v-path"></div>
+      <div class="tiles">
+        <div class="tile"><b id="vt1">0</b><span>Clientes novos por mês</span></div>
+        <div class="tile"><b id="vt2">0</b><span>Estadias em 6 meses</span></div>
+        <div class="tile"><b id="vt3">0</b><span>Estadias suas em 6 meses</span></div>
+        <div class="tile gold"><b id="vt4">0</b><span>Ocupação com a rede</span></div>
+      </div>
+      <div class="occ"><div class="occb"><div class="occ0" id="oc0"></div><div class="occ1" id="oc1"></div></div><div class="occl"><span>Hoje: <b id="oc0v">40%</b></span><span>Com a rede: <b id="oc1v">0%</b></span></div></div>
+      <p class="small" style="margin-top:10px">Simulação com hipóteses suas. A visibilidade reparte-se pelos alojamentos da zona, sem favorecer ninguém. Não é uma promessa de resultados.</p>
+    </div>
+  </div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>09</span></div>
+</section>
+
+<!-- 10 PREÇO -->
+<section class="s dark" data-n="Fale disto só depois do valor. A regra: o anfitrião diz o mínimo que quer receber e o preço publicado constrói-se a partir daí, nunca o contrário. A taxa de 15% é a referência atual e ainda pode ser ajustada.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Como o preço se constrói</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:10px">Você define o que quer receber. Nunca recebe menos.</h1>
+  <div class="sim" style="grid-template-columns:420px 1fr">
+    <div class="panel a" style="--d:.2s;background:var(--card);border-color:#27457a;color:#fff">
+      <div class="fld"><label for="c-own" style="color:#fff">Quer receber por noite <b id="c-ownv" style="color:var(--gold)">7.500 MZN</b></label><input id="c-own" type="range" min="1000" max="30000" step="500" value="7500"></div>
+      <div class="fld"><label for="c-pct" style="color:#fff">Co-anfitrião (criador), % do preço <b id="c-pctv" style="color:var(--gold)">10%</b></label><input id="c-pct" type="range" min="0" max="30" step="1" value="10"></div>
+      <div class="small">Com 0% não há co-anfitrião. Um criador pode gerir a sua presença e comunicação, e acordam a percentagem entre vocês.</div>
+    </div>
+    <div class="a" style="--d:.35s">
+      <div class="tiles" style="grid-template-columns:repeat(2,1fr)">
+        <div class="tile gold"><b id="c-pub">0</b><span>Preço publicado por noite</span></div>
+        <div class="tile"><b id="c-ow">0</b><span>Você recebe por noite</span></div>
+      </div>
+      <div class="split" id="c-split"></div>
+      <div class="splitl"><span><i style="background:var(--gold)"></i>Você</span><span><i style="background:var(--blue)"></i>Co-anfitrião <b id="c-me">0</b></span><span><i style="background:#8fa0bd"></i>IndicoStay <b id="c-ix">0</b></span></div>
+      <p class="small" style="margin-top:12px">Referência: a IndicoStay retira 15% do preço publicado e a percentagem do co-anfitrião calcula-se sobre o mesmo preço. Taxa sujeita a confirmação final.</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top:22px;align-items:stretch">
+    <div class="col card a" style="--d:.5s"><h3>1. Define o mínimo</h3><p>Diz quanto quer receber por noite. Esse é o ponto de partida do preço.</p></div>
+    <div class="col card a" style="--d:.6s"><h3>2. O preço constrói-se para cima</h3><p>Soma-se a comissão da plataforma e, se existir, a do co-anfitrião. Nunca se desce a partir de um valor redondo.</p></div>
+    <div class="col card a" style="--d:.7s"><h3>3. Pagos ao mesmo tempo</h3><p>A IndicoStay paga o anfitrião e o co-anfitrião em simultâneo, para ninguém ficar a dever a ninguém.</p></div>
+  </div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>10</span></div>
+</section>
+
+<!-- 11 GESTAO -->
+<section class="s cream" data-n="Escolha uma área para abrir. Sublinhe que as integrações com Cloudbeds, SiteMinder e outros dependem de compatibilidade e autorização dos fornecedores.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Divisão 1</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:8px">Gestão &amp; Formação</h1>
+  <p class="lead a" style="--d:.15s;font-size:18px">Do primeiro contacto com o hóspede à limpeza final do quarto. Processos, pessoas e tecnologia a funcionar em conjunto.</p>
+  <div class="tabs a" id="gtabs" style="--d:.25s;margin-top:16px;flex-wrap:wrap"></div>
+  <div class="card a" id="gpanel" style="--d:.35s;min-height:96px"></div>
+  <div class="path a" style="--d:.5s;margin-top:18px"><span>1 Diagnóstico</span>&rarr;<span>2 SOPs e plano</span>&rarr;<span>3 Workshops práticos</span>&rarr;<span class="end"><b>4 Avaliação aos 30 dias</b></span></div>
+  <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c5.jpg" alt=""><img src="img/c7.jpg" alt=""><img src="img/c4.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>11</span></div>
+</section>
+
+<!-- 12 SUPPLY -->
+<section class="s dark" data-n="Os preços e as quantidades mínimas são sob consulta. As opções de marca própria são exemplos sujeitos a aprovação de amostras e cotação.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Divisão 2</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:8px">Supply &amp; Procurement</h1>
+  <p class="lead a" style="--d:.15s;font-size:18px">Produtos e equipamentos para hotéis, lodges, guesthouses, apartamentos e villas, com a sua marca quando faz sentido.</p>
+  <div class="row" style="margin-top:20px;align-items:stretch">
+    <div class="col">
+      <div class="chips a" id="stabs" style="--d:.25s"></div>
+      <div class="card a" id="spanel" style="--d:.35s;min-height:170px"></div>
+    </div>
+    <div class="col">
+      <div class="card a" style="--d:.45s"><h3>Como compramos por si</h3>
+        <ol class="ol"><li>Levantamento de necessidades e quantidades</li><li>Especificações e comparação de fornecedores</li><li>Amostras e aprovação do proprietário</li><li>Encomenda, controlo de qualidade e transporte</li><li>Entrega, instalação e garantia</li></ol></div>
+    </div>
+  </div>
+  <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c6.jpg" alt=""><img src="img/c5.jpg" alt=""><img src="img/c2.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>12</span></div>
+</section>
+
+<!-- 13 DEVELOPMENTS GALERIA -->
+<section class="s cream" data-n="Estas imagens são conceitos ilustrativos e não projetos executados pela Indico. Diga-o logo. Use os filtros para mostrar o tipo de propriedade que interessa ao anfitrião.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Divisão 3</p>
+  <h1 class="a" style="--d:.05s;font-size:36px;margin-bottom:8px">Developments &amp; Design</h1>
+  <div class="chips a" id="gfil" style="--d:.15s;margin-bottom:12px"></div>
+  <div class="gal a" id="gal" style="--d:.25s"></div>
+  <p class="small" style="margin-top:10px">Conceitos ilustrativos. As imagens não representam projetos executados pela Indico e os números de quartos são exemplos.</p>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>13</span></div>
+</section>
+
+<!-- 14 VIABILIDADE -->
+<section class="s navy" data-n="Modelo simplificado e ilustrativo. Não é avaliação financeira, garantia de rentabilidade nem aconselhamento de investimento. Use para abrir a conversa sobre viabilidade.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Simulador de viabilidade</p>
+  <h1 class="a" style="--d:.05s;font-size:36px;margin-bottom:10px">Uma ideia de quanto tempo demora a recuperar o investimento</h1>
+  <div class="sim" style="grid-template-columns:420px 1fr">
+    <div class="panel a" style="--d:.2s">
+      <div class="two">
+        <div class="fld"><label for="d-rm">Quartos</label><input id="d-rm" type="number" min="1" step="1" value="20"></div>
+        <div class="fld"><label for="d-adr">Tarifa média (MZN)</label><input id="d-adr" type="number" min="0" step="500" value="5000"></div>
+      </div>
+      <div class="fld"><label for="d-oc">Ocupação <b id="d-ocv">55%</b></label><input id="d-oc" type="range" min="10" max="95" value="55"></div>
+      <div class="fld"><label for="d-co">Custos operacionais <b id="d-cov">60%</b></label><input id="d-co" type="range" min="20" max="90" value="60"></div>
+      <div class="fld"><label for="d-in">Investimento estimado (MZN)</label><input id="d-in" type="number" min="0" step="1000000" value="30000000"></div>
+    </div>
+    <div class="a" style="--d:.35s">
+      <div class="tiles" style="grid-template-columns:repeat(3,1fr)">
+        <div class="tile"><b id="dt1">0</b><span>Receita anual de quartos</span></div>
+        <div class="tile"><b id="dt2">0</b><span>Contribuição operacional</span></div>
+        <div class="tile gold"><b id="dt3">0</b><span>Recuperação simplificada</span></div>
+      </div>
+      <div class="path" id="d-path"></div>
+      <p class="small" style="margin-top:12px">Receita = quartos x 365 x tarifa x ocupação. Contribuição = receita x (1 menos custos). Recuperação = investimento / contribuição. Não constitui avaliação financeira, garantia de rentabilidade nem aconselhamento de investimento.</p>
+      <div class="row" style="margin-top:14px"><div class="small" style="flex:1"><b style="color:var(--gold)">Estudo</b><br>brief, terreno, benchmark, CAPEX</div><div class="small" style="flex:1"><b style="color:var(--gold)">Conceito</b><br>plantas, renders 3D, materiais</div><div class="small" style="flex:1"><b style="color:var(--gold)">Execução</b><br>orçamento, compras, pré-abertura</div></div>
+    </div>
+  </div>
+  <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c1.jpg" alt=""><img src="img/c2.jpg" alt=""><img src="img/c3.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>14</span></div>
+</section>
+
+<!-- 15 EXPERIENCIAS -->
+<section class="s dark" data-n="Contratação de operadores depende de verificação de licenças, segurança e seguros. Saunas, jacuzzis e imersão a frio exigem avaliação de riscos e não implicam promessas de saúde.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Divisão 4</p>
+  <h1 class="a" style="--d:.05s;font-size:36px;margin-bottom:10px">Experiências &amp; Concierge, Spa e Wellness</h1>
+  <div class="row" style="align-items:stretch">
+    <div class="col card a" style="--d:.2s"><h3>Experiências para o hóspede</h3>
+      <div class="expg">
+        <span>Passeios de barco e ilhas</span><span>Jet skis e desportos aquáticos</span><span>Mergulho e snorkeling</span><span>Natureza e safaris</span><span>Transferes privados</span><span>Jantares privados</span>
+      </div>
+      <p class="small" style="margin-top:10px">Operadores sujeitos a verificação de licenças, segurança e seguros.</p></div>
+    <div class="col card a" style="--d:.35s"><h3>Conceitos de spa</h3>
+      <div class="chips" id="etabs" style="margin-top:10px"></div>
+      <p id="epanel" style="min-height:70px"></p>
+      <p class="small">Exigem avaliação de riscos, supervisão e manutenção. Não são adequados a todas as pessoas e não implicam promessas de benefícios de saúde.</p></div>
+  </div>
+  <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c3.jpg" alt=""><img src="img/c6.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>15</span></div>
+</section>
+
+<!-- 16 PROCESSO -->
+<section class="s cream" data-n="Quatro passos. Passe o rato em cada um. Termine com a nota: serviços independentes e opcionais.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Como trabalhamos</p>
+  <h1 class="a" style="--d:.05s;font-size:40px">Conhecer, personalizar, executar, acompanhar</h1>
+  <div class="row" style="margin-top:30px;align-items:stretch">
+    <div class="col card a" style="--d:.2s"><div class="num" style="color:var(--navy2)">1</div><h3>Conhecer</h3><p>Objetivos, propriedade, equipa e orçamento.</p></div>
+    <div class="col card a" style="--d:.35s"><div class="num" style="color:var(--navy2)">2</div><h3>Personalizar</h3><p>Proposta, cronograma, materiais e resultados esperados.</p></div>
+    <div class="col card a" style="--d:.5s"><div class="num" style="color:var(--navy2)">3</div><h3>Executar</h3><p>Especialistas, fornecedores e aprovações por etapa.</p></div>
+    <div class="col card a" style="--d:.65s;background:var(--gold)"><div class="num" style="color:var(--navy)">4</div><h3>Acompanhar</h3><p style="color:var(--navy)">Entrega, qualidade, indicadores e melhoria contínua.</p></div>
+  </div>
+  <div class="card a" style="--d:.9s;margin-top:24px"><h3>O que recebe numa proposta</h3><p>Ficha técnica com dimensões, materiais e personalização. Mapa de quantidades por quarto e cronograma. Cotação com preços unitários, personalização, transporte e impostos.</p></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>16</span></div>
+</section>
+
+<!-- 17 FAQ -->
+<section class="s navy" data-n="Responda com calma e com honestidade. Se não houver resposta confirmada, diga que acerta com o anfitrião caso a caso.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Perguntas frequentes</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:14px">O que nos costumam perguntar</h1>
+  <div class="qgrid a" style="--d:.2s">
+    <div>
+      <div class="qa open"><button>Tenho de contratar tudo?</button><div>Não. Os serviços são independentes e opcionais. Anunciar na IndicoStay não exige contratar nenhum deles.</div></div>
+      <div class="qa"><button>Quanto custam os serviços?</button><div>Preços e quantidades mínimas são sob consulta. Fazemos uma cotação depois de conhecer a propriedade.</div></div>
+      <div class="qa"><button>Como recebo o pagamento?</button><div>O hóspede paga pela plataforma, com M-Pesa ou e-Mola, e o dono recebe pela plataforma.</div></div>
+    </div>
+    <div>
+      <div class="qa"><button>Os criadores trazem reservas?</button><div>Só ganham comissão quando há reservas concluídas, por isso o interesse deles é o seu. Os resultados medem-se no painel e não prometemos números.</div></div>
+      <div class="qa"><button>Posso escolher o criador?</button><div>Pode propor destino, público e formato. As condições acertam-se caso a caso com o criador, que não tem exclusividade.</div></div>
+      <div class="qa"><button>As imagens e projetos são vossos?</button><div>São conceitos ilustrativos. Referências e parcerias só são divulgadas depois de confirmadas e autorizadas.</div></div>
+    </div>
+  </div>
+  <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c7.jpg" alt=""><img src="img/c1.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>17</span></div>
+</section>
+
+<!-- 18 PLANO + CTA -->
+<section class="s gold" data-n="Peça ao anfitrião para marcar o que lhe interessa. O botão abre o WhatsApp com a mensagem já escrita. Próximo passo: uma conversa de 15 minutos.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Próximo passo</p>
+  <h1 class="a" style="--d:.05s;font-size:42px;margin-bottom:12px">O que lhe interessa para o seu alojamento?</h1>
+  <div class="plan a" id="plan" style="--d:.2s"></div>
+  <p class="a" style="--d:.4s;margin-top:20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+    <a class="btn" id="p-wa" href="#" target="_blank" rel="noopener" style="background:var(--navy);color:#fff">Falar no WhatsApp &#8599;</a>
+    <a class="btn ghost" href="https://indicostay.com" target="_blank" rel="noopener" style="color:var(--navy);border-color:var(--navy)">indicostay.com &#8599;</a>
+    <span id="p-sum" style="font:700 16px var(--body);color:var(--navy)"></span>
+  </p>
+  <div class="strip a" style="--d:.7s;height:210px;bottom:60px"><img src="img/c4.jpg" alt=""><img src="img/c3.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>18</span></div>
+</section>
+
+</div>
+<div id="bar"><button id="prev" aria-label="Anterior">&#9664;</button><span id="ctr">1 / 18</span><button id="next" aria-label="Seguinte">&#9654;</button><button id="fs" aria-label="Ecrã inteiro">&#9974;</button></div>
+<div id="notes"></div>
+<div id="hint">Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> para navegar, <kbd>N</kbd> para notas, <kbd>F</kbd> para ecrã inteiro</div>
+
+<script>
+(function(){
+var slides=[].slice.call(document.querySelectorAll('.s')),total=slides.length,cur=-1,step=0,stage=document.getElementById('stage');
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+var $=function(id){return document.getElementById(id)};
+var grp=function(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.')};
+var WA='258865178862';
+function wa(t){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(t)}
+function fit(){var k=Math.min(innerWidth/1280,(innerHeight-46)/720);stage.style.transform='translate(-50%,-50%) scale('+k+')';stage.style.top='calc(50% - 23px)'}
+addEventListener('resize',fit);fit();
+function steps(s,n){[].forEach.call(s.querySelectorAll('.st'),function(e){e.classList.toggle('show',n>=+e.getAttribute('data-step'))})}
+function go(i,fromEnd){
+  if(i<0||i>=total||i===cur)return;
+  var s=slides[i];
+  if(cur>=0)slides[cur].classList.remove('on','play');
+  cur=i;step=fromEnd?(+s.getAttribute('data-steps')||0):0;
+  s.classList.remove('play');void s.offsetWidth;s.classList.add('on','play');
+  steps(s,step);
+  $('ctr').textContent=(i+1)+' / '+total;
+  $('prog').style.width=((i+1)/total*100)+'%';
+  $('notes').innerHTML='<b>Notas · slide '+(i+1)+'</b><br>'+(s.getAttribute('data-n')||'');
+  if(location.hash!=='#'+(i+1)){try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+}
+function next(){var s=slides[cur],n=+s.getAttribute('data-steps')||0;if(step<n){step++;steps(s,step)}else go(cur+1)}
+function prev(){var s=slides[cur];if(step>0){step--;steps(s,step)}else go(cur-1,true)}
+var tw=new WeakMap();
+function tween(el,to,fmt){fmt=fmt||grp;if(reduce){el.textContent=fmt(to);return}var from=tw.get(el)||0;tw.set(el,to);var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/450),e=1-Math.pow(1-p,3);el.textContent=fmt(from+(to-from)*e);if(p<1)requestAnimationFrame(f)})(t0)}
+function num(id){var v=parseFloat(String($(id).value).replace(',','.'));return isNaN(v)?0:v}
+function one(n){return String(Math.round(n*10)/10).replace('.',',')}
+function mk(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+function single(box,cb){[].forEach.call(box.querySelectorAll('.chipb'),function(b){b.addEventListener('click',function(){[].forEach.call(box.querySelectorAll('.chipb'),function(x){x.classList.toggle('on',x===b)});cb()})})}
+
+/* 3: hub */
+var HUB={
+app:{t:'IndicoStay',o:'A app de reservas. A porta de entrada do ecossistema.',l:['Alojamento visível para quem procura onde ficar','Pagamento com M-Pesa e e-Mola','Portal do anfitrião para gerir reservas'],k:'Não exige contratar mais nada.'},
+criadores:{t:'Rede de criadores',o:'Pessoas com audiência própria a dar visibilidade à app e aos alojamentos.',l:['Parceiros, Criadores e Rostos IndicoStay','Só ganham quando há reservas concluídas','Pode escolher perfis para serem a cara do seu hotel'],k:'Ligação: mais visibilidade, mais procura, mais ocupação.'},
+gestao:{t:'Gestão & Formação',o:'Operações, equipas, PMS, receitas e qualidade do serviço.',l:['Receção, reservas e housekeeping','PMS e distribuição, gestão de receitas','SOPs, workshops e avaliação aos 30 dias'],k:'Ligação: um alojamento bem gerido converte melhor na app.'},
+supply:{t:'Supply & Procurement',o:'Produtos e equipamentos personalizados para alojamentos.',l:['Têxteis, amenities, uniformes e sinalética','Mobiliário, equipamentos e exterior','Amostras, controlo de qualidade e entrega'],k:'Ligação: a imagem do quarto que as fotos prometem.'},
+dev:{t:'Developments & Design',o:'Conceitos, viabilidade, arquitetura, interiores e execução.',l:['Estudo de mercado e viabilidade','Conceito, 3D e orçamento','Execução, compras e pré-abertura'],k:'Ligação: novas propriedades nascem prontas para vender na app.'},
+exp:{t:'Experiências & Concierge',o:'Excursões, transferes, spa, wellness e experiências.',l:['Passeios, mergulho, safaris e transferes','Spa, sauna, cold plunge e jacuzzi','Concierge para o hóspede'],k:'Ligação: mais motivos para o hóspede ficar mais noites.'}};
+function hub(k){var d=HUB[k];$('hubp').innerHTML='<h3>'+d.t+'</h3><p class="one">'+d.o+'</p><ul>'+d.l.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><div class="lk">'+d.k+'</div>';
+ [].forEach.call(document.querySelectorAll('.hn'),function(n){n.classList.toggle('on',n.getAttribute('data-k')===k)})}
+[].forEach.call(document.querySelectorAll('.hn'),function(n){n.addEventListener('click',function(){hub(n.getAttribute('data-k'))})});hub('app');
+
+/* 7: levels */
+function hlLevel(c){[].forEach.call(document.querySelectorAll('.tab'),function(t){t.classList.toggle('on',t.getAttribute('data-c')===c)});[].forEach.call(document.querySelectorAll('.lvc'),function(e){e.classList.toggle('hl',e.getAttribute('data-c')===c)})}
+[].forEach.call(document.querySelectorAll('.tab'),function(t){t.addEventListener('click',function(){hlLevel(t.getAttribute('data-c'))})});hlLevel('2');
+
+/* 8: matcher */
+var FMT=[
+ {n:'Estadia por conteúdo',d:'Oferece uma estadia para duas pessoas e o criador publica a experiência. Você decide as datas e o que inclui.',s:['Define datas e o que inclui','Escolhemos o perfil','O criador visita e publica','Mede no painel']},
+ {n:'Rosto do hotel',d:'Um criador torna-se a cara do seu alojamento ao longo do tempo, com conteúdo recorrente e o link ligado ao seu hotel.',s:['Escolhe o perfil','Proposta ao criador','Acordo caso a caso','Presença contínua']},
+ {n:'Campanha de evento',d:'Uma ação pontual, como Dia dos Namorados ou passagem de ano, com os criadores de melhores resultados.',s:['Define a data','Convidamos criadores','Conteúdo e oferta','Reservas medidas']}];
+function matcher(){
+  var g=function(n){var b=document.querySelector('[data-g="'+n+'"] .chipb.on');return b?b.getAttribute('data-v'):''};
+  var dest=g('dest'),pub=g('pub'),f=FMT[+g('fmt')];
+  $('match').innerHTML='<div class="t">Perfil sugerido</div><h3>Criador de '+pub+' com audiência ligada a '+dest+'</h3><p><b style="color:#fff">'+f.n+'.</b> '+f.d+'</p><p style="font-size:14px;color:#9fb0cc">As condições acertam-se caso a caso com o hotel e com o criador. O criador não tem exclusividade.</p>';
+  var p=$('m-steps');p.innerHTML='';f.s.forEach(function(x,i){var e=mk('span',i===f.s.length-1?'end':'',i===f.s.length-1?'<b>'+x+'</b>':x);if(i)p.appendChild(document.createTextNode('→'));p.appendChild(e)});
+  $('m-wa').href=wa('Olá, sou anfitrião em '+dest+' e quero uma parceria "'+f.n+'" com um criador de '+pub+'.');
+}
+['dest','pub','fmt'].forEach(function(n){single(document.querySelector('[data-g="'+n+'"]'),matcher)});matcher();
+
+/* 9: occupancy */
+function renderV(){
+  var cr=num('v-cr'),vw=num('v-vw'),ctr=Math.min(100,num('v-ctr')),bk=Math.min(100,num('v-bk')),pr=Math.max(1,num('v-pr')),rm=Math.max(1,num('v-rm')),oc=Math.min(100,num('v-oc')),nt=Math.max(1,num('v-nt'));
+  $('v-crv').textContent=cr;$('v-vwv').textContent=grp(vw);
+  var views=cr*vw,clicks=views*ctr/100,cl=clicks*bk/100,st6=cl*6*2,mine=st6/pr,nightsM=mine/6*nt,add=nightsM/(rm*30)*100,oc1=Math.min(100,oc+add);
+  $('v-path').innerHTML='<span>'+grp(views)+' visualizações</span>&rarr;<span>'+grp(clicks)+' cliques</span>&rarr;<span class="end"><b>'+one(cl)+' clientes por mês</b></span>';
+  tween($('vt1'),cl,function(n){return one(n)});tween($('vt2'),st6);tween($('vt3'),mine,function(n){return one(n)});
+  tween($('vt4'),oc1,function(n){return one(n)+'%'});
+  $('oc0').style.width=oc+'%';$('oc1').style.width=oc1+'%';$('oc0v').textContent=one(oc)+'%';$('oc1v').textContent=one(oc1)+'%';
+}
+['v-cr','v-vw','v-ctr','v-bk','v-pr','v-rm','v-oc','v-nt'].forEach(function(i){$(i).addEventListener('input',renderV)});
+
+/* 10: price */
+function renderC(){
+  var own=num('c-own'),c=num('c-pct')/100,pub=own/(1-0.15-c),me=pub*c,ix=pub*0.15;
+  $('c-ownv').textContent=grp(own)+' MZN';$('c-pctv').textContent=Math.round(c*100)+'%';
+  tween($('c-pub'),pub,function(n){return grp(n)+' MZN'});tween($('c-ow'),own,function(n){return grp(n)+' MZN'});
+  $('c-me').textContent=grp(me)+' MZN';$('c-ix').textContent=grp(ix)+' MZN';
+  $('c-split').innerHTML='<div style="width:'+own/pub*100+'%;background:var(--gold)"></div><div style="width:'+c*100+'%;background:var(--blue)"></div><div style="width:15%;background:#8fa0bd"></div>';
+}
+['c-own','c-pct'].forEach(function(i){$(i).addEventListener('input',renderC)});
+
+/* 11: gestao tabs */
+var GA=[['Receção e reservas','Check-in, check-out, confirmações, atendimento e gestão de pedidos.'],['Housekeeping','Limpeza, reposição, inspeções, manutenção e controlo de roupa.'],['PMS e distribuição','Inventário, disponibilidade, tarifas, canais e testes de integração. Depende de compatibilidade e autorização dos fornecedores.'],['Formação','Procedimentos operacionais (SOPs), workshops e avaliação de competências.'],['Gestão de receitas','Sazonalidade, ADR, RevPAR e acompanhamento de ocupação.'],['Liderança','Gestão de equipas, turnos e indicadores.']];
+function tabs(box,list,out,tag){list.forEach(function(it,i){var b=mk('button',tag+(i?'':' on'),it[0]);b.addEventListener('click',function(){[].forEach.call(box.children,function(x){x.classList.toggle('on',x===b)});out.innerHTML='<h3>'+it[0]+'</h3><p>'+it[1]+'</p>'});box.appendChild(b);if(!i)out.innerHTML='<h3>'+it[0]+'</h3><p>'+it[1]+'</p>'})}
+tabs($('gtabs'),GA,$('gpanel'),'tab');
+/* 12: supply */
+var SA=[['Quarto e cama','Toalhas de banho 450 a 650 GSM, lençóis e capas, almofadas hipoalergénicas, colchões e toppers.'],['Casa de banho','Amenities personalizados, roupões e chinelos com bordado, secadores e acessórios.'],['Mobiliário','Camas e cabeceiras, cortinas e iluminação, mesas, cadeiras e roupeiros por medida.'],['Equipamentos','Minibares, chaleiras, televisores, cofres, aspiradores e carros de limpeza.'],['Restauração e exterior','Louça, copos, talheres, espreguiçadeiras, toalhas de piscina e guarda-sóis.'],['Marca e uniformes','Uniformes, sinalética, materiais de boas-vindas e kits de boas-vindas.']];
+(function(){var box=$('stabs'),out=$('spanel');SA.forEach(function(it,i){var b=mk('button','chipb'+(i?'':' on'),it[0]);b.addEventListener('click',function(){[].forEach.call(box.children,function(x){x.classList.toggle('on',x===b)});out.innerHTML='<h3>'+it[0]+'</h3><p>'+it[1]+' <span class="small">Preço e quantidade mínima sob consulta.</span></p>'});box.appendChild(b);if(!i)out.innerHTML='<h3>'+it[0]+'</h3><p>'+it[1]+' <span class="small">Preço e quantidade mínima sob consulta.</span></p>'})})();
+/* 13: gallery */
+var GL=[['Boutique Hotel Urbano','Maputo · 28 quartos','Hotel',4],['Eco-Lodge Costeiro','Vilankulo · 12 villas','Lodge',1],['Resort de Praia','Inhambane · 46 unidades','Resort',3],['Villas Premium','Tofo · 8 villas','Villas',2],['Renovação de Quartos','Maputo · 40 quartos','Renovação',5],['Wellness Retreat','Bilene · 16 suites','Wellness',6],['Guesthouse Boutique','Ilha de Moçambique · 14 quartos','Guesthouse',7],['Lodge de Natureza','Gorongosa · 18 tendas','Lodge',8]];
+(function(){var cats=['Todos'],f=$('gfil'),g=$('gal');GL.forEach(function(x){if(cats.indexOf(x[2])<0)cats.push(x[2])});
+ GL.forEach(function(x){var e=mk('div','gi','<img src="img/c'+x[3]+'.jpg" alt="Conceito ilustrativo: '+x[0]+'" loading="lazy"><div><b>'+x[0]+'</b><span>'+x[1]+'</span></div>');e.setAttribute('data-c',x[2]);g.appendChild(e)});
+ cats.forEach(function(c,i){var b=mk('button','chipb'+(i?'':' on'),c);b.addEventListener('click',function(){[].forEach.call(f.children,function(z){z.classList.toggle('on',z===b)});[].forEach.call(g.children,function(e){e.classList.toggle('dim',c!=='Todos'&&e.getAttribute('data-c')!==c)})});f.appendChild(b)})})();
+/* 14: viability */
+function renderD(){
+  var rm=num('d-rm'),adr=num('d-adr'),oc=num('d-oc'),co=num('d-co'),inv=num('d-in');
+  $('d-ocv').textContent=oc+'%';$('d-cov').textContent=co+'%';
+  var rev=rm*365*adr*oc/100,con=rev*(1-co/100),pb=con>0?inv/con:null;
+  var m=function(n){return n>=1e6?one(n/1e6)+' M':grp(n)};
+  tween($('dt1'),rev,function(n){return m(n)});tween($('dt2'),con,function(n){return m(n)});
+  $('dt3').textContent=pb===null?'n/d':one(pb)+' anos';
+  $('d-path').innerHTML='<span>'+rm+' quartos</span>&rarr;<span>'+grp(adr)+' MZN por noite</span>&rarr;<span>'+oc+'% ocupação</span>&rarr;<span class="end"><b>'+(pb===null?'sem retorno neste cenário':'cerca de '+one(pb)+' anos')+'</b></span>';
+}
+['d-rm','d-adr','d-oc','d-co','d-in'].forEach(function(i){$(i).addEventListener('input',renderD)});
+/* 15: spa */
+var SP=[['Recovery Corner','Sauna compacta, imersão a frio, duches e zona de repouso.'],['Spa & Hydro Suite','Sauna, jacuzzi, cold plunge, tratamentos e lounge.'],['Wellness Destination','Circuito de águas, salas de tratamento, experiências guiadas e operação dedicada.']];
+(function(){var box=$('etabs'),out=$('epanel');SP.forEach(function(it,i){var b=mk('button','chipb'+(i?'':' on'),it[0]);b.addEventListener('click',function(){[].forEach.call(box.children,function(x){x.classList.toggle('on',x===b)});out.textContent=it[1]});box.appendChild(b);if(!i)out.textContent=it[1]})})();
+/* 17: faq */
+[].forEach.call(document.querySelectorAll('.qa button'),function(b){b.addEventListener('click',function(){var q=b.parentNode,open=q.classList.contains('open');[].forEach.call(document.querySelectorAll('.qa'),function(x){x.classList.remove('open')});if(!open)q.classList.add('open')})});
+/* 18: plan */
+var PL=['Listar na IndicoStay','Criadores a dar visibilidade','Criador como rosto do hotel','Gestão e formação da equipa','Fornecimentos e equipamentos','Renovação ou novo projeto','Spa, wellness e experiências'];
+function renderP(){var on=[].filter.call($('plan').children,function(b){return b.classList.contains('on')}).map(function(b){return b.textContent});
+  $('p-sum').textContent=on.length?on.length+' interesse'+(on.length>1?'s':'')+' marcado'+(on.length>1?'s':''):'Marque o que lhe interessa';
+  $('p-wa').href=wa('Olá, sou anfitrião e tenho interesse em: '+(on.length?on.join(', '):'conhecer a IndicoStay')+'.')}
+PL.forEach(function(t,i){var b=mk('button','chipb'+(i===0?' on':''),t);b.addEventListener('click',function(){b.classList.toggle('on');renderP()});$('plan').appendChild(b)});
+renderP();
+
+renderV();renderC();renderD();
+
+/* controls */
+$('next').addEventListener('click',next);$('prev').addEventListener('click',prev);
+function fs(){var d=document.documentElement;if(!document.fullscreenElement){(d.requestFullscreen||function(){}).call(d)}else document.exitFullscreen()}
+$('fs').addEventListener('click',fs);
+addEventListener('keydown',function(e){var t=e.target,tag=t&&t.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'){if(e.key!=='Escape')return}
+ if((tag==='BUTTON'||tag==='A')&&(e.key===' '||e.key==='Enter'))return;
+ var k=e.key;
+ if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();next()}
+ else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}
+ else if(k==='Home'){go(0)}else if(k==='End'){go(total-1)}
+ else if(k==='f'||k==='F'){fs()}
+ else if(k==='n'||k==='N'){$('notes').classList.toggle('show')}});
+var tx=null;addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',function(e){if(tx===null)return;var dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>60){dx<0?next():prev()}tx=null},{passive:true});
+addEventListener('hashchange',function(){var n=parseInt((location.hash||'').slice(1),10);if(n>=1&&n<=total)go(n-1)});
+var h=parseInt((location.hash||'').slice(1),10);go(h>=1&&h<=total?h-1:0);
+setTimeout(function(){$('hint').style.opacity='0'},6000);
+})();
+</script>
+</body>
+</html>
