@@ -205,6 +205,14 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
 .dots{display:flex;gap:8px}.dots i{width:30px;height:30px;border-radius:50%;border:3px solid #3f78c7;display:block}.dots i.on{background:var(--gold);border-color:var(--gold)}
 .stat2{display:flex;align-items:baseline;gap:2px;margin:16px 0 0;font:800 54px/1 var(--display);color:#fff}.s2p,.s2k{color:var(--gold)}.s2c{font:600 16px/1.3 var(--body);color:var(--soft);margin-left:12px;max-width:260px}
 .wantout{font-size:15px;margin:2px 0 4px;color:var(--soft)}.wantout b{color:var(--gold);font-size:19px}
+.autowrap{display:grid;grid-template-columns:500px 1fr;gap:22px;align-items:stretch}
+.autogrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ac{background:var(--card);border:3px solid transparent;border-radius:16px;padding:14px 16px;text-align:left;color:#fff;cursor:pointer;font:inherit;transition:border-color .2s,transform .2s}
+.ac:hover{transform:translateY(-3px)}.ac.on{border-color:var(--gold)}
+.ac b{display:block;font:800 18px var(--display)}.ac span{font-size:13px;color:var(--soft)}
+.autopanel h3{font-size:24px;color:var(--gold);margin:0 0 6px}.autopanel p{font-size:16px;line-height:1.45;color:#fff;margin:0 0 10px}
+.autopanel ul{margin:0 0 12px;padding:0;list-style:none}.autopanel li{font-size:15px;color:var(--soft);padding:4px 0 4px 20px;position:relative}
+.autopanel li:before{content:"";position:absolute;left:0;top:11px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
 .camp{margin-top:14px;background:var(--gold);color:var(--navy);border-radius:14px;padding:12px 20px;font-size:17px}
 </style>
 </head>
@@ -329,7 +337,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
   <div class="stairs">
     <div class="stair a" style="--d:.2s;height:150px"><b>1</b><h3>Listar</h3><p>Entra na IndicoStay e começa a receber reservas</p></div>
     <div class="stair st" data-step="1" style="height:220px"><b>2</b><h3>Ganhar visibilidade</h3><p>Criadores levam o alojamento ao público deles</p></div>
-    <div class="stair st" data-step="2" style="height:290px"><b>3</b><h3>Operar melhor</h3><p>Receção, housekeeping, receitas e formação da equipa</p></div>
+    <div class="stair st" data-step="2" style="height:290px"><b>3</b><h3>Operar melhor</h3><p>Receção, receitas, formação da equipa e automações</p></div>
     <div class="stair st" data-step="3" style="height:360px"><b>4</b><h3>Equipar e renovar</h3><p>Têxteis, amenities, uniformes, mobiliário e interiores</p></div>
     <div class="stair st gold" data-step="4" style="height:430px"><b>5</b><h3>Crescer</h3><p>Novos conceitos, spa e wellness, experiências e concierge</p></div>
   </div>
@@ -473,6 +481,21 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
   <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>11</span></div>
 </section>
 
+<!-- 11b AUTOMAÇÕES -->
+<section class="s dark" data-n="Mostre cada canal. Mensagem: o hotel não responde a tudo à mão. A Sara, na IndicoStay, já atende no WhatsApp 24 horas e marca reservas. Construímos o mesmo para o hotel, sobre as ferramentas que ele já usa. Integrações dependem da compatibilidade e autorização dos fornecedores.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Divisão 1 · Automações</p>
+  <h1 class="a" style="--d:.05s;font-size:36px;margin-bottom:6px">Automações que trabalham pelo seu hotel, 24 horas por dia</h1>
+  <p class="lead a" style="--d:.15s;font-size:17px;margin-bottom:14px">Menos mensagens respondidas à mão, menos reservas perdidas, menos faltas. Escolha um canal.</p>
+  <div class="autowrap">
+    <div class="autogrid a" style="--d:.25s" id="agrid"></div>
+    <div class="card a autopanel" style="--d:.4s" id="apanel"></div>
+  </div>
+  <p class="small a" style="--d:.7s;margin-top:10px">Construído sobre as ferramentas que o hotel já usa. Integrações com sistemas de terceiros dependem de compatibilidade e autorização dos fornecedores.</p>
+  <div class="strip a" style="--d:.8s;height:130px;bottom:58px"><img src="img/c3.jpg" alt=""><img src="img/c1.jpg" alt=""><img src="img/c5.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>12</span></div>
+</section>
+
 <!-- 12 SUPPLY -->
 <section class="s dark" data-n="Os preços e as quantidades mínimas são sob consulta. As opções de marca própria são exemplos sujeitos a aprovação de amostras e cotação.">
   <img class="logo" src="img/logo.png" alt="">
@@ -490,7 +513,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     </div>
   </div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c6.jpg" alt=""><img src="img/c5.jpg" alt=""><img src="img/c2.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>12</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>13</span></div>
 </section>
 
 <!-- 13 DEVELOPMENTS GALERIA -->
@@ -501,7 +524,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
   <div class="chips a" id="gfil" style="--d:.15s;margin-bottom:12px"></div>
   <div class="gal a" id="gal" style="--d:.25s"></div>
   <p class="small" style="margin-top:10px">Conceitos ilustrativos. As imagens não representam projetos executados pela Indico e os números de quartos são exemplos.</p>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>13</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>14</span></div>
 </section>
 
 <!-- 14 VIABILIDADE -->
@@ -531,7 +554,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     </div>
   </div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c1.jpg" alt=""><img src="img/c2.jpg" alt=""><img src="img/c3.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>14</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>15</span></div>
 </section>
 
 <!-- 15 EXPERIENCIAS -->
@@ -551,7 +574,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
       <p class="small">Exigem avaliação de riscos, supervisão e manutenção. Não são adequados a todas as pessoas e não implicam promessas de benefícios de saúde.</p></div>
   </div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c3.jpg" alt=""><img src="img/c6.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>15</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>16</span></div>
 </section>
 
 <!-- 16 PROCESSO -->
@@ -566,7 +589,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     <div class="col card a" style="--d:.65s;background:var(--gold)"><div class="num" style="color:var(--navy)">4</div><h3>Acompanhar</h3><p style="color:var(--navy)">Entrega, qualidade, indicadores e melhoria contínua.</p></div>
   </div>
   <div class="card a" style="--d:.9s;margin-top:24px"><h3>O que recebe numa proposta</h3><p>Ficha técnica com dimensões, materiais e personalização. Mapa de quantidades por quarto e cronograma. Cotação com preços unitários, personalização, transporte e impostos.</p></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>16</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>17</span></div>
 </section>
 
 <!-- 17 FAQ -->
@@ -587,7 +610,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     </div>
   </div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c7.jpg" alt=""><img src="img/c1.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>17</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>18</span></div>
 </section>
 
 <!-- 18 PLANO + CTA -->
@@ -602,11 +625,11 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     <span id="p-sum" style="font:700 16px var(--body);color:var(--navy)"></span>
   </p>
   <div class="strip a" style="--d:.7s;height:210px;bottom:60px"><img src="img/c4.jpg" alt=""><img src="img/c3.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>18</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>19</span></div>
 </section>
 
 </div>
-<div id="bar"><button id="prev" aria-label="Anterior">&#9664;</button><span id="ctr">1 / 18</span><button id="next" aria-label="Seguinte">&#9654;</button><button id="fs" aria-label="Ecrã inteiro">&#9974;</button></div>
+<div id="bar"><button id="prev" aria-label="Anterior">&#9664;</button><span id="ctr">1 / 19</span><button id="next" aria-label="Seguinte">&#9654;</button><button id="fs" aria-label="Ecrã inteiro">&#9974;</button></div>
 <div id="notes"></div>
 <div id="hint">Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> para navegar, <kbd>N</kbd> para notas, <kbd>F</kbd> para ecrã inteiro</div>
 
@@ -647,7 +670,7 @@ function single(box,cb){[].forEach.call(box.querySelectorAll('.chipb'),function(
 var HUB={
 app:{t:'IndicoStay',o:'A app de reservas. A porta de entrada do ecossistema.',l:['Alojamento visível para quem procura onde ficar','Pagamento com M-Pesa e e-Mola','Portal do anfitrião para gerir reservas'],k:'Não exige contratar mais nada.'},
 criadores:{t:'Rede de criadores',o:'Pessoas com audiência própria a dar visibilidade à app e aos alojamentos. Hoje 4 criadores somam +10 milhões de visualizações em 30 dias, e 10 estão a entrar.',l:['Alcance dentro da plataforma, em TikTok, Instagram e Facebook','Conteúdo real, nos canais deles, para o público que os segue','Pode escolher perfis para serem a cara do seu hotel','Campanhas na app e com os criadores'],k:'Ligação: mais visibilidade, mais procura, mais ocupação.'},
-gestao:{t:'Gestão & Formação',o:'Operações, equipas, PMS, receitas e qualidade do serviço.',l:['Receção, reservas e housekeeping','PMS e distribuição, gestão de receitas','SOPs, workshops e avaliação aos 30 dias'],k:'Ligação: um alojamento bem gerido converte melhor na app.'},
+gestao:{t:'Gestão & Formação',o:'Operações, equipas, PMS, receitas e qualidade do serviço.',l:['Receção, reservas e housekeeping','PMS e distribuição, gestão de receitas','Automações: WhatsApp, email, SMS e agentes de IA','SOPs, workshops e avaliação aos 30 dias'],k:'Ligação: um alojamento bem gerido converte melhor na app.'},
 supply:{t:'Supply & Procurement',o:'Produtos e equipamentos personalizados para alojamentos.',l:['Têxteis, amenities, uniformes e sinalética','Mobiliário, equipamentos e exterior','Amostras, controlo de qualidade e entrega'],k:'Ligação: a imagem do quarto que as fotos prometem.'},
 dev:{t:'Developments & Design',o:'Conceitos, viabilidade, arquitetura, interiores e execução.',l:['Estudo de mercado e viabilidade','Conceito, 3D e orçamento','Execução, compras e pré-abertura'],k:'Ligação: novas propriedades nascem prontas para vender na app.'},
 exp:{t:'Experiências & Concierge',o:'Excursões, transferes, spa, wellness e experiências.',l:['Passeios, mergulho, safaris e transferes','Spa, sauna, cold plunge e jacuzzi','Concierge para o hóspede'],k:'Ligação: mais motivos para o hóspede ficar mais noites.'}};
@@ -701,9 +724,24 @@ $('c-want').addEventListener('input',renderW);renderW();
 $('c-use').addEventListener('click',function(){$('c-num').value=Math.round(num('c-want')/0.85);renderC('n')});
 
 /* 11: gestao tabs */
-var GA=[['Receção e reservas','Check-in, check-out, confirmações, atendimento e gestão de pedidos.'],['Housekeeping','Limpeza, reposição, inspeções, manutenção e controlo de roupa.'],['PMS e distribuição','Inventário, disponibilidade, tarifas, canais e testes de integração. Depende de compatibilidade e autorização dos fornecedores.'],['Formação','Procedimentos operacionais (SOPs), workshops e avaliação de competências.'],['Gestão de receitas','Sazonalidade, ADR, RevPAR e acompanhamento de ocupação.'],['Liderança','Gestão de equipas, turnos e indicadores.']];
+var GA=[['Receção e reservas','Check-in, check-out, confirmações, atendimento e gestão de pedidos.'],['Housekeeping','Limpeza, reposição, inspeções, manutenção e controlo de roupa.'],['PMS e distribuição','Inventário, disponibilidade, tarifas, canais e testes de integração. Depende de compatibilidade e autorização dos fornecedores.'],['Formação','Procedimentos operacionais (SOPs), workshops e avaliação de competências.'],['Gestão de receitas','Sazonalidade, ADR, RevPAR e acompanhamento de ocupação.'],['Liderança','Gestão de equipas, turnos e indicadores.'],['Automações','WhatsApp, email, SMS, agentes de IA e CRM a trabalhar pelo hotel, 24 horas por dia. <button class="btn" data-go="12" style="padding:6px 16px;font-size:14px;margin-left:10px">Ver as automações &rarr;</button>']];
 function tabs(box,list,out,tag){list.forEach(function(it,i){var b=mk('button',tag+(i?'':' on'),it[0]);b.addEventListener('click',function(){[].forEach.call(box.children,function(x){x.classList.toggle('on',x===b)});out.innerHTML='<h3>'+it[0]+'</h3><p>'+it[1]+'</p>'});box.appendChild(b);if(!i)out.innerHTML='<h3>'+it[0]+'</h3><p>'+it[1]+'</p>'})}
 tabs($('gtabs'),GA,$('gpanel'),'tab');
+
+/* automations */
+var AU=[
+['WhatsApp','Confirmações, lembretes, instruções','O canal que os hóspedes em Moçambique já usam. Mensagens automáticas em cada passo da estadia.',['Confirmação da reserva na hora','Lembrete antes da chegada, para cortar faltas','Instruções de check-in e perguntas frequentes'],['Reserva','Confirmação','Lembrete','Instruções de chegada']],
+['Email','Confirmações, PDF, avaliações','Documentos e comunicação formal enviados sem ninguém lhes tocar.',['Confirmação com todos os detalhes e PDF','Recibos e documentos para empresas','Pedido de avaliação depois da estadia'],['Reserva','Email de confirmação','Antes da chegada','Pedido de avaliação']],
+['SMS','Chega a qualquer telemóvel','Avisos curtos e diretos, mesmo para quem não usa WhatsApp ou fora da janela de conversa.',['Lembrete da reserva e hora de chegada','Aviso de alterações de última hora','Código ou link de pagamento'],['Reserva','SMS de lembrete','Aviso de última hora']],
+['Agente de IA','Atende 24 horas, em chat','Um agente que responde no WhatsApp e no Instagram, qualifica o contacto e marca a reserva ou a visita. Passa a pessoa à equipa quando é preciso. A Sara já faz isto na IndicoStay.',['Responde a preços, disponibilidade e regras','Marca reservas e reuniões na conversa','Entrega à equipa quando o caso é complexo'],['Mensagem no Instagram','Agente responde','Qualifica','Reserva marcada']],
+['Agente de voz','Atende o telefone do hotel','Um agente de voz que atende e liga, fora de horas também, e marca no calendário.',['Atende chamadas a qualquer hora','Regista o pedido e marca a reserva','Resumo da chamada enviado à equipa'],['Chamada recebida','Agente atende','Reserva marcada','Resumo por email']],
+['CRM e relatórios','Tudo registado, sem folhas soltas','Cada contacto, conversa e reserva fica guardado e organizado, com alertas para a equipa.',['Contactos e reservas num só sítio','Alertas à equipa para casos que precisam de atenção','Relatórios de reservas, origem e ocupação'],['Contacto','Registado no CRM','Alerta à equipa','Relatório']]];
+(function(){var g=$('agrid'),p=$('apanel');
+ function show(i){[].forEach.call(g.children,function(b,k){b.classList.toggle('on',k===i)});var d=AU[i];
+  p.innerHTML='<h3>'+d[0]+'</h3><p>'+d[2]+'</p><ul>'+d[3].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><div class="path">'+d[4].map(function(x,k){return (k?'\u2192':'')+'<span'+(k===d[4].length-1?' class="end"><b>'+x+'</b>':'>'+x)+'</span>'}).join('')+'</div>'}
+ AU.forEach(function(d,i){var b=mk('button','ac'+(i?'':' on'),'<b>'+d[0]+'</b><span>'+d[1]+'</span>');b.addEventListener('click',function(){show(i)});g.appendChild(b)});show(0)})();
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-go]');if(b)go(+b.getAttribute('data-go')-1)});
+
 /* 12: supply */
 var SA=[['Quarto e cama','Toalhas de banho 450 a 650 GSM, lençóis e capas, almofadas hipoalergénicas, colchões e toppers.'],['Casa de banho','Amenities personalizados, roupões e chinelos com bordado, secadores e acessórios.'],['Mobiliário','Camas e cabeceiras, cortinas e iluminação, mesas, cadeiras e roupeiros por medida.'],['Equipamentos','Minibares, chaleiras, televisores, cofres, aspiradores e carros de limpeza.'],['Restauração e exterior','Louça, copos, talheres, espreguiçadeiras, toalhas de piscina e guarda-sóis.'],['Marca e uniformes','Uniformes, sinalética, materiais de boas-vindas e kits de boas-vindas.']];
 (function(){var box=$('stabs'),out=$('spanel');SA.forEach(function(it,i){var b=mk('button','chipb'+(i?'':' on'),it[0]);b.addEventListener('click',function(){[].forEach.call(box.children,function(x){x.classList.toggle('on',x===b)});out.innerHTML='<h3>'+it[0]+'</h3><p>'+it[1]+' <span class="small">Preço e quantidade mínima sob consulta.</span></p>'});box.appendChild(b);if(!i)out.innerHTML='<h3>'+it[0]+'</h3><p>'+it[1]+' <span class="small">Preço e quantidade mínima sob consulta.</span></p>'})})();
