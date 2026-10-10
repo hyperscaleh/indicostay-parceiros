@@ -388,12 +388,20 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
 </section>
 
 <!-- 9 SIMULADOR OCUPAÇÃO -->
-<section class="s cream" data-n="Escreva os números reais do anfitrião: quartos, ocupação, preço por noite. Depois diga quantas reservas extra por mês a IndicoStay lhe pode trazer e veja o efeito. É uma simulação, não uma promessa. Pergunte: e se fossem 2 reservas a mais? E 6?">
+<section class="s cream" data-n="Escreva os números reais do anfitrião: quartos, ocupação, preço por noite. Depois escolha quantas visualizações por mês os criadores e as campanhas podem gerar para o alojamento dele, e veja cliques, reservas e ocupação. É uma simulação com as taxas de clique e de reserva que estiverem escritas, não uma promessa.">
   <img class="logo" src="img/logo.png" alt="">
   <p class="k a">Simulador de ocupação</p>
-  <h1 class="a" style="--d:.05s;font-size:34px;margin-bottom:10px">O que mais reservas fazem pelo seu alojamento</h1>
+  <h1 class="a" style="--d:.05s;font-size:34px;margin-bottom:10px">O que as visualizações podem gerar para o seu alojamento</h1>
   <div class="sim" style="grid-template-columns:420px 1fr">
     <div class="panel a" style="--d:.2s">
+      <div class="gl" style="color:var(--navy2)">Visibilidade gerada para o seu alojamento</div>
+      <div class="chips" id="v-presets"><button class="chipb" data-v="25000">25 mil</button><button class="chipb on" data-v="50000">50 mil</button><button class="chipb" data-v="100000">100 mil</button><button class="chipb" data-v="250000">250 mil</button><button class="chipb" data-v="500000">500 mil</button></div>
+      <div class="fld"><label for="v-vw">Visualizações por mês</label><input id="v-vw" type="number" min="0" step="1000" value="50000"></div>
+      <div class="two">
+        <div class="fld"><label for="v-ctr">% que clica</label><input id="v-ctr" type="number" min="0" max="100" step="0.1" value="1"></div>
+        <div class="fld"><label for="v-bk">% que reserva</label><input id="v-bk" type="number" min="0" max="100" step="0.1" value="2"></div>
+      </div>
+      <div class="gl" style="color:var(--navy2);margin-top:4px">O seu alojamento</div>
       <div class="two">
         <div class="fld"><label for="v-rm">Quartos</label><input id="v-rm" type="number" min="1" step="1" value="6"></div>
         <div class="fld"><label for="v-oc">Ocupação atual %</label><input id="v-oc" type="number" min="0" max="100" step="1" value="40"></div>
@@ -402,8 +410,6 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
         <div class="fld"><label for="v-price">Preço por noite (MZN)</label><input id="v-price" type="number" min="0" step="500" value="6000"></div>
         <div class="fld"><label for="v-nt">Noites por estadia</label><input id="v-nt" type="number" min="1" max="10" step="1" value="2"></div>
       </div>
-      <div class="fld" style="margin-top:6px"><label for="v-ex">Reservas extra por mês através da IndicoStay <b id="v-exv">4</b></label><input id="v-ex" type="range" min="1" max="30" value="4"></div>
-      <div class="small">Cada reserva extra vem da visibilidade da rede de criadores e das campanhas na app.</div>
     </div>
     <div class="a" style="--d:.35s">
       <div class="path" id="v-path"></div>
@@ -418,10 +424,9 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
         <div class="tile"><b id="vt5">0</b><span>Receita atual por mês</span></div>
         <div class="tile"><b id="vt6">0</b><span>Receita por mês com a IndicoStay</span></div>
       </div>
-      <p class="small" style="margin-top:6px">Simulação com os seus números. Receita bruta, antes da comissão da plataforma. Não é uma promessa de resultados.</p>
+      <p class="small" style="margin-top:6px">Simulação com os seus números e taxas de clique e reserva ajustáveis. Receita bruta, antes da comissão da plataforma. Não é uma promessa de resultados.</p>
     </div>
   </div>
-  <div class="strip a" style="--d:.7s;height:100px;bottom:58px"><img src="img/c2.jpg" alt=""><img src="img/c4.jpg" alt=""><img src="img/c6.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
   <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>09</span></div>
 </section>
 
@@ -667,16 +672,17 @@ function matcher(){
 
 /* 9: occupancy */
 function renderV(){
-  var rm=Math.max(1,num('v-rm')),oc=Math.min(100,Math.max(0,num('v-oc'))),pr=num('v-price'),nt=Math.max(1,num('v-nt')),ex=num('v-ex');
-  $('v-exv').textContent=ex;
-  var cap=rm*30,cur=cap*oc/100,exN=ex*nt,nn=Math.min(cap,cur+exN),added=nn-cur,oc1=nn/cap*100;
-  $('v-path').innerHTML='<span>'+ex+' reservas extra por mês</span>&rarr;<span>'+grp(exN)+' noites</span>&rarr;<span class="end"><b>+'+one(oc1-oc)+' pontos de ocupação</b></span>';
+  var vw=num('v-vw'),ctr=Math.min(100,Math.max(0,num('v-ctr'))),bk=Math.min(100,Math.max(0,num('v-bk'))),rm=Math.max(1,num('v-rm')),oc=Math.min(100,Math.max(0,num('v-oc'))),pr=num('v-price'),nt=Math.max(1,num('v-nt'));
+  var clicks=vw*ctr/100,ex=clicks*bk/100,cap=rm*30,cur=cap*oc/100,exN=ex*nt,nn=Math.min(cap,cur+exN),added=nn-cur,oc1=nn/cap*100;
+  $('v-path').innerHTML='<span>'+grp(vw)+' visualizações</span>&rarr;<span>'+grp(clicks)+' cliques</span>&rarr;<span class="end"><b>'+one(ex)+' reservas por mês</b></span>';
   var m=function(n){return grp(n)+' MZN'};
   tween($('vt1'),added,function(n){return one(n)});tween($('vt2'),oc1,function(n){return one(n)+'%'});
   tween($('vt3'),added*pr,m);tween($('vt4'),added*pr*6,m);tween($('vt5'),cur*pr,m);tween($('vt6'),nn*pr,m);
   $('oc0').style.width=oc+'%';$('oc1').style.width=oc1+'%';$('oc0v').textContent=one(oc)+'%';$('oc1v').textContent=one(oc1)+'%';
+  [].forEach.call(document.querySelectorAll('#v-presets .chipb'),function(c){c.classList.toggle('on',+c.getAttribute('data-v')===vw)});
 }
-['v-rm','v-oc','v-price','v-nt','v-ex'].forEach(function(i){$(i).addEventListener('input',renderV)});
+['v-vw','v-ctr','v-bk','v-rm','v-oc','v-price','v-nt'].forEach(function(i){$(i).addEventListener('input',renderV)});
+[].forEach.call(document.querySelectorAll('#v-presets .chipb'),function(c){c.addEventListener('click',function(){$('v-vw').value=c.getAttribute('data-v');renderV()})});
 
 /* 10: price */
 function renderC(src){
