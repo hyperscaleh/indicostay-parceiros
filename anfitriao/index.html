@@ -204,6 +204,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
 .plats{display:flex;gap:8px}.plats span{background:#0d2b57;border:1px solid #27457a;border-radius:999px;padding:7px 16px;font:800 14px var(--body)}
 .dots{display:flex;gap:8px}.dots i{width:30px;height:30px;border-radius:50%;border:3px solid #3f78c7;display:block}.dots i.on{background:var(--gold);border-color:var(--gold)}
 .stat2{display:flex;align-items:baseline;gap:2px;margin:16px 0 0;font:800 54px/1 var(--display);color:#fff}.s2p,.s2k{color:var(--gold)}.s2c{font:600 16px/1.3 var(--body);color:var(--soft);margin-left:12px;max-width:260px}
+.wantout{font-size:15px;margin:2px 0 4px;color:var(--soft)}.wantout b{color:var(--gold);font-size:19px}
 .camp{margin-top:14px;background:var(--gold);color:var(--navy);border-radius:14px;padding:12px 20px;font-size:17px}
 </style>
 </head>
@@ -387,70 +388,69 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
 </section>
 
 <!-- 9 SIMULADOR OCUPAÇÃO -->
-<section class="s cream" data-n="Mexa nos cursores com o anfitrião. A conta é honesta: a visibilidade da rede reparte-se por todos os alojamentos da zona. Veja o que muda na ocupação dele. É uma simulação, não uma promessa.">
+<section class="s cream" data-n="Escreva os números reais do anfitrião: quartos, ocupação, preço por noite. Depois diga quantas reservas extra por mês a IndicoStay lhe pode trazer e veja o efeito. É uma simulação, não uma promessa. Pergunte: e se fossem 2 reservas a mais? E 6?">
   <img class="logo" src="img/logo.png" alt="">
   <p class="k a">Simulador de ocupação</p>
-  <h1 class="a" style="--d:.05s;font-size:34px;margin-bottom:10px">O que a visibilidade da rede pode fazer pela sua ocupação</h1>
+  <h1 class="a" style="--d:.05s;font-size:34px;margin-bottom:10px">O que mais reservas fazem pelo seu alojamento</h1>
   <div class="sim" style="grid-template-columns:420px 1fr">
     <div class="panel a" style="--d:.2s">
-      <div class="fld"><label for="v-cr">Criadores ativos na rede <b id="v-crv">5</b></label><input id="v-cr" type="range" min="1" max="20" value="5"></div>
-      <div class="fld"><label for="v-vw">Visualizações por criador, por mês <b id="v-vwv">50.000</b></label><input id="v-vw" type="range" min="10000" max="300000" step="10000" value="50000"></div>
       <div class="two">
-        <div class="fld"><label for="v-ctr">% que clica</label><input id="v-ctr" type="number" min="0" max="100" step="0.1" value="1"></div>
-        <div class="fld"><label for="v-bk">% que reserva</label><input id="v-bk" type="number" min="0" max="100" step="0.1" value="2"></div>
-      </div>
-      <div class="two">
-        <div class="fld"><label for="v-pr">Alojamentos na sua zona</label><input id="v-pr" type="number" min="1" step="1" value="20"></div>
-        <div class="fld"><label for="v-rm">Quartos seus</label><input id="v-rm" type="number" min="1" step="1" value="6"></div>
-      </div>
-      <div class="two">
+        <div class="fld"><label for="v-rm">Quartos</label><input id="v-rm" type="number" min="1" step="1" value="6"></div>
         <div class="fld"><label for="v-oc">Ocupação atual %</label><input id="v-oc" type="number" min="0" max="100" step="1" value="40"></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label for="v-price">Preço por noite (MZN)</label><input id="v-price" type="number" min="0" step="500" value="6000"></div>
         <div class="fld"><label for="v-nt">Noites por estadia</label><input id="v-nt" type="number" min="1" max="10" step="1" value="2"></div>
       </div>
-      <div class="fld"><label for="v-price">Preço por noite do seu alojamento (MZN)</label><input id="v-price" type="number" min="0" step="500" value="6000"></div>
+      <div class="fld" style="margin-top:6px"><label for="v-ex">Reservas extra por mês através da IndicoStay <b id="v-exv">4</b></label><input id="v-ex" type="range" min="1" max="30" value="4"></div>
+      <div class="small">Cada reserva extra vem da visibilidade da rede de criadores e das campanhas na app.</div>
     </div>
     <div class="a" style="--d:.35s">
       <div class="path" id="v-path"></div>
       <div class="tiles">
-        <div class="tile"><b id="vt1">0</b><span>Clientes novos por mês</span></div>
-        <div class="tile"><b id="vt2">0</b><span>Estadias em 6 meses</span></div>
-        <div class="tile"><b id="vt3">0</b><span>Estadias suas em 6 meses</span></div>
-        <div class="tile gold"><b id="vt4">0</b><span>Ocupação com a rede</span></div>
+        <div class="tile"><b id="vt1">0</b><span>Noites extra por mês</span></div>
+        <div class="tile"><b id="vt3">0</b><span>Receita extra por mês</span></div>
+        <div class="tile gold"><b id="vt4">0</b><span>Receita extra em 6 meses</span></div>
+        <div class="tile"><b id="vt2">0</b><span>Ocupação com a IndicoStay</span></div>
       </div>
-      <div class="tiles" style="grid-template-columns:repeat(2,1fr);margin-top:2px">
-        <div class="tile gold"><b id="vt5">0</b><span>Receita estimada em 6 meses, vinda da rede</span></div>
-        <div class="tile"><b id="vt6">0</b><span>Em média, por mês</span></div>
+      <div class="occ"><div class="occb"><div class="occ0" id="oc0"></div><div class="occ1" id="oc1"></div></div><div class="occl"><span>Hoje: <b id="oc0v">40%</b></span><span>Com a IndicoStay: <b id="oc1v">0%</b></span></div></div>
+      <div class="tiles" style="grid-template-columns:repeat(2,1fr);margin-top:14px">
+        <div class="tile"><b id="vt5">0</b><span>Receita atual por mês</span></div>
+        <div class="tile"><b id="vt6">0</b><span>Receita por mês com a IndicoStay</span></div>
       </div>
-      <div class="occ"><div class="occb"><div class="occ0" id="oc0"></div><div class="occ1" id="oc1"></div></div><div class="occl"><span>Hoje: <b id="oc0v">40%</b></span><span>Com a rede: <b id="oc1v">0%</b></span></div></div>
-      <p class="small" style="margin-top:10px">Simulação com hipóteses suas, incluindo o seu preço por noite. A visibilidade reparte-se pelos alojamentos da zona. Receita bruta, antes da comissão da plataforma. Não é uma promessa de resultados.</p>
+      <p class="small" style="margin-top:6px">Simulação com os seus números. Receita bruta, antes da comissão da plataforma. Não é uma promessa de resultados.</p>
     </div>
   </div>
+  <div class="strip a" style="--d:.7s;height:100px;bottom:58px"><img src="img/c2.jpg" alt=""><img src="img/c4.jpg" alt=""><img src="img/c6.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
   <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>09</span></div>
 </section>
 
 <!-- 10 PREÇO -->
-<section class="s dark" data-n="Fale disto só depois do valor. A regra: o anfitrião diz o mínimo que quer receber e o preço publicado constrói-se a partir daí, nunca o contrário. A taxa de 15% é a referência atual e ainda pode ser ajustada.">
+<section class="s dark" data-n="O anfitrião diz como quer que o alojamento apareça na app, ou seja, o preço de listagem. A partir desse preço retiramos os 15% da app. É simples: ele vê logo quanto recebe por noite. Escreva o preço dele e mostre.">
   <img class="logo" src="img/logo.png" alt="">
-  <p class="k a">Como o preço se constrói</p>
-  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:10px">Você define o que quer receber. Nunca recebe menos.</h1>
+  <p class="k a">Como funciona o preço na app</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:10px">Você decide o preço. A app retira 15%.</h1>
   <div class="sim" style="grid-template-columns:420px 1fr">
     <div class="panel a" style="--d:.2s;background:var(--card);border-color:#27457a;color:#fff">
-      <div class="fld"><label for="c-own" style="color:#fff">Quer receber por noite <b id="c-ownv" style="color:var(--gold)">7.500 MZN</b></label><input id="c-own" type="range" min="1000" max="30000" step="500" value="7500"></div>
-      <div class="small">Esse é o seu valor mínimo. O preço publicado soma a comissão da plataforma.</div>
+      <div class="fld"><label for="c-own" style="color:#fff">Preço do seu alojamento na app, por noite <b id="c-ownv" style="color:var(--gold)">6.000 MZN</b></label><input id="c-own" type="range" min="1000" max="30000" step="500" value="6000"></div>
+      <div class="fld"><label for="c-num" style="color:#fff">Ou escreva o valor exato (MZN)</label><input id="c-num" type="number" min="0" step="100" value="6000"></div>
+      <div class="fld" style="margin-top:6px"><label for="c-want" style="color:#fff">Quer receber exatamente (MZN)</label><input id="c-want" type="number" min="0" step="100" value="5100"></div>
+      <div class="wantout">Para receber isso, liste a <b id="c-list">0 MZN</b> <button class="chipb" id="c-use" style="margin-left:6px">Usar este preço</button></div>
+      <div class="small" style="margin-top:10px">Defina o preço já a contar com os 15% da comissão. É o preço que o hóspede vê na app.</div>
     </div>
     <div class="a" style="--d:.35s">
       <div class="tiles" style="grid-template-columns:repeat(2,1fr)">
-        <div class="tile gold"><b id="c-pub">0</b><span>Preço publicado por noite</span></div>
-        <div class="tile"><b id="c-ow">0</b><span>Você recebe por noite</span></div>
+        <div class="tile"><b id="c-ow">0</b><span>Preço do seu alojamento na app</span></div>
+        <div class="tile gold"><b id="c-pub">0</b><span>Você recebe por noite</span></div>
       </div>
       <div class="split" id="c-split"></div>
-      <div class="splitl"><span><i style="background:var(--gold)"></i>Você</span><span><i style="background:#8fa0bd"></i>IndicoStay <b id="c-ix">0</b></span></div>
-      <p class="small" style="margin-top:12px">Referência: a IndicoStay retira 15% do preço publicado. Taxa sujeita a confirmação final.</p>
+      <div class="splitl"><span><i style="background:var(--gold)"></i>Você <b id="c-me">0</b></span><span><i style="background:#8fa0bd"></i>IndicoStay (15%) <b id="c-ix">0</b></span></div>
+      <p class="small" style="margin-top:12px">Referência: a comissão da IndicoStay é de 15% do preço da reserva. Taxa sujeita a confirmação final.</p>
     </div>
   </div>
   <div class="row" style="margin-top:22px;align-items:stretch">
-    <div class="col card a" style="--d:.5s"><h3>1. Define o mínimo</h3><p>Diz quanto quer receber por noite. Esse é o ponto de partida do preço.</p></div>
-    <div class="col card a" style="--d:.6s"><h3>2. O preço constrói-se para cima</h3><p>Soma-se a comissão da plataforma. Nunca se desce a partir de um valor redondo, para nunca ficar abaixo do seu mínimo.</p></div>
+    <div class="col card a" style="--d:.5s"><h3>1. Define o preço na app</h3><p>Diz como quer que o alojamento apareça, já a contar com os 15%. Esse é o preço que o hóspede vê.</p></div>
+    <div class="col card a" style="--d:.6s"><h3>2. A app retira 15%</h3><p>O resto é seu. Vê logo, antes de publicar, quanto recebe por noite.</p></div>
   </div>
   <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>10</span></div>
 </section>
@@ -667,26 +667,32 @@ function matcher(){
 
 /* 9: occupancy */
 function renderV(){
-  var cr=num('v-cr'),vw=num('v-vw'),ctr=Math.min(100,num('v-ctr')),bk=Math.min(100,num('v-bk')),pr=Math.max(1,num('v-pr')),rm=Math.max(1,num('v-rm')),oc=Math.min(100,num('v-oc')),nt=Math.max(1,num('v-nt'));
-  $('v-crv').textContent=cr;$('v-vwv').textContent=grp(vw);
-  var views=cr*vw,clicks=views*ctr/100,cl=clicks*bk/100,st6=cl*6*2,mine=st6/pr,nightsM=mine/6*nt,add=nightsM/(rm*30)*100,oc1=Math.min(100,oc+add);
-  $('v-path').innerHTML='<span>'+grp(views)+' visualizações</span>&rarr;<span>'+grp(clicks)+' cliques</span>&rarr;<span class="end"><b>'+one(cl)+' clientes por mês</b></span>';
-  tween($('vt1'),cl,function(n){return one(n)});tween($('vt2'),st6);tween($('vt3'),mine,function(n){return one(n)});
-  tween($('vt4'),oc1,function(n){return one(n)+'%'});
-  var pr2=num('v-price'),rev6=mine*nt*pr2;tween($('vt5'),rev6,function(n){return grp(n)+' MZN'});tween($('vt6'),rev6/6,function(n){return grp(n)+' MZN'});
+  var rm=Math.max(1,num('v-rm')),oc=Math.min(100,Math.max(0,num('v-oc'))),pr=num('v-price'),nt=Math.max(1,num('v-nt')),ex=num('v-ex');
+  $('v-exv').textContent=ex;
+  var cap=rm*30,cur=cap*oc/100,exN=ex*nt,nn=Math.min(cap,cur+exN),added=nn-cur,oc1=nn/cap*100;
+  $('v-path').innerHTML='<span>'+ex+' reservas extra por mês</span>&rarr;<span>'+grp(exN)+' noites</span>&rarr;<span class="end"><b>+'+one(oc1-oc)+' pontos de ocupação</b></span>';
+  var m=function(n){return grp(n)+' MZN'};
+  tween($('vt1'),added,function(n){return one(n)});tween($('vt2'),oc1,function(n){return one(n)+'%'});
+  tween($('vt3'),added*pr,m);tween($('vt4'),added*pr*6,m);tween($('vt5'),cur*pr,m);tween($('vt6'),nn*pr,m);
   $('oc0').style.width=oc+'%';$('oc1').style.width=oc1+'%';$('oc0v').textContent=one(oc)+'%';$('oc1v').textContent=one(oc1)+'%';
 }
-['v-cr','v-vw','v-ctr','v-bk','v-pr','v-rm','v-oc','v-nt','v-price'].forEach(function(i){$(i).addEventListener('input',renderV)});
+['v-rm','v-oc','v-price','v-nt','v-ex'].forEach(function(i){$(i).addEventListener('input',renderV)});
 
 /* 10: price */
-function renderC(){
-  var own=num('c-own'),c=0,pub=own/(1-0.15-c),me=pub*c,ix=pub*0.15;
-  $('c-ownv').textContent=grp(own)+' MZN';
-  tween($('c-pub'),pub,function(n){return grp(n)+' MZN'});tween($('c-ow'),own,function(n){return grp(n)+' MZN'});
-  $('c-ix').textContent=grp(ix)+' MZN';
-  $('c-split').innerHTML='<div style="width:'+own/pub*100+'%;background:var(--gold)"></div><div style="width:15%;background:#8fa0bd"></div>';
+function renderC(src){
+  var p=src==='n'?num('c-num'):num('c-own');
+  if(src==='n'){$('c-own').value=Math.min(30000,Math.max(1000,p))}else{$('c-num').value=p}
+  var fee=p*0.15,rec=p-fee;
+  $('c-ownv').textContent=grp(p)+' MZN';
+  var m=function(n){return grp(n)+' MZN'};
+  tween($('c-ow'),p,m);tween($('c-pub'),rec,m);
+  $('c-me').textContent=m(rec);$('c-ix').textContent=m(fee);
+  $('c-split').innerHTML='<div style="width:85%;background:var(--gold)"></div><div style="width:15%;background:#8fa0bd"></div>';
 }
-['c-own'].forEach(function(i){$(i).addEventListener('input',renderC)});
+$('c-own').addEventListener('input',function(){renderC('r')});$('c-num').addEventListener('input',function(){renderC('n')});
+function renderW(){$('c-list').textContent=grp(num('c-want')/0.85)+' MZN'}
+$('c-want').addEventListener('input',renderW);renderW();
+$('c-use').addEventListener('click',function(){$('c-num').value=Math.round(num('c-want')/0.85);renderC('n')});
 
 /* 11: gestao tabs */
 var GA=[['Receção e reservas','Check-in, check-out, confirmações, atendimento e gestão de pedidos.'],['Housekeeping','Limpeza, reposição, inspeções, manutenção e controlo de roupa.'],['PMS e distribuição','Inventário, disponibilidade, tarifas, canais e testes de integração. Depende de compatibilidade e autorização dos fornecedores.'],['Formação','Procedimentos operacionais (SOPs), workshops e avaliação de competências.'],['Gestão de receitas','Sazonalidade, ADR, RevPAR e acompanhamento de ocupação.'],['Liderança','Gestão de equipas, turnos e indicadores.']];
@@ -724,7 +730,7 @@ function renderP(){var on=[].filter.call($('plan').children,function(b){return b
 PL.forEach(function(t,i){var b=mk('button','chipb'+(i===0?' on':''),t);b.addEventListener('click',function(){b.classList.toggle('on');renderP()});$('plan').appendChild(b)});
 renderP();
 
-renderV();renderC();renderD();
+renderV();renderC('r');renderD();
 
 /* controls */
 $('next').addEventListener('click',next);$('prev').addEventListener('click',prev);
