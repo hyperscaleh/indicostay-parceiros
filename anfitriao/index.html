@@ -196,6 +196,14 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
 .strip{position:absolute;left:76px;right:76px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:100%;gap:12px;overflow:hidden;border-radius:14px}
 .strip img{width:100%;height:100%;object-fit:cover;border-radius:14px;display:block}
 .strip .il{position:absolute;right:10px;top:8px;background:rgba(7,28,63,.8);color:#fff;font:700 11px var(--body);padding:3px 9px;border-radius:999px}
+
+.vgrid{display:grid;grid-template-columns:470px 1fr;gap:40px;align-items:start}
+.bigstat{font:800 150px/1 var(--display);color:var(--gold);letter-spacing:-.03em;display:flex;align-items:baseline}
+.bs-p{font-size:90px}.bs-m{font-size:110px;margin-left:6px}
+.bs-c{font-size:19px;line-height:1.4;color:#fff;margin:6px 0 14px;max-width:440px}.bs-c b{color:var(--gold)}
+.plats{display:flex;gap:8px}.plats span{background:#0d2b57;border:1px solid #27457a;border-radius:999px;padding:7px 16px;font:800 14px var(--body)}
+.dots{display:flex;gap:8px}.dots i{width:30px;height:30px;border-radius:50%;border:3px solid #3f78c7;display:block}.dots i.on{background:var(--gold);border-color:var(--gold)}
+.camp{margin-top:14px;background:var(--gold);color:var(--navy);border-radius:14px;padding:12px 20px;font-size:17px}
 </style>
 </head>
 <body>
@@ -233,7 +241,36 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
   <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>02</span></div>
 </section>
 
-<!-- 3 ECOSSISTEMA HUB -->
+<!-- 3 VISIBILIDADE (10M) -->
+<section class="s navy" data-n="Este é o slide essencial. +10 milhões é a soma das visualizações dos 4 criadores com quem já reunimos, nos últimos 30 dias, em TikTok, Instagram e Facebook. São visualizações, não reservas: diga isso. Agora é o momento de converter. Vão entrar 10 criadores. Clique em cada problema para mostrar como a visibilidade e a app o resolvem. Fecho: campanhas dentro da app e com os criadores, a gerar visibilidade através dos alojamentos.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">A visibilidade que criamos para si</p>
+  <h1 class="a" style="--d:.05s;font-size:36px;margin-bottom:12px">Criadores com audiência, dentro da plataforma onde o seu alojamento está</h1>
+  <div class="vgrid">
+    <div>
+      <div class="bigstat a" style="--d:.2s"><span class="bs-p">+</span><span class="bs-n" data-count="10">10</span><span class="bs-m">M</span></div>
+      <p class="bs-c a" style="--d:.3s">visualizações acumuladas nos últimos 30 dias por <b>4 criadores</b>, no TikTok, Instagram e Facebook</p>
+      <div class="plats a" style="--d:.4s"><span>TikTok</span><span>Instagram</span><span>Facebook</span></div>
+      <div class="a" style="--d:.5s;margin-top:18px">
+        <div class="dots" aria-label="4 criadores hoje, 10 a entrar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="small" style="margin-top:8px"><b style="color:var(--gold)">4 criadores hoje</b>, 10 a entrar agora. Agora é o momento de converter essa audiência em reservas.</p>
+      </div>
+    </div>
+    <div class="a" style="--d:.35s">
+      <div class="gl">Os problemas de quem tem um alojamento, e como os resolvemos</div>
+      <div class="qa open"><button>Não sei onde anunciar nem como chegar a clientes</button><div>Fica listado na app e aparece nos conteúdos dos criadores, perante uma audiência que já os segue.</div></div>
+      <div class="qa"><button>Quartos vazios a meio da semana e na época baixa</button><div>Campanhas dentro da app e com os criadores geram procura exatamente nos períodos em que o quarto fica parado.</div></div>
+      <div class="qa"><button>O hóspede vê as fotos mas não quer transferir para um número</button><div>Paga pela plataforma, com M-Pesa ou e-Mola, e o dono recebe pela plataforma. A reserva deixa de ficar por fazer.</div></div>
+      <div class="qa"><button>Sem website, só WhatsApp e em horário de escritório</button><div>Tem página própria com fotos, mapa e avaliações, e painel para gerir calendário, preços e reservas.</div></div>
+      <div class="qa"><button>Não chego ao cliente local</button><div>Os criadores têm audiências moçambicanas. As reservas vêm de pessoas que já confiam neles.</div></div>
+    </div>
+  </div>
+  <div class="camp a" style="--d:.7s"><b>Campanhas dentro da app e com os criadores</b> para gerar ainda mais visibilidade através dos seus alojamentos.</div>
+  <p class="small a" style="--d:.8s;margin-top:8px">Fonte: estatísticas dos perfis dos 4 criadores reunidos pela IndicoStay, últimos 30 dias, TikTok, Instagram e Facebook. Alcance acumulado, não reservas.</p>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>03</span></div>
+</section>
+
+<!-- 4 ECOSSISTEMA HUB -->
 <section class="s dark" data-n="Clique em cada círculo para abrir. Mensagem: a IndicoStay é a entrada, o resto é opcional e independente. Anunciar na IndicoStay não obriga a contratar nada.">
   <img class="logo" src="img/logo.png" alt="">
   <p class="k a">O ecossistema</p>
@@ -252,7 +289,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     </svg>
     <div class="hubpanel a" style="--d:.4s" id="hubp"></div>
   </div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>03</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>04</span></div>
 </section>
 
 <!-- 4 APP -->
@@ -278,7 +315,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
         <div class="pbtn">Reservar</div></div>
     </div>
   </div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span style="margin-right:380px">04</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span style="margin-right:380px">05</span></div>
 </section>
 
 <!-- 5 ESCADA -->
@@ -294,7 +331,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     <div class="stair st gold" data-step="4" style="height:430px"><b>5</b><h3>Crescer</h3><p>Novos conceitos, spa e wellness, experiências e concierge</p></div>
   </div>
   <p class="small a" style="--d:.8s;margin-top:12px">Os serviços da Indico Hospitality são independentes e opcionais. Anunciar na IndicoStay não exige contratar nenhum.</p>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>05</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>06</span></div>
 </section>
 
 <!-- 6 VISIBILIDADE -->
@@ -320,7 +357,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     <text x="625" y="290" text-anchor="middle" class="vl">Um só sítio para reservar</text>
   </svg>
   <p class="lead a" style="--d:.7s;font-size:18px;margin-top:26px">Mais criadores a partilhar significa mais pessoas a ver a app. Mais pessoas a ver a app significa mais procura para si.</p>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>06</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>07</span></div>
 </section>
 
 <!-- 7 REDE DE CRIADORES -->
@@ -341,7 +378,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     <div class="tile" style="flex:1"><b style="font-size:20px">Comissão paga pela IndicoStay</b><span>Não é descontada ao anfitrião</span></div>
     <div class="tile" style="flex:1"><b style="font-size:20px">Resultados medidos</b><span>Cliques, registos e reservas no painel</span></div>
   </div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>07</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>08</span></div>
 </section>
 
 <!-- 8 ROSTO DO HOTEL -->
@@ -365,7 +402,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     </div>
   </div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c2.jpg" alt=""><img src="img/c4.jpg" alt=""><img src="img/c6.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>08</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>09</span></div>
 </section>
 
 <!-- 9 SIMULADOR OCUPAÇÃO -->
@@ -402,7 +439,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
       <p class="small" style="margin-top:10px">Simulação com hipóteses suas. A visibilidade reparte-se pelos alojamentos da zona, sem favorecer ninguém. Não é uma promessa de resultados.</p>
     </div>
   </div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>09</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>10</span></div>
 </section>
 
 <!-- 10 PREÇO -->
@@ -431,7 +468,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     <div class="col card a" style="--d:.6s"><h3>2. O preço constrói-se para cima</h3><p>Soma-se a comissão da plataforma e, se existir, a do co-anfitrião. Nunca se desce a partir de um valor redondo.</p></div>
     <div class="col card a" style="--d:.7s"><h3>3. Pagos ao mesmo tempo</h3><p>A IndicoStay paga o anfitrião e o co-anfitrião em simultâneo, para ninguém ficar a dever a ninguém.</p></div>
   </div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>10</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>11</span></div>
 </section>
 
 <!-- 11 GESTAO -->
@@ -444,7 +481,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
   <div class="card a" id="gpanel" style="--d:.35s;min-height:96px"></div>
   <div class="path a" style="--d:.5s;margin-top:18px"><span>1 Diagnóstico</span>&rarr;<span>2 SOPs e plano</span>&rarr;<span>3 Workshops práticos</span>&rarr;<span class="end"><b>4 Avaliação aos 30 dias</b></span></div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c5.jpg" alt=""><img src="img/c7.jpg" alt=""><img src="img/c4.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>11</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>12</span></div>
 </section>
 
 <!-- 12 SUPPLY -->
@@ -464,7 +501,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     </div>
   </div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c6.jpg" alt=""><img src="img/c5.jpg" alt=""><img src="img/c2.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>12</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>13</span></div>
 </section>
 
 <!-- 13 DEVELOPMENTS GALERIA -->
@@ -475,7 +512,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
   <div class="chips a" id="gfil" style="--d:.15s;margin-bottom:12px"></div>
   <div class="gal a" id="gal" style="--d:.25s"></div>
   <p class="small" style="margin-top:10px">Conceitos ilustrativos. As imagens não representam projetos executados pela Indico e os números de quartos são exemplos.</p>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>13</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>14</span></div>
 </section>
 
 <!-- 14 VIABILIDADE -->
@@ -505,7 +542,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     </div>
   </div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c1.jpg" alt=""><img src="img/c2.jpg" alt=""><img src="img/c3.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>14</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>15</span></div>
 </section>
 
 <!-- 15 EXPERIENCIAS -->
@@ -525,7 +562,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
       <p class="small">Exigem avaliação de riscos, supervisão e manutenção. Não são adequados a todas as pessoas e não implicam promessas de benefícios de saúde.</p></div>
   </div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c3.jpg" alt=""><img src="img/c6.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>15</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>16</span></div>
 </section>
 
 <!-- 16 PROCESSO -->
@@ -540,7 +577,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     <div class="col card a" style="--d:.65s;background:var(--gold)"><div class="num" style="color:var(--navy)">4</div><h3>Acompanhar</h3><p style="color:var(--navy)">Entrega, qualidade, indicadores e melhoria contínua.</p></div>
   </div>
   <div class="card a" style="--d:.9s;margin-top:24px"><h3>O que recebe numa proposta</h3><p>Ficha técnica com dimensões, materiais e personalização. Mapa de quantidades por quarto e cronograma. Cotação com preços unitários, personalização, transporte e impostos.</p></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>16</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>17</span></div>
 </section>
 
 <!-- 17 FAQ -->
@@ -561,7 +598,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     </div>
   </div>
   <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c7.jpg" alt=""><img src="img/c1.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>17</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>18</span></div>
 </section>
 
 <!-- 18 PLANO + CTA -->
@@ -576,11 +613,11 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     <span id="p-sum" style="font:700 16px var(--body);color:var(--navy)"></span>
   </p>
   <div class="strip a" style="--d:.7s;height:210px;bottom:60px"><img src="img/c4.jpg" alt=""><img src="img/c3.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
-  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>18</span></div>
+  <div class="foot"><span>INDICO HOSPITALITY | MOÇAMBIQUE</span><span>19</span></div>
 </section>
 
 </div>
-<div id="bar"><button id="prev" aria-label="Anterior">&#9664;</button><span id="ctr">1 / 18</span><button id="next" aria-label="Seguinte">&#9654;</button><button id="fs" aria-label="Ecrã inteiro">&#9974;</button></div>
+<div id="bar"><button id="prev" aria-label="Anterior">&#9664;</button><span id="ctr">1 / 19</span><button id="next" aria-label="Seguinte">&#9654;</button><button id="fs" aria-label="Ecrã inteiro">&#9974;</button></div>
 <div id="notes"></div>
 <div id="hint">Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> para navegar, <kbd>N</kbd> para notas, <kbd>F</kbd> para ecrã inteiro</div>
 
@@ -602,6 +639,7 @@ function go(i,fromEnd){
   cur=i;step=fromEnd?(+s.getAttribute('data-steps')||0):0;
   s.classList.remove('play');void s.offsetWidth;s.classList.add('on','play');
   steps(s,step);
+  [].forEach.call(s.querySelectorAll('[data-count]'),function(c){var to=+c.getAttribute('data-count');if(reduce){c.textContent=to;return}var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/1400);c.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)});
   $('ctr').textContent=(i+1)+' / '+total;
   $('prog').style.width=((i+1)/total*100)+'%';
   $('notes').innerHTML='<b>Notas · slide '+(i+1)+'</b><br>'+(s.getAttribute('data-n')||'');
@@ -619,14 +657,14 @@ function single(box,cb){[].forEach.call(box.querySelectorAll('.chipb'),function(
 /* 3: hub */
 var HUB={
 app:{t:'IndicoStay',o:'A app de reservas. A porta de entrada do ecossistema.',l:['Alojamento visível para quem procura onde ficar','Pagamento com M-Pesa e e-Mola','Portal do anfitrião para gerir reservas'],k:'Não exige contratar mais nada.'},
-criadores:{t:'Rede de criadores',o:'Pessoas com audiência própria a dar visibilidade à app e aos alojamentos.',l:['Parceiros, Criadores e Rostos IndicoStay','Só ganham quando há reservas concluídas','Pode escolher perfis para serem a cara do seu hotel'],k:'Ligação: mais visibilidade, mais procura, mais ocupação.'},
+criadores:{t:'Rede de criadores',o:'Pessoas com audiência própria a dar visibilidade à app e aos alojamentos. Hoje 4 criadores somam +10 milhões de visualizações em 30 dias, e 10 estão a entrar.',l:['Alcance dentro da plataforma, em TikTok, Instagram e Facebook','Só ganham quando há reservas concluídas','Pode escolher perfis para serem a cara do seu hotel','Campanhas na app e com os criadores'],k:'Ligação: mais visibilidade, mais procura, mais ocupação.'},
 gestao:{t:'Gestão & Formação',o:'Operações, equipas, PMS, receitas e qualidade do serviço.',l:['Receção, reservas e housekeeping','PMS e distribuição, gestão de receitas','SOPs, workshops e avaliação aos 30 dias'],k:'Ligação: um alojamento bem gerido converte melhor na app.'},
 supply:{t:'Supply & Procurement',o:'Produtos e equipamentos personalizados para alojamentos.',l:['Têxteis, amenities, uniformes e sinalética','Mobiliário, equipamentos e exterior','Amostras, controlo de qualidade e entrega'],k:'Ligação: a imagem do quarto que as fotos prometem.'},
 dev:{t:'Developments & Design',o:'Conceitos, viabilidade, arquitetura, interiores e execução.',l:['Estudo de mercado e viabilidade','Conceito, 3D e orçamento','Execução, compras e pré-abertura'],k:'Ligação: novas propriedades nascem prontas para vender na app.'},
 exp:{t:'Experiências & Concierge',o:'Excursões, transferes, spa, wellness e experiências.',l:['Passeios, mergulho, safaris e transferes','Spa, sauna, cold plunge e jacuzzi','Concierge para o hóspede'],k:'Ligação: mais motivos para o hóspede ficar mais noites.'}};
 function hub(k){var d=HUB[k];$('hubp').innerHTML='<h3>'+d.t+'</h3><p class="one">'+d.o+'</p><ul>'+d.l.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><div class="lk">'+d.k+'</div>';
  [].forEach.call(document.querySelectorAll('.hn'),function(n){n.classList.toggle('on',n.getAttribute('data-k')===k)})}
-[].forEach.call(document.querySelectorAll('.hn'),function(n){n.addEventListener('click',function(){hub(n.getAttribute('data-k'))})});hub('app');
+[].forEach.call(document.querySelectorAll('.hn'),function(n){n.addEventListener('click',function(){hub(n.getAttribute('data-k'))})});hub('criadores');
 
 /* 7: levels */
 function hlLevel(c){[].forEach.call(document.querySelectorAll('.tab'),function(t){t.classList.toggle('on',t.getAttribute('data-c')===c)});[].forEach.call(document.querySelectorAll('.lvc'),function(e){e.classList.toggle('hl',e.getAttribute('data-c')===c)})}
@@ -695,7 +733,7 @@ function renderD(){
 var SP=[['Recovery Corner','Sauna compacta, imersão a frio, duches e zona de repouso.'],['Spa & Hydro Suite','Sauna, jacuzzi, cold plunge, tratamentos e lounge.'],['Wellness Destination','Circuito de águas, salas de tratamento, experiências guiadas e operação dedicada.']];
 (function(){var box=$('etabs'),out=$('epanel');SP.forEach(function(it,i){var b=mk('button','chipb'+(i?'':' on'),it[0]);b.addEventListener('click',function(){[].forEach.call(box.children,function(x){x.classList.toggle('on',x===b)});out.textContent=it[1]});box.appendChild(b);if(!i)out.textContent=it[1]})})();
 /* 17: faq */
-[].forEach.call(document.querySelectorAll('.qa button'),function(b){b.addEventListener('click',function(){var q=b.parentNode,open=q.classList.contains('open');[].forEach.call(document.querySelectorAll('.qa'),function(x){x.classList.remove('open')});if(!open)q.classList.add('open')})});
+[].forEach.call(document.querySelectorAll('.qa button'),function(b){b.addEventListener('click',function(){var q=b.parentNode,open=q.classList.contains('open');[].forEach.call(q.closest('.s').querySelectorAll('.qa'),function(x){x.classList.remove('open')});if(!open)q.classList.add('open')})});
 /* 18: plan */
 var PL=['Listar na IndicoStay','Criadores a dar visibilidade','Criador como rosto do hotel','Gestão e formação da equipa','Fornecimentos e equipamentos','Renovação ou novo projeto','Spa, wellness e experiências'];
 function renderP(){var on=[].filter.call($('plan').children,function(b){return b.classList.contains('on')}).map(function(b){return b.textContent});
