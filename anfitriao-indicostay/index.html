@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IndicoStay · Para anfitriões</title>
+<meta name="description" content="Apresentação interativa da IndicoStay para anfitriões: como listar o alojamento, visibilidade com criadores e ocupação.">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{--navy:#071c3f;--navy2:#0b2d5c;--card:#143a6e;--gold:#e5a823;--gold2:#f3c862;--cream:#f6f1e8;--ink:#10213d;--muted:#5d6b82;--soft:#c9d4e6;--line:#e3dccf;--blue:#3f78c7;
+--display:"Archivo","Helvetica Neue",Arial,sans-serif;--body:"Source Sans 3","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#050f22;overflow:hidden;font-family:var(--body);color:var(--ink)}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;overflow:hidden;border-radius:6px;background:var(--navy)}
+.s{position:absolute;inset:0;padding:58px 76px 64px;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility .45s;overflow:hidden}
+.s.on{opacity:1;visibility:visible}
+.dark{background:var(--navy);color:#fff}.navy{background:var(--navy2);color:#fff}.cream{background:var(--cream)}.gold{background:var(--gold);color:var(--navy)}
+.logo{position:absolute;top:34px;right:70px;width:62px;height:62px;border-radius:9px}
+.foot{position:absolute;left:76px;right:76px;bottom:22px;display:flex;justify-content:space-between;font:700 12px var(--body);letter-spacing:.07em;color:#7d8aa3}
+.dark .foot,.navy .foot{color:#8fa0bd}.gold .foot{color:#7a5a12}
+.k{font:700 13px var(--body);letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:0 0 10px}.gold .k{color:var(--navy)}
+h1{font:800 46px/1.06 var(--display);margin:0 0 18px;letter-spacing:-.01em;max-width:960px;text-wrap:balance}
+h1.xl{font-size:68px;line-height:1.02}
+h2,h3{font-family:var(--display);margin:0}
+.lead{font-size:20px;line-height:1.45;color:var(--muted);max-width:820px;margin:0}.dark .lead,.navy .lead{color:var(--soft)}
+.row{display:flex;gap:22px}.col{flex:1 1 0;min-width:0}
+.card{background:#fff;border-radius:18px;padding:24px 26px;transition:transform .25s ease,box-shadow .25s ease}
+.dark .card,.navy .card{background:var(--card);color:#fff}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.18)}
+.card h3{font-size:21px;margin:0 0 8px}.card p{font-size:16px;line-height:1.45;margin:0;color:var(--muted)}.dark .card p,.navy .card p{color:var(--soft)}
+.num{font:800 38px var(--display);color:var(--gold);margin-bottom:6px}
+.chip{display:inline-block;background:var(--gold);color:var(--navy);border-radius:999px;font:800 15px var(--body);padding:8px 20px}
+.tick{list-style:none;padding:0;margin:14px 0 0}.tick li{font-size:17px;margin:0 0 10px;padding-left:26px;position:relative;line-height:1.35}
+.tick li:before{content:"";position:absolute;left:0;top:7px;width:12px;height:12px;border-radius:50%;background:var(--gold)}
+.small{font-size:13px;color:var(--muted)}.dark .small,.navy .small{color:#9fb0cc}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 24px;font:800 16px var(--body);cursor:pointer;background:var(--gold);color:var(--navy);text-decoration:none;transition:transform .2s,filter .2s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:#fff;border:2px solid var(--gold)}
+/* animation */
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes slideL{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes kb{from{transform:scale(1.0)}to{transform:scale(1.08)}}
+.s .a{opacity:0}
+.s.play .a{animation:rise .6s cubic-bezier(.2,.8,.2,1) var(--d,0s) both}
+.s.play .a.pop{animation-name:pop}
+.s.play .a.sl{animation-name:slideL}
+.st{opacity:0;transform:scale(.85);pointer-events:none;transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+.st.show{opacity:1;transform:none;pointer-events:auto}
+/* chrome */
+#bar{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;justify-content:center;gap:14px;color:#9fb0cc;font:700 13px var(--body);opacity:.35;transition:opacity .25s;z-index:5}
+#bar:hover{opacity:1}
+#bar button{background:#10264d;color:#fff;border:1px solid #27457a;border-radius:8px;width:34px;height:30px;cursor:pointer;font-size:15px}
+#bar button:hover{background:#1b3a70}
+#prog{position:fixed;left:0;top:0;height:4px;background:var(--gold);width:0;transition:width .4s;z-index:6}
+#notes{position:fixed;left:50%;transform:translateX(-50%);bottom:54px;max-width:860px;width:calc(100% - 40px);background:rgba(7,28,63,.96);color:#fff;border:1px solid #27457a;border-radius:14px;padding:14px 18px;font:400 16px/1.45 var(--body);display:none;z-index:7}
+#notes.show{display:block}#notes b{color:var(--gold)}
+#hint{position:fixed;right:18px;bottom:56px;background:rgba(7,28,63,.95);color:#c9d4e6;border:1px solid #27457a;border-radius:12px;padding:10px 14px;font:600 13px var(--body);z-index:7;transition:opacity .6s}
+kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-radius:5px;padding:1px 6px;font:700 12px var(--body);color:#fff}
+/* slide specific */
+.hero{position:absolute;right:0;top:0;bottom:0;width:530px;object-fit:cover;animation:kb 14s ease-in-out infinite alternate}
+.herowrap{position:absolute;right:0;top:0;bottom:0;width:530px;overflow:hidden}
+.flow{display:flex;align-items:center;gap:12px}
+.fbox{flex:1;background:var(--card);border-radius:14px;padding:12px 16px;text-align:center}
+.fbox small{display:block;font:700 11px var(--body);color:var(--gold);letter-spacing:.08em}
+.fbox b{font-size:16px;display:block}.fbox em{font:800 16px var(--body);font-style:normal;color:var(--gold)}
+.fop{font:800 26px var(--display);color:var(--gold)}
+.bubbles{display:flex;align-items:center;justify-content:center;gap:20px;height:360px;margin-top:6px}
+.bub{border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--card);border:3px solid var(--blue)}
+.bub b{font:800 12px var(--body);letter-spacing:.08em;color:var(--gold)}.bub strong{font:800 40px/1.05 var(--display)}.bub span{font-size:14px;color:var(--soft);font-weight:600}
+.bub.b2{background:var(--gold);color:var(--navy);border-color:var(--gold2)}.bub.b2 b,.bub.b2 span{color:var(--navy)}
+.bub.b3{border-color:var(--gold)}
+.mult{text-align:center;font:800 14px var(--body);color:var(--gold)}.mult i{display:block;font:800 30px var(--display);font-style:normal;line-height:1}
+.tabs{display:flex;gap:10px;margin:6px 0 14px}
+.tab{border:2px solid #cfc6b4;background:#fff;border-radius:999px;padding:9px 22px;font:800 16px var(--body);color:var(--ink);cursor:pointer}
+.tab.on{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.lv{display:grid;grid-template-columns:200px repeat(3,1fr);gap:0;background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.lv>div{padding:15px 18px;border-bottom:1px solid var(--line);font-size:17px;line-height:1.3;transition:background .3s,color .3s}
+.lv>div:nth-last-child(-n+4){border-bottom:0}
+.lv .h{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lv .rl{font-weight:700;color:var(--navy2)}.lv .rl small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.lv .c.hl{background:#fff4d3}.lv .h.hl{background:var(--gold);color:var(--navy)}
+.sim{display:grid;grid-template-columns:400px 1fr;gap:26px;align-items:start}
+.panel{background:#fff;border-radius:18px;padding:18px 22px;border:1px solid var(--line)}
+.fld{margin-bottom:12px}.fld label{display:flex;justify-content:space-between;font:700 14px var(--body);margin-bottom:4px}
+.fld input[type=number]{width:100%;font:800 20px var(--body);color:var(--navy2);border:2px solid var(--line);border-radius:10px;padding:7px 12px}
+.fld input[type=range]{width:100%;accent-color:var(--gold)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chipb{border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font:800 14px var(--body);cursor:pointer;color:var(--ink)}.chipb.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.seg{display:flex;gap:8px;margin-bottom:12px}.seg button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px;font:800 14px var(--body);cursor:pointer;color:var(--ink)}
+.seg button.on{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.path{display:flex;align-items:center;gap:8px;font:700 14px var(--body);margin-bottom:12px;flex-wrap:wrap}
+.path span{background:#f3efe6;border:1px solid var(--line);border-radius:10px;padding:6px 12px}.path span.end{background:#fff4d3;border-color:#f0d58f}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}.tile b{display:block;font:800 25px var(--display);color:var(--navy2);white-space:nowrap}.tile span{font-size:13px;color:var(--muted);font-weight:600}
+.tile.gold{background:var(--navy2);border-color:var(--navy2)}.tile.gold b{color:var(--gold)}.tile.gold span{color:var(--soft)}
+.chart{display:flex;align-items:flex-end;gap:6px;height:215px;border-bottom:2px solid var(--line);padding-top:6px}
+.chart .bar{flex:1;background:var(--navy2);border-radius:6px 6px 0 0;height:0;transition:height .6s cubic-bezier(.2,.8,.2,1);position:relative}
+.chart .bar.dec{background:var(--blue)}
+.chart .bar:hover::after{content:attr(data-v);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font:700 12px var(--body);padding:3px 8px;border-radius:6px;white-space:nowrap}
+.mlab{display:flex;gap:6px;margin-top:4px}.mlab span{flex:1;text-align:center;font-size:11px;color:var(--muted)}
+.gbars{display:flex;align-items:flex-end;gap:16px;height:270px;border-bottom:2px solid #3a5a8c;margin-top:8px}
+.gb{flex:1;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.gb .v{font:700 15px var(--body);color:var(--soft);margin-bottom:5px}
+.gb .b{background:var(--blue);border-radius:8px 8px 0 0;height:0;transition:height .9s cubic-bezier(.2,.8,.2,1)}
+.gb.last .b{background:var(--gold)}.gb.last .v{color:var(--gold)}
+.glab{display:flex;gap:16px;margin-top:6px;color:var(--soft);font-size:14px}.glab span{flex:1;text-align:center}
+.cmp{display:grid;grid-template-columns:1fr;gap:12px;margin-top:6px}
+.cbar{background:var(--card);border-radius:14px;padding:12px 18px}
+.cbar .t{display:flex;justify-content:space-between;font:800 15px var(--body);margin-bottom:6px}.cbar .t em{font-style:normal;color:var(--gold);font-size:24px}
+.cbar .tr{height:20px;background:#0d2b57;border-radius:10px;overflow:hidden}.cbar .fi{height:100%;background:var(--gold);width:0;transition:width .5s;border-radius:10px}
+.cbar.l .fi{background:var(--blue)}
+.big3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.qa{background:var(--card);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.qa button{width:100%;text-align:left;background:none;border:0;color:#fff;font:800 17px var(--body);padding:13px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.qa button:after{content:"+";font-size:24px;color:var(--gold);transition:transform .25s}.qa.open button:after{transform:rotate(45deg)}
+.qa div{max-height:0;overflow:hidden;color:var(--soft);font-size:15px;line-height:1.45;padding:0 18px;transition:max-height .35s ease,padding .35s}
+.qa.open div{max-height:130px;padding:0 18px 14px}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.done{display:none;position:absolute;top:12px;right:14px;width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--navy);font:800 16px/28px var(--body);text-align:center}
+.card.chk{cursor:pointer;position:relative;user-select:none}.card.chk.ok .done{display:block}.card.chk.ok{outline:3px solid var(--gold)}
+@media (prefers-reduced-motion:reduce){.s .a,.s.play .a,.st{animation:none!important;opacity:1;transform:none;transition:none}.hero{animation:none}.gb .b,.chart .bar{transition:none}}
+
+/* ---- host deck additions ---- */
+.hubwrap{display:grid;grid-template-columns:560px 1fr;gap:26px;align-items:center;height:520px}
+#hub{width:560px;height:500px;overflow:visible}
+.hn{cursor:pointer;transition:transform .25s}
+.hn circle{fill:#143a6e;stroke:#3f78c7;stroke-width:3;transition:fill .25s,stroke .25s}
+.hn text{fill:#fff;font:800 13px Archivo,Arial,sans-serif;text-anchor:middle;pointer-events:none}
+.hn:hover circle,.hn.on circle{fill:#1b4a8a;stroke:#e5a823}
+.hn.core circle{fill:#e5a823;stroke:#f3c862}.hn.core text{fill:#071c3f}
+.hn.on circle{stroke-width:5}
+.hubl line{animation:dash 1.6s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-22}}
+.hubpanel{background:var(--card);border-radius:18px;padding:24px 26px;min-height:300px}
+.hubpanel h3{font-size:26px;margin:0 0 6px;color:var(--gold)}
+.hubpanel .one{font-size:18px;line-height:1.4;color:#fff;margin:0 0 12px}
+.hubpanel ul{margin:0;padding:0;list-style:none}.hubpanel li{font-size:16px;color:var(--soft);padding:5px 0 5px 22px;position:relative;line-height:1.35}
+.hubpanel li:before{content:"";position:absolute;left:0;top:12px;width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.hubpanel .lk{margin-top:12px;font:700 14px var(--body);color:var(--gold2)}
+.phone{position:absolute;right:140px;top:96px;width:280px;height:540px;border-radius:40px;background:#050f22;border:6px solid #27457a;padding:14px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.pscr{background:#fff;border-radius:28px;height:100%;overflow:hidden;color:var(--ink)}
+.pscr img{width:100%;height:240px;object-fit:cover;display:block}
+.pbody{padding:16px 18px}.pbody b{display:block;font:800 19px var(--display)}.pbody span{font-size:12px;color:var(--muted)}
+.pr{margin:14px 0 10px;font-size:15px;color:var(--muted)}.pr em{font:800 24px var(--display);font-style:normal;color:var(--navy2)}
+.pay{display:flex;gap:8px;margin-bottom:14px}.pay i{font:800 13px var(--body);font-style:normal;background:#fff4d3;border:1px solid #f0d58f;border-radius:999px;padding:5px 12px;color:var(--navy)}
+.pbtn{background:var(--gold);color:var(--navy);text-align:center;font:800 17px var(--body);border-radius:14px;padding:13px}
+.stairs{display:flex;align-items:flex-end;gap:14px;height:450px;margin-top:6px;border-bottom:3px solid var(--line)}
+.stair{flex:1;background:var(--navy2);color:#fff;border-radius:16px 16px 0 0;padding:14px 16px;overflow:hidden}
+.stair b{font:800 30px var(--display);color:var(--gold);display:block;line-height:1}
+.stair h3{font-size:18px;margin:6px 0 4px}.stair p{font-size:14px;line-height:1.35;margin:0;color:var(--soft)}
+.stair.gold{background:var(--gold);color:var(--navy)}.stair.gold b{color:var(--navy)}.stair.gold p{color:var(--navy)}
+.vis{width:100%;height:340px;margin-top:0}
+.vis .cr circle{fill:#143a6e;stroke:#3f78c7;stroke-width:3}.vis .cr text{fill:#fff;font:800 14px Archivo,Arial;text-anchor:middle}
+.vl{fill:#9fb0cc;font:700 14px "Source Sans 3",Arial;text-anchor:middle}
+.flowl path{stroke-dasharray:8 8;animation:dash 1.4s linear infinite}
+.lvc{transition:transform .25s,box-shadow .25s,outline .25s}
+.lvc.hl{outline:4px solid var(--gold);transform:translateY(-6px)}
+.gl{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:4px 0 8px}
+.navy .chipb,.dark .chipb{background:#0d2b57;border-color:#27457a;color:#fff}
+.navy .chipb.on,.dark .chipb.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.navy .path span,.dark .path span{background:#0d2b57;border-color:#27457a;color:#fff}
+.navy .path span.end,.dark .path span.end{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.navy .tile,.dark .tile{background:var(--card);border-color:#27457a}
+.navy .tile b,.dark .tile b{color:#fff}.navy .tile span,.dark .tile span{color:var(--soft)}
+.navy .tile.gold,.dark .tile.gold{background:var(--gold);border-color:var(--gold)}.navy .tile.gold b,.dark .tile.gold b,.navy .tile.gold span,.dark .tile.gold span{color:var(--navy)}
+.navy .panel{background:var(--card);border-color:#27457a;color:#fff}
+.match{background:var(--card);border-radius:18px;padding:22px 24px;border-left:6px solid var(--gold)}
+.match .t{font:700 12px var(--body);letter-spacing:.08em;color:var(--gold);text-transform:uppercase}
+.match h3{font-size:24px;margin:4px 0 8px}.match p{font-size:16px;line-height:1.45;color:var(--soft);margin:0 0 8px}
+.occ{margin-top:6px}.occb{position:relative;height:34px;background:#e9e2d2;border-radius:17px;overflow:hidden}
+.occ1{position:absolute;left:0;top:0;bottom:0;background:var(--gold);width:0;transition:width .5s;border-radius:17px}
+.occ0{position:absolute;left:0;top:0;bottom:0;background:var(--navy2);width:0;transition:width .5s;border-radius:17px;z-index:2}
+.occl{display:flex;justify-content:space-between;font-size:15px;margin-top:6px}
+.split{display:flex;height:46px;border-radius:12px;overflow:hidden;margin-top:6px}
+.split div{transition:width .4s}
+.splitl{display:flex;gap:18px;margin-top:8px;font-size:15px;flex-wrap:wrap}.splitl i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px}.splitl b{color:var(--gold)}
+.ol{margin:10px 0 0;padding-left:22px}.ol li{font-size:16px;margin-bottom:8px;line-height:1.35;color:var(--soft)}
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gi{position:relative;border-radius:14px;overflow:hidden;height:172px;transition:opacity .35s,transform .35s,filter .35s}
+.gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.gi:hover img{transform:scale(1.08)}
+.gi.dim{opacity:.18;filter:grayscale(1);transform:scale(.97)}
+.gi div{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(7,28,63,.92));color:#fff}
+.gi b{display:block;font:800 14px var(--display)}.gi span{font-size:12px;color:var(--gold2)}
+.expg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.expg span{background:#0d2b57;border:1px solid #27457a;border-radius:10px;padding:10px 12px;font:700 14px var(--body)}
+.plan{display:flex;flex-wrap:wrap;gap:10px}
+.plan .chipb{background:#fff;border:2px solid var(--navy);color:var(--navy);font-size:16px;padding:10px 18px}
+.plan .chipb.on{background:var(--navy);color:#fff}
+.cream .card .chipb{background:#fff}
+
+.strip{position:absolute;left:76px;right:76px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:100%;gap:12px;overflow:hidden;border-radius:14px}
+.strip img{width:100%;height:100%;object-fit:cover;border-radius:14px;display:block}
+.strip .il{position:absolute;right:10px;top:8px;background:rgba(7,28,63,.8);color:#fff;font:700 11px var(--body);padding:3px 9px;border-radius:999px}
+
+.vgrid{display:grid;grid-template-columns:470px 1fr;gap:40px;align-items:start}
+.bigstat{font:800 120px/1 var(--display);color:var(--gold);letter-spacing:-.03em;display:flex;align-items:baseline}
+.bs-p{font-size:72px}.bs-m{font-size:88px;margin-left:6px}
+.bs-c{font-size:19px;line-height:1.4;color:#fff;margin:6px 0 14px;max-width:440px}.bs-c b{color:var(--gold)}
+.plats{display:flex;gap:8px}.plats span{background:#0d2b57;border:1px solid #27457a;border-radius:999px;padding:7px 16px;font:800 14px var(--body)}
+.dots{display:flex;gap:8px}.dots i{width:30px;height:30px;border-radius:50%;border:3px solid #3f78c7;display:block}.dots i.on{background:var(--gold);border-color:var(--gold)}
+.stat2{display:flex;align-items:baseline;gap:2px;margin:16px 0 0;font:800 54px/1 var(--display);color:#fff}.s2p,.s2k{color:var(--gold)}.s2c{font:600 16px/1.3 var(--body);color:var(--soft);margin-left:12px;max-width:260px}
+.wantout{font-size:15px;margin:2px 0 4px;color:var(--soft)}.wantout b{color:var(--gold);font-size:19px}
+.autowrap{display:grid;grid-template-columns:500px 1fr;gap:22px;align-items:stretch}
+.autogrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ac{background:var(--card);border:3px solid transparent;border-radius:16px;padding:14px 16px;text-align:left;color:#fff;cursor:pointer;font:inherit;transition:border-color .2s,transform .2s}
+.ac:hover{transform:translateY(-3px)}.ac.on{border-color:var(--gold)}
+.ac b{display:block;font:800 18px var(--display)}.ac span{font-size:13px;color:var(--soft)}
+.autopanel h3{font-size:24px;color:var(--gold);margin:0 0 6px}.autopanel p{font-size:16px;line-height:1.45;color:#fff;margin:0 0 10px}
+.autopanel ul{margin:0 0 12px;padding:0;list-style:none}.autopanel li{font-size:15px;color:var(--soft);padding:4px 0 4px 20px;position:relative}
+.autopanel li:before{content:"";position:absolute;left:0;top:11px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.camp{margin-top:14px;background:var(--gold);color:var(--navy);border-radius:14px;padding:12px 20px;font-size:17px}
+
+.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+.sc{background:#fff;border-radius:18px;padding:20px 20px;min-height:230px;border:1px solid var(--line)}
+.sc b{font:800 40px var(--display);color:var(--gold);display:block;line-height:1;margin-bottom:6px}
+.sc h3{font-size:22px;margin:0 0 8px;color:var(--navy2)}.sc p{font-size:16px;line-height:1.45;color:var(--muted);margin:0}
+.sc.gold{background:var(--navy2)}.sc.gold h3{color:#fff}.sc.gold p{color:var(--soft)}
+.banner{margin-top:22px;background:var(--gold);color:var(--navy);border-radius:14px;padding:14px 22px;font:800 19px var(--body)}
+.tl{display:flex;align-items:stretch;gap:12px;margin-top:22px}
+.tl i{font:800 26px var(--display);color:var(--gold);font-style:normal;align-self:center}
+.tlp{flex:1;background:var(--card);border-radius:14px;padding:16px 18px}
+.tlp b{display:block;font:800 19px var(--display);margin-bottom:4px}.tlp span{font-size:15px;color:var(--soft)}
+.tlp.end{background:var(--gold);color:var(--navy)}.tlp.end span{color:var(--navy)}
+.prog{display:flex;align-items:center;gap:14px;margin-top:14px}
+.progb{flex:1;height:16px;background:#e9e2d2;border-radius:8px;overflow:hidden}.progb div{height:100%;width:0;background:var(--gold);transition:width .4s}
+#doctxt{font:800 16px var(--body);color:var(--navy2);min-width:130px}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="stage">
+
+<!-- CAPA -->
+<section class="s dark" data-n="Abra com calma. Uma frase: a IndicoStay é a plataforma de reservas feita para Moçambique, com pagamento por M-Pesa e e-Mola e criadores a levar o alojamento ao público. Pergunte quantos quartos tem e como recebe reservas hoje.">
+  <img class="logo a" src="img/logo.png" alt="">
+  <div style="position:absolute;left:76px;top:70px;width:660px">
+    <p class="k a" style="--d:.1s">IndicoStay · Para anfitriões</p>
+    <h1 class="xl a" style="--d:.2s;margin-top:110px;font-size:58px">Coloque o seu alojamento onde os hóspedes já procuram</h1>
+    <p class="lead a" style="--d:.4s;font-size:21px;max-width:590px">A plataforma de reservas feita para Moçambique. Pagamento por M-Pesa e e-Mola, e criadores a levar o seu alojamento ao público deles.</p>
+    <p class="a" style="--d:.6s;margin-top:26px"><span class="chip">Reservas · Visibilidade · Ocupação</span></p>
+  </div>
+  <div class="herowrap"><img class="hero" src="img/hero.jpg" alt=""></div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span style="margin-right:560px">01</span></div>
+</section>
+
+<!-- 2 PROBLEMA -->
+<section class="s cream" data-n="Não comece por preço nem por dezembro. Comece pela procura que ele perde: meio da semana, época baixa e o hóspede que não transfere para um número desconhecido. Diga como contabilidade, nunca como acusação.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Onde a procura se perde</p>
+  <h1 class="a" style="--d:.1s;font-size:42px">Quem tem o melhor produto muitas vezes não tem onde o vender</h1>
+  <div class="row" style="margin-top:26px;align-items:stretch">
+    <div class="col card a" style="--d:.25s"><div class="num" style="color:var(--navy2)">1</div><h3>Meio da semana e época baixa</h3><p>Nos picos enche sozinho. É nos outros dias que o quarto fica vazio e ninguém sabe que ele existe.</p></div>
+    <div class="col card a" style="--d:.4s"><div class="num" style="color:var(--navy2)">2</div><h3>O hóspede que desistiu</h3><p>Viu as fotos, gostou, mas não quis transferir dinheiro para o número de um desconhecido. Essa reserva ficou por fazer.</p></div>
+    <div class="col card a" style="--d:.55s"><div class="num" style="color:var(--navy2)">3</div><h3>A casa que não aparece</h3><p>Sem site e sem presença onde o hóspede procura, o alojamento só existe para quem já o conhece.</p></div>
+  </div>
+  <div class="row a" style="--d:.8s;margin-top:22px;gap:16px">
+    <div class="tile gold" style="flex:1"><b>68%</b><span>dos 833 alojamentos que analisámos não têm website</span></div>
+    <div class="tile gold" style="flex:1"><b>80%</b><span>são contactáveis por WhatsApp</span></div>
+    <div class="tile" style="flex:2;display:flex;align-items:center"><span style="font-size:15px">Fonte: análise interna IndicoStay à nossa lista de alojamentos em Maputo, Bilene e Inhambane, 2026.</span></div>
+  </div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>02</span></div>
+</section>
+
+<!-- 3 VISIBILIDADE (10M) -->
+<section class="s navy" data-n="Este é o slide essencial. +100 mil visitantes no website num mês e +10 milhões é a soma das visualizações dos 4 criadores com quem já reunimos, nos últimos 30 dias, em TikTok, Instagram e Facebook. São visualizações, não reservas: diga isso. Agora é o momento de converter. Vão entrar 10 criadores. Clique em cada problema para mostrar como a visibilidade e a app o resolvem. Fecho: campanhas dentro da app e com os criadores, a gerar visibilidade através dos alojamentos.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">A visibilidade que criamos para si</p>
+  <h1 class="a" style="--d:.05s;font-size:36px;margin-bottom:12px">Criadores com audiência, dentro da plataforma onde o seu alojamento está</h1>
+  <div class="vgrid">
+    <div>
+      <div class="bigstat a" style="--d:.2s"><span class="bs-p">+</span><span class="bs-n" data-count="10">10</span><span class="bs-m">M</span></div>
+      <p class="bs-c a" style="--d:.3s">visualizações acumuladas nos últimos 30 dias por <b>4 criadores</b>, no TikTok, Instagram e Facebook</p>
+      <div class="plats a" style="--d:.4s"><span>TikTok</span><span>Instagram</span><span>Facebook</span></div>
+      <div class="stat2 a"  style="--d:.38s"><span class="s2p">+</span><span class="s2n" data-count="100">100</span><span class="s2k">K</span><span class="s2c">visitantes no website da IndicoStay num só mês</span></div>
+      <div class="a" style="--d:.5s;margin-top:18px">
+        <div class="dots" aria-label="4 criadores hoje, 10 a entrar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="small" style="margin-top:8px"><b style="color:var(--gold)">4 criadores hoje</b>, 10 a entrar agora. Agora é o momento de converter essa audiência em reservas.</p>
+      </div>
+    </div>
+    <div class="a" style="--d:.35s">
+      <div class="gl">Os problemas de quem tem um alojamento, e como os resolvemos</div>
+      <div class="qa open"><button>Não sei onde anunciar nem como chegar a clientes</button><div>Fica listado na app e aparece nos conteúdos dos criadores, perante uma audiência que já os segue.</div></div>
+      <div class="qa"><button>Quartos vazios a meio da semana e na época baixa</button><div>Campanhas dentro da app e com os criadores geram procura exatamente nos períodos em que o quarto fica parado.</div></div>
+      <div class="qa"><button>O hóspede vê as fotos mas não quer transferir para um número</button><div>Paga pela plataforma, com M-Pesa ou e-Mola, e o dono recebe pela plataforma. A reserva deixa de ficar por fazer.</div></div>
+      <div class="qa"><button>Sem website, só WhatsApp e em horário de escritório</button><div>Tem página própria com fotos, mapa e avaliações, e painel para gerir calendário, preços e reservas.</div></div>
+      <div class="qa"><button>Não chego ao cliente local</button><div>Os criadores têm audiências moçambicanas. As reservas vêm de pessoas que já confiam neles.</div></div>
+    </div>
+  </div>
+  <div class="camp a" style="--d:.7s"><b>Campanhas dentro da app e com os criadores</b> para gerar ainda mais visibilidade através dos seus alojamentos.</div>
+  <p class="small a" style="--d:.8s;margin-top:8px">Fontes: estatísticas dos perfis dos 4 criadores (últimos 30 dias, TikTok, Instagram e Facebook) e tráfego do website indicostay.com num mês. Alcance e visitas, não reservas.</p>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>03</span></div>
+</section>
+
+<!-- APP -->
+<section class="s navy" data-n="Mostre o indicostay.com. O ponto: o hóspede paga com M-Pesa ou e-Mola pela plataforma, o quarto fica bloqueado durante o pagamento e nunca é vendido duas vezes. O cartão do telemóvel é um exemplo ilustrativo.">
+  <img class="logo" src="img/logo.png" alt="">
+  <div style="position:absolute;left:76px;top:58px;width:640px">
+    <p class="k a">O que é a IndicoStay</p>
+    <h1 class="a" style="--d:.1s;font-size:40px">A plataforma de reservas que vende o seu alojamento</h1>
+    <ul class="tick a" style="--d:.3s">
+      <li>Pensada para Moçambique: em português, com preços em meticais</li>
+      <li>O hóspede paga com <b>M-Pesa</b> ou <b>e-Mola</b>, sem cartão internacional</li>
+      <li>O mesmo quarto <b>nunca é vendido duas vezes</b>: fica bloqueado durante o pagamento</li>
+      <li>Recebe em meticais, para M-Pesa, e-Mola ou banco</li>
+    </ul>
+    <p class="a" style="--d:.6s;margin-top:20px"><a class="btn" href="https://indicostay.com" target="_blank" rel="noopener">Abrir indicostay.com &#8599;</a></p>
+  </div>
+  <div class="phone a pop" style="--d:.4s">
+    <div class="pscr">
+      <img src="img/c4.jpg" alt="">
+      <div class="pbody"><b>Casa de praia · Bilene</b><span>Exemplo ilustrativo</span>
+        <div class="pr"><em>6.000 MZN</em> / noite</div>
+        <div class="pay"><i>M-Pesa</i><i>e-Mola</i></div>
+        <div class="pbtn">Reservar</div></div>
+    </div>
+  </div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span style="margin-right:380px">04</span></div>
+</section>
+
+<!-- FLUXO RESERVA -->
+<section class="s cream" data-steps="3" data-n="Carregue na seta para avançar cada passo. Mostre o que o hóspede vive e o que o anfitrião recebe no fim: a reserva e a conversa com o hóspede.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Como o hóspede reserva</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:12px">Da pesquisa ao voucher, sem sair da app</h1>
+  <div class="steps4">
+    <div class="sc a" style="--d:.2s"><b>1</b><h3>Procura</h3><p>Destino, datas e número de hóspedes.</p></div>
+    <div class="sc st" data-step="1"><b>2</b><h3>Escolhe</h3><p>Quarto, fotos e o preço final, com todas as taxas já incluídas.</p></div>
+    <div class="sc st" data-step="2"><b>3</b><h3>Paga</h3><p>M-Pesa ou e-Mola. Tudo agora, sinal de 20%, ou mais tarde. O quarto fica reservado 15 minutos.</p></div>
+    <div class="sc st gold" data-step="3"><b>4</b><h3>Recebe o voucher</h3><p>Referência IS-XXXXXX e a reserva guardada em "Viagens". O anfitrião recebe a reserva e fala com o hóspede.</p></div>
+  </div>
+  <div class="banner a" style="--d:.7s">O mesmo quarto nunca é vendido duas vezes. Durante o pagamento fica bloqueado no sistema.</div>
+  <div class="strip a" style="--d:.8s;height:150px;bottom:58px"><img src="img/c2.jpg" alt=""><img src="img/c4.jpg" alt=""><img src="img/c6.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>05</span></div>
+</section>
+
+<!-- PAINEL ANFITRIAO -->
+<section class="s dark" data-n="Escolha cada área. Diga: tudo num só portal, no telemóvel ou no computador. O co-anfitrião é opcional: o anfitrião convida quem quiser e escolhe o que essa pessoa pode fazer.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">O que o anfitrião recebe</p>
+  <h1 class="a" style="--d:.05s;font-size:36px;margin-bottom:6px">O seu próprio portal para gerir o alojamento</h1>
+  <p class="lead a" style="--d:.15s;font-size:17px;margin-bottom:14px">Tudo num só sítio. Escolha uma área.</p>
+  <div class="autowrap">
+    <div class="autogrid a" style="--d:.25s" id="agrid"></div>
+    <div class="card a autopanel" style="--d:.4s" id="apanel"></div>
+  </div>
+  <div class="strip a" style="--d:.8s;height:150px;bottom:58px"><img src="img/c5.jpg" alt=""><img src="img/c7.jpg" alt=""><img src="img/c1.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>06</span></div>
+</section>
+
+<!-- 6 VISIBILIDADE -->
+<section class="s dark" data-n="Este é o grande diferencial. Os criadores têm a sua própria audiência e trabalham, direta ou indiretamente, para dar visibilidade à app. Cada um traz o público dele para o mesmo sítio onde o seu alojamento está.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">A grande vantagem</p>
+  <h1 class="a" style="--d:.05s;font-size:40px;margin-bottom:0">Os criadores trazem o público deles até ao seu alojamento</h1>
+  <svg viewBox="0 0 1100 400" class="vis a" style="--d:.2s" aria-label="Diagrama: criadores, seguidores, IndicoStay, o seu alojamento">
+    <defs><clipPath id="cp"><circle cx="965" cy="200" r="78"/></clipPath></defs>
+    <g stroke="#3f78c7" stroke-width="2.5" fill="none" class="flowl">
+      <path d="M215 70 C 380 70, 400 200, 560 200"/><path d="M215 200 L 560 200"/><path d="M215 330 C 380 330, 400 200, 560 200"/>
+      <path d="M690 200 L 885 200" stroke="#e5a823" stroke-width="3.5"/>
+    </g>
+    <g class="cr"><circle cx="150" cy="70" r="50"/><text x="150" y="68">Criador</text><text x="150" y="86">A</text></g>
+    <g class="cr"><circle cx="150" cy="200" r="50"/><text x="150" y="198">Criador</text><text x="150" y="216">B</text></g>
+    <g class="cr"><circle cx="150" cy="330" r="50"/><text x="150" y="328">Criador</text><text x="150" y="346">C</text></g>
+    <g fill="#c9d4e6" opacity=".7"><circle cx="40" cy="20" r="5"/><circle cx="70" cy="8" r="4"/><circle cx="215" cy="22" r="5"/><circle cx="238" cy="52" r="4"/><circle cx="28" cy="160" r="5"/><circle cx="18" cy="205" r="4"/><circle cx="240" cy="180" r="5"/><circle cx="246" cy="222" r="4"/><circle cx="40" cy="378" r="5"/><circle cx="205" cy="384" r="5"/><circle cx="238" cy="352" r="4"/></g>
+    <text x="150" y="395" text-anchor="middle" class="vl">Seguidores de cada criador</text>
+    <g><rect x="560" y="140" width="130" height="120" rx="20" fill="#e5a823"/><text x="625" y="192" text-anchor="middle" style="font:800 20px Archivo,Arial;fill:#071c3f">Indico</text><text x="625" y="216" text-anchor="middle" style="font:800 20px Archivo,Arial;fill:#071c3f">Stay</text></g>
+    <image href="img/c4.jpg" x="887" y="122" width="156" height="156" clip-path="url(#cp)" preserveAspectRatio="xMidYMid slice"/>
+    <circle cx="965" cy="200" r="78" fill="none" stroke="#e5a823" stroke-width="4"/>
+    <text x="965" y="305" text-anchor="middle" class="vl" style="fill:#f3c862">O seu alojamento</text>
+    <text x="625" y="290" text-anchor="middle" class="vl">Um só sítio para reservar</text>
+  </svg>
+  <p class="lead a" style="--d:.7s;font-size:18px;margin-top:26px">Mais criadores a partilhar significa mais pessoas a ver a app. Mais pessoas a ver a app significa mais procura para si.</p>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>07</span></div>
+</section>
+
+<!-- 8 ROSTO DO HOTEL -->
+<section class="s navy" data-n="Escolha com o anfitrião: destino, público e formato. A resposta muda. Diga apenas que tratamos do acordo com o criador. Não explique termos, comissões nem níveis.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Escolha quem dá a cara pelo seu hotel</p>
+  <h1 class="a" style="--d:.05s;font-size:36px;margin-bottom:10px">Monte a parceria com o perfil certo de criador</h1>
+  <div class="sim" style="grid-template-columns:480px 1fr;gap:24px">
+    <div class="panel a" style="--d:.2s;background:var(--card);border-color:#27457a;color:#fff">
+      <div class="gl">Onde fica o seu alojamento</div>
+      <div class="chips" data-g="dest"><button class="chipb on" data-v="Maputo">Maputo</button><button class="chipb" data-v="Bilene">Bilene</button><button class="chipb" data-v="Inhambane">Inhambane</button><button class="chipb" data-v="Ponta do Ouro">Ponta do Ouro</button><button class="chipb" data-v="Tofo e Vilanculos">Tofo e Vilanculos</button></div>
+      <div class="gl">Que público quer atrair</div>
+      <div class="chips" data-g="pub"><button class="chipb on" data-v="casais">Casais</button><button class="chipb" data-v="famílias">Famílias</button><button class="chipb" data-v="aventura">Aventura</button><button class="chipb" data-v="bem-estar">Bem-estar</button></div>
+      <div class="gl">Que tipo de parceria</div>
+      <div class="chips" data-g="fmt"><button class="chipb on" data-v="0">Estadia por conteúdo</button><button class="chipb" data-v="1">Rosto do hotel</button><button class="chipb" data-v="2">Campanha de evento</button></div>
+    </div>
+    <div class="a" style="--d:.35s">
+      <div class="match" id="match"></div>
+      <div class="path" id="m-steps" style="margin-top:12px"></div>
+      <a class="btn" id="m-wa" href="#" target="_blank" rel="noopener" style="margin-top:6px">Pedir esta parceria no WhatsApp &#8599;</a>
+    </div>
+  </div>
+  <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c2.jpg" alt=""><img src="img/c4.jpg" alt=""><img src="img/c6.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>08</span></div>
+</section>
+
+<!-- 9 SIMULADOR OCUPAÇÃO -->
+<section class="s cream" data-n="Escreva os números reais do anfitrião: quartos, ocupação, preço por noite. Depois escolha quantas visualizações por mês os criadores e as campanhas podem gerar para o alojamento dele, e veja cliques, reservas e ocupação. É uma simulação com as taxas de clique e de reserva que estiverem escritas, não uma promessa.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Simulador de ocupação</p>
+  <h1 class="a" style="--d:.05s;font-size:34px;margin-bottom:10px">O que as visualizações podem gerar para o seu alojamento</h1>
+  <div class="sim" style="grid-template-columns:420px 1fr">
+    <div class="panel a" style="--d:.2s">
+      <div class="gl" style="color:var(--navy2)">Visibilidade gerada para o seu alojamento</div>
+      <div class="chips" id="v-presets"><button class="chipb" data-v="25000">25 mil</button><button class="chipb on" data-v="50000">50 mil</button><button class="chipb" data-v="100000">100 mil</button><button class="chipb" data-v="250000">250 mil</button><button class="chipb" data-v="500000">500 mil</button></div>
+      <div class="fld"><label for="v-vw">Visualizações por mês</label><input id="v-vw" type="number" min="0" step="1000" value="50000"></div>
+      <div class="two">
+        <div class="fld"><label for="v-ctr">% que clica</label><input id="v-ctr" type="number" min="0" max="100" step="0.1" value="1"></div>
+        <div class="fld"><label for="v-bk">% que reserva</label><input id="v-bk" type="number" min="0" max="100" step="0.1" value="2"></div>
+      </div>
+      <div class="gl" style="color:var(--navy2);margin-top:4px">O seu alojamento</div>
+      <div class="two">
+        <div class="fld"><label for="v-rm">Quartos</label><input id="v-rm" type="number" min="1" step="1" value="6"></div>
+        <div class="fld"><label for="v-oc">Ocupação atual %</label><input id="v-oc" type="number" min="0" max="100" step="1" value="40"></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label for="v-price">Preço por noite (MZN)</label><input id="v-price" type="number" min="0" step="500" value="6000"></div>
+        <div class="fld"><label for="v-nt">Noites por estadia</label><input id="v-nt" type="number" min="1" max="10" step="1" value="2"></div>
+      </div>
+    </div>
+    <div class="a" style="--d:.35s">
+      <div class="path" id="v-path"></div>
+      <div class="tiles">
+        <div class="tile"><b id="vt1">0</b><span>Noites extra por mês</span></div>
+        <div class="tile"><b id="vt3">0</b><span>Receita extra por mês</span></div>
+        <div class="tile gold"><b id="vt4">0</b><span>Receita extra em 6 meses</span></div>
+        <div class="tile"><b id="vt2">0</b><span>Ocupação com a IndicoStay</span></div>
+      </div>
+      <div class="occ"><div class="occb"><div class="occ0" id="oc0"></div><div class="occ1" id="oc1"></div></div><div class="occl"><span>Hoje: <b id="oc0v">40%</b></span><span>Com a IndicoStay: <b id="oc1v">0%</b></span></div></div>
+      <div class="tiles" style="grid-template-columns:repeat(2,1fr);margin-top:14px">
+        <div class="tile"><b id="vt5">0</b><span>Receita atual por mês</span></div>
+        <div class="tile"><b id="vt6">0</b><span>Receita por mês com a IndicoStay</span></div>
+      </div>
+      <p class="small" style="margin-top:6px">Simulação com os seus números e taxas de clique e reserva ajustáveis. Receita bruta, antes da comissão da plataforma. Não é uma promessa de resultados.</p>
+    </div>
+  </div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>09</span></div>
+</section>
+
+<!-- 10 PREÇO -->
+<section class="s dark" data-n="O anfitrião diz como quer que o alojamento apareça na app, ou seja, o preço de listagem. A partir desse preço retiramos os 15% da app. É simples: ele vê logo quanto recebe por noite. Escreva o preço dele e mostre.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Como funciona o preço na app</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:10px">Você decide o preço. A app retira 15%.</h1>
+  <div class="sim" style="grid-template-columns:420px 1fr">
+    <div class="panel a" style="--d:.2s;background:var(--card);border-color:#27457a;color:#fff">
+      <div class="fld"><label for="c-own" style="color:#fff">Preço do seu alojamento na app, por noite <b id="c-ownv" style="color:var(--gold)">6.000 MZN</b></label><input id="c-own" type="range" min="1000" max="30000" step="500" value="6000"></div>
+      <div class="fld"><label for="c-num" style="color:#fff">Ou escreva o valor exato (MZN)</label><input id="c-num" type="number" min="0" step="100" value="6000"></div>
+      <div class="fld" style="margin-top:6px"><label for="c-want" style="color:#fff">Quer receber exatamente (MZN)</label><input id="c-want" type="number" min="0" step="100" value="5100"></div>
+      <div class="wantout">Para receber isso, liste a <b id="c-list">0 MZN</b> <button class="chipb" id="c-use" style="margin-left:6px">Usar este preço</button></div>
+      <div class="small" style="margin-top:10px">Defina o preço já a contar com os 15% da comissão. É o preço que o hóspede vê na app.</div>
+    </div>
+    <div class="a" style="--d:.35s">
+      <div class="tiles" style="grid-template-columns:repeat(2,1fr)">
+        <div class="tile"><b id="c-ow">0</b><span>Preço do seu alojamento na app</span></div>
+        <div class="tile gold"><b id="c-pub">0</b><span>Você recebe por noite</span></div>
+      </div>
+      <div class="split" id="c-split"></div>
+      <div class="splitl"><span><i style="background:var(--gold)"></i>Você <b id="c-me">0</b></span><span><i style="background:#8fa0bd"></i>IndicoStay (15%) <b id="c-ix">0</b></span></div>
+      <p class="small" style="margin-top:12px">Referência: a comissão da IndicoStay é de 15% do preço da reserva. Taxa sujeita a confirmação final.</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top:22px;align-items:stretch">
+    <div class="col card a" style="--d:.5s"><h3>1. Define o preço na app</h3><p>Diz como quer que o alojamento apareça, já a contar com os 15%. Esse é o preço que o hóspede vê.</p></div>
+    <div class="col card a" style="--d:.6s"><h3>2. A app retira 15%</h3><p>O resto é seu. Vê logo, antes de publicar, quanto recebe por noite.</p></div>
+  </div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>10</span></div>
+</section>
+
+<!-- CUSTO E PAGAMENTO -->
+<section class="s navy" data-n="Sem reservas, não há custo. Mostre a linha do tempo: a reserva é confirmada, o hóspede faz check-in e 24 horas depois o anfitrião recebe, sem esperar pelo fecho do mês.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Custo e pagamento</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:12px">Entra sem custo. Só paga quando há estadia.</h1>
+  <div class="row" style="align-items:stretch">
+    <div class="col card a" style="--d:.2s"><h3>Sem taxa de inscrição</h3><p>Entrar não custa nada.</p></div>
+    <div class="col card a" style="--d:.3s"><h3>Sem mensalidade</h3><p>Nada fixo por mês.</p></div>
+    <div class="col card a" style="--d:.4s"><h3>Sem custo por anúncio</h3><p>Publica o alojamento sem pagar.</p></div>
+    <div class="col card a" style="--d:.5s;background:var(--gold);color:var(--navy)"><h3>Só paga com estadia confirmada</h3><p style="color:var(--navy)">Sem reservas, não há custo.</p></div>
+  </div>
+  <div class="tl a" style="--d:.7s">
+    <div class="tlp"><b>Reserva confirmada</b><span>O hóspede paga pela plataforma</span></div><i>&rarr;</i>
+    <div class="tlp"><b>Check-in</b><span>O hóspede chega ao alojamento</span></div><i>&rarr;</i>
+    <div class="tlp end"><b>+ 24 horas</b><span>Recebe em meticais: M-Pesa, e-Mola ou banco</span></div>
+  </div>
+  <div class="strip a" style="--d:.8s;height:150px;bottom:58px"><img src="img/c3.jpg" alt=""><img src="img/c8.jpg" alt=""><img src="img/c2.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>11</span></div>
+</section>
+
+<!-- COMEÇAR -->
+<section class="s cream" data-n="Três passos e uma lista de documentos. Peça ao anfitrião para marcar o que já tem: o objetivo é ele ver que está perto. A equipa ajuda no carregamento, por telefone ou WhatsApp.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Como começar</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:12px">Três passos até estar nas pesquisas</h1>
+  <div class="row" style="align-items:stretch">
+    <div class="col card a" style="--d:.2s"><div class="num" style="color:var(--navy2)">1</div><h3>Cria a conta</h3><p>Em indicostay.com, na área de alojamentos.</p></div>
+    <div class="col card a" style="--d:.3s"><div class="num" style="color:var(--navy2)">2</div><h3>Carrega o alojamento</h3><p>Fotos, quartos, tarifas, disponibilidade e política de cancelamento. A equipa ajuda por telefone ou WhatsApp.</p></div>
+    <div class="col card a" style="--d:.4s;background:var(--gold)"><div class="num" style="color:var(--navy)">3</div><h3>A equipa publica</h3><p style="color:var(--navy)">Confirma os documentos, publica o anúncio e o alojamento entra nas pesquisas.</p></div>
+  </div>
+  <div class="gl a" style="--d:.55s;color:var(--navy2);margin-top:20px">Marque o que já tem pronto</div>
+  <div class="chips a" id="docs" style="--d:.6s"></div>
+  <div class="prog a" style="--d:.7s"><div class="progb"><div id="docfill"></div></div><span id="doctxt">0 de 5 prontos</span></div>
+  <div class="strip a" style="--d:.8s;height:120px;bottom:58px"><img src="img/c7.jpg" alt=""><img src="img/c5.jpg" alt=""><img src="img/c4.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>12</span></div>
+</section>
+
+<!-- FAQ -->
+<section class="s navy" data-n="Responda com calma e com honestidade. Se não houver resposta confirmada, diga que a equipa explica na reunião de 15 minutos.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Perguntas frequentes</p>
+  <h1 class="a" style="--d:.05s;font-size:38px;margin-bottom:14px">O que nos costumam perguntar</h1>
+  <div class="qgrid a" style="--d:.2s">
+    <div>
+      <div class="qa open"><button>Quanto custa entrar?</button><div>Não há taxa de inscrição, mensalidade nem custo por anúncio. A IndicoStay cobra uma comissão apenas sobre estadias confirmadas.</div></div>
+      <div class="qa"><button>Quando recebo?</button><div>24 horas depois do check-in do hóspede, em meticais, para M-Pesa, e-Mola ou banco.</div></div>
+      <div class="qa"><button>E se o hóspede cancelar?</button><div>Aplica-se a política de cancelamento que você define no anúncio. O hóspede vê-a antes de reservar.</div></div>
+    </div>
+    <div>
+      <div class="qa"><button>O quarto pode ser vendido duas vezes?</button><div>Não. Durante o pagamento o quarto fica bloqueado no sistema, por isso nunca há duas reservas para a mesma data.</div></div>
+      <div class="qa"><button>Preciso de ter website?</button><div>Não. O alojamento tem uma página própria na IndicoStay, com fotos, mapa e avaliações.</div></div>
+      <div class="qa"><button>Quem monta o anúncio?</button><div>Você carrega o alojamento e a equipa ajuda por telefone ou WhatsApp. Depois confirma os documentos e publica.</div></div>
+    </div>
+  </div>
+  <div class="strip a" style="--d:.7s;height:140px;bottom:58px"><img src="img/c1.jpg" alt=""><img src="img/c4.jpg" alt=""><img src="img/c7.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>13</span></div>
+</section>
+
+<!-- CTA -->
+<section class="s gold" data-n="Peça ao anfitrião para marcar o que lhe interessa. O botão abre o WhatsApp com a mensagem já escrita. Próximo passo: uma reunião de 15 minutos com a equipa.">
+  <img class="logo" src="img/logo.png" alt="">
+  <p class="k a">Próximo passo</p>
+  <h1 class="a" style="--d:.05s;font-size:42px;margin-bottom:12px">Vamos pôr o seu alojamento na IndicoStay?</h1>
+  <div class="plan a" id="plan" style="--d:.2s"></div>
+  <p class="a" style="--d:.4s;margin-top:20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+    <a class="btn" id="p-wa" href="#" target="_blank" rel="noopener" style="background:var(--navy);color:#fff">Falar no WhatsApp &#8599;</a>
+    <a class="btn ghost" href="https://indicostay.com" target="_blank" rel="noopener" style="color:var(--navy);border-color:var(--navy)">indicostay.com &#8599;</a>
+    <span id="p-sum" style="font:700 16px var(--body);color:var(--navy)"></span>
+  </p>
+  <div class="strip a" style="--d:.6s;height:200px;bottom:60px"><img src="img/c4.jpg" alt=""><img src="img/c3.jpg" alt=""><img src="img/c8.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>14</span></div>
+</section>
+
+</div>
+<div id="bar"><button id="prev" aria-label="Anterior">&#9664;</button><span id="ctr">1 / 14</span><button id="next" aria-label="Seguinte">&#9654;</button><button id="fs" aria-label="Ecrã inteiro">&#9974;</button></div>
+<div id="notes"></div>
+<div id="hint">Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> para navegar, <kbd>N</kbd> para notas, <kbd>F</kbd> para ecrã inteiro</div>
+
+<script>
+
+(function(){
+var slides=[].slice.call(document.querySelectorAll('.s')),total=slides.length,cur=-1,step=0,stage=document.getElementById('stage');
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+var $=function(id){return document.getElementById(id)};
+var grp=function(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.')};
+var WA='258865178862';
+function wa(t){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(t)}
+function fit(){var k=Math.min(innerWidth/1280,(innerHeight-46)/720);stage.style.transform='translate(-50%,-50%) scale('+k+')';stage.style.top='calc(50% - 23px)'}
+addEventListener('resize',fit);fit();
+function steps(s,n){[].forEach.call(s.querySelectorAll('.st'),function(e){e.classList.toggle('show',n>=+e.getAttribute('data-step'))})}
+function go(i,fromEnd){
+  if(i<0||i>=total||i===cur)return;
+  var s=slides[i];
+  if(cur>=0)slides[cur].classList.remove('on','play');
+  cur=i;step=fromEnd?(+s.getAttribute('data-steps')||0):0;
+  s.classList.remove('play');void s.offsetWidth;s.classList.add('on','play');
+  steps(s,step);
+  [].forEach.call(s.querySelectorAll('[data-count]'),function(c){var to=+c.getAttribute('data-count');if(reduce){c.textContent=to;return}var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/1400);c.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)});
+  $('ctr').textContent=(i+1)+' / '+total;
+  $('prog').style.width=((i+1)/total*100)+'%';
+  $('notes').innerHTML='<b>Notas · slide '+(i+1)+'</b><br>'+(s.getAttribute('data-n')||'');
+  if(location.hash!=='#'+(i+1)){try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+}
+function next(){var s=slides[cur],n=+s.getAttribute('data-steps')||0;if(step<n){step++;steps(s,step)}else go(cur+1)}
+function prev(){var s=slides[cur];if(step>0){step--;steps(s,step)}else go(cur-1,true)}
+var tw=new WeakMap();
+function tween(el,to,fmt){fmt=fmt||grp;if(reduce){el.textContent=fmt(to);return}var from=tw.get(el)||0;tw.set(el,to);var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/450),e=1-Math.pow(1-p,3);el.textContent=fmt(from+(to-from)*e);if(p<1)requestAnimationFrame(f)})(t0)}
+function num(id){var v=parseFloat(String($(id).value).replace(',','.'));return isNaN(v)?0:v}
+function one(n){return String(Math.round(n*10)/10).replace('.',',')}
+function mk(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+function single(box,cb){[].forEach.call(box.querySelectorAll('.chipb'),function(b){b.addEventListener('click',function(){[].forEach.call(box.querySelectorAll('.chipb'),function(x){x.classList.toggle('on',x===b)});cb()})})}
+
+/* 8: matcher */
+var FMT=[
+ {n:'Estadia por conteúdo',d:'Recebe um criador no seu alojamento e ele publica a experiência. Você decide as datas e o que inclui.',s:['Define datas e o que inclui','Escolhemos o perfil','O criador visita e publica','Mede no painel']},
+ {n:'Rosto do hotel',d:'Um criador torna-se a cara do seu alojamento ao longo do tempo, com conteúdo recorrente e o link ligado ao seu hotel.',s:['Escolhe o perfil','Propomos ao criador','Tratamos do acordo','Presença contínua']},
+ {n:'Campanha de evento',d:'Uma ação pontual, como Dia dos Namorados ou passagem de ano, com os criadores de melhores resultados.',s:['Define a data','Convidamos criadores','Conteúdo e oferta','Reservas medidas']}];
+function matcher(){
+  var g=function(n){var b=document.querySelector('[data-g="'+n+'"] .chipb.on');return b?b.getAttribute('data-v'):''};
+  var dest=g('dest'),pub=g('pub'),f=FMT[+g('fmt')];
+  $('match').innerHTML='<div class="t">Perfil sugerido</div><h3>Criador de '+pub+' com audiência ligada a '+dest+'</h3><p><b style="color:#fff">'+f.n+'.</b> '+f.d+'</p><p style="font-size:14px;color:#9fb0cc">Nós tratamos do acordo com o criador.</p>';
+  var p=$('m-steps');p.innerHTML='';f.s.forEach(function(x,i){var e=mk('span',i===f.s.length-1?'end':'',i===f.s.length-1?'<b>'+x+'</b>':x);if(i)p.appendChild(document.createTextNode('→'));p.appendChild(e)});
+  $('m-wa').href=wa('Olá, sou anfitrião em '+dest+' e quero uma parceria "'+f.n+'" com um criador de '+pub+'.');
+}
+['dest','pub','fmt'].forEach(function(n){single(document.querySelector('[data-g="'+n+'"]'),matcher)});matcher();
+
+/* 9: occupancy */
+function renderV(){
+  var vw=num('v-vw'),ctr=Math.min(100,Math.max(0,num('v-ctr'))),bk=Math.min(100,Math.max(0,num('v-bk'))),rm=Math.max(1,num('v-rm')),oc=Math.min(100,Math.max(0,num('v-oc'))),pr=num('v-price'),nt=Math.max(1,num('v-nt'));
+  var clicks=vw*ctr/100,ex=clicks*bk/100,cap=rm*30,cur=cap*oc/100,exN=ex*nt,nn=Math.min(cap,cur+exN),added=nn-cur,oc1=nn/cap*100;
+  $('v-path').innerHTML='<span>'+grp(vw)+' visualizações</span>&rarr;<span>'+grp(clicks)+' cliques</span>&rarr;<span class="end"><b>'+one(ex)+' reservas por mês</b></span>';
+  var m=function(n){return grp(n)+' MZN'};
+  tween($('vt1'),added,function(n){return one(n)});tween($('vt2'),oc1,function(n){return one(n)+'%'});
+  tween($('vt3'),added*pr,m);tween($('vt4'),added*pr*6,m);tween($('vt5'),cur*pr,m);tween($('vt6'),nn*pr,m);
+  $('oc0').style.width=oc+'%';$('oc1').style.width=oc1+'%';$('oc0v').textContent=one(oc)+'%';$('oc1v').textContent=one(oc1)+'%';
+  [].forEach.call(document.querySelectorAll('#v-presets .chipb'),function(c){c.classList.toggle('on',+c.getAttribute('data-v')===vw)});
+}
+['v-vw','v-ctr','v-bk','v-rm','v-oc','v-price','v-nt'].forEach(function(i){$(i).addEventListener('input',renderV)});
+[].forEach.call(document.querySelectorAll('#v-presets .chipb'),function(c){c.addEventListener('click',function(){$('v-vw').value=c.getAttribute('data-v');renderV()})});
+
+/* 10: price */
+function renderC(src){
+  var p=src==='n'?num('c-num'):num('c-own');
+  if(src==='n'){$('c-own').value=Math.min(30000,Math.max(1000,p))}else{$('c-num').value=p}
+  var fee=p*0.15,rec=p-fee;
+  $('c-ownv').textContent=grp(p)+' MZN';
+  var m=function(n){return grp(n)+' MZN'};
+  tween($('c-ow'),p,m);tween($('c-pub'),rec,m);
+  $('c-me').textContent=m(rec);$('c-ix').textContent=m(fee);
+  $('c-split').innerHTML='<div style="width:85%;background:var(--gold)"></div><div style="width:15%;background:#8fa0bd"></div>';
+}
+$('c-own').addEventListener('input',function(){renderC('r')});$('c-num').addEventListener('input',function(){renderC('n')});
+function renderW(){$('c-list').textContent=grp(num('c-want')/0.85)+' MZN'}
+$('c-want').addEventListener('input',renderW);renderW();
+$('c-use').addEventListener('click',function(){$('c-num').value=Math.round(num('c-want')/0.85);renderC('n')});
+
+
+/* painel anfitrião */
+var PA=[
+['Painel de gestão','Um só sítio para gerir o alojamento',['Reservas e mensagens à vista','Estado de cada pagamento','Convide um co-anfitrião de confiança e escolha o que ele pode fazer']],
+['Calendário e preços','Disponibilidade e preços por época',['Abra e feche datas quando quiser','Defina preços diferentes por época','Sem reservas duplicadas: o quarto bloqueia durante o pagamento']],
+['Reservas e conversa','Lista de reservas e chat direto',['Todas as reservas numa lista','Conversa direta com o hóspede','Voucher com referência para cada reserva']],
+['Financeiro','Histórico de pagamentos',['Cada pagamento registado','Pago 24 horas depois do check-in','Em meticais, para M-Pesa, e-Mola ou banco']],
+['Página própria','Fotos, mapa e avaliações',['O seu alojamento com a sua própria página','Política de cancelamento visível antes de reservar','Não precisa de website']],
+['Métricas do anúncio','Veja o que funciona',['Visualizações do anúncio','Favoritos e reservas','Taxa de conversão']]];
+(function(){var g=$('agrid'),p=$('apanel');
+ function show(i){[].forEach.call(g.children,function(b,k){b.classList.toggle('on',k===i)});var d=PA[i];
+  p.innerHTML='<h3>'+d[0]+'</h3><p>'+d[1]+'</p><ul>'+d[2].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
+ PA.forEach(function(d,i){var b=mk('button','ac'+(i?'':' on'),'<b>'+d[0]+'</b><span>'+d[1]+'</span>');b.addEventListener('click',function(){show(i)});g.appendChild(b)});show(0)})();
+/* documentos */
+var DOCS=['Alvará ou licença de turismo','NUIT','Identificação do proprietário','Conta M-Pesa, e-Mola ou banco em nome do negócio','8 fotos reais e as tarifas'];
+(function(){var b=$('docs');DOCS.forEach(function(t){var c=mk('button','chipb',t);c.addEventListener('click',function(){c.classList.toggle('on');var n=b.querySelectorAll('.chipb.on').length;$('docfill').style.width=n/DOCS.length*100+'%';$('doctxt').textContent=n+' de '+DOCS.length+' prontos'});b.appendChild(c)})})();
+/* faq */
+[].forEach.call(document.querySelectorAll('.qa button'),function(b){b.addEventListener('click',function(){var q=b.parentNode,open=q.classList.contains('open');[].forEach.call(q.closest('.s').querySelectorAll('.qa'),function(x){x.classList.remove('open')});if(!open)q.classList.add('open')})});
+/* plano */
+var PL=['Listar o meu alojamento','Aparecer nos conteúdos de criadores','Ter um criador como rosto do hotel','Perceber os pagamentos','Reunião de 15 minutos com a equipa'];
+function renderP(){var on=[].filter.call($('plan').children,function(b){return b.classList.contains('on')}).map(function(b){return b.textContent});
+  $('p-sum').textContent=on.length?on.length+' interesse'+(on.length>1?'s':'')+' marcado'+(on.length>1?'s':''):'Marque o que lhe interessa';
+  $('p-wa').href=wa('Olá, sou anfitrião e tenho interesse em: '+(on.length?on.join(', '):'listar o meu alojamento na IndicoStay')+'.')}
+PL.forEach(function(t,i){var b=mk('button','chipb'+(i===0?' on':''),t);b.addEventListener('click',function(){b.classList.toggle('on');renderP()});$('plan').appendChild(b)});
+renderP();
+renderV();renderC('r');
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-go]');if(b)go(+b.getAttribute('data-go')-1)});
+/* controls */
+$('next').addEventListener('click',next);$('prev').addEventListener('click',prev);
+function fs(){var d=document.documentElement;if(!document.fullscreenElement){(d.requestFullscreen||function(){}).call(d)}else document.exitFullscreen()}
+$('fs').addEventListener('click',fs);
+addEventListener('keydown',function(e){var t=e.target,tag=t&&t.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'){if(e.key!=='Escape')return}
+ if((tag==='BUTTON'||tag==='A')&&(e.key===' '||e.key==='Enter'))return;
+ var k=e.key;
+ if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();next()}
+ else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}
+ else if(k==='Home'){go(0)}else if(k==='End'){go(total-1)}
+ else if(k==='f'||k==='F'){fs()}
+ else if(k==='n'||k==='N'){$('notes').classList.toggle('show')}});
+var tx=null;addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',function(e){if(tx===null)return;var dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>60){dx<0?next():prev()}tx=null},{passive:true});
+addEventListener('hashchange',function(){var n=parseInt((location.hash||'').slice(1),10);if(n>=1&&n<=total)go(n-1)});
+var h=parseInt((location.hash||'').slice(1),10);go(h>=1&&h<=total?h-1:0);
+setTimeout(function(){$('hint').style.opacity='0'},6000);
+})();
+</script>
+</body>
+</html>
