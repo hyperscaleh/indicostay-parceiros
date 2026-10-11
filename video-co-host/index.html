@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IndicoStay · Para co-hosts</title>
+<meta name="description" content="Mais propriedades, mais organização e regras mais claras. Veja o vídeo de 1 minuto.">
+<meta property="og:title" content="IndicoStay · Para co-hosts">
+<meta property="og:description" content="Mais propriedades, mais organização e regras mais claras. Veja o vídeo de 1 minuto.">
+<meta property="og:image" content="assets/poster.jpg">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Source+Sans+3:wght@400;600;700;800&display=swap">
+<style>
+:root{--bg:#071C3F;--card:#0F2A55;--card2:#143A6E;--ink:#F6F1E8;--muted:#AFBBD0;--rule:#22406E;--gold:#E5A823;--gold2:#F3C862;
+--display:"Archivo","Helvetica Neue",Arial,sans-serif;--body:"Source Sans 3","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;margin:0;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
+.wrap{max-width:440px;margin:0 auto;padding:0 20px}
+.brand{display:flex;align-items:center;gap:10px;padding:24px 0 18px}
+.brand img{width:34px;height:34px;border-radius:8px}
+.brand span{font:800 18px var(--display);letter-spacing:-.01em}.brand b{color:var(--gold)}
+.eyebrow{font:700 11.5px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+h1{font:800 clamp(26px,7.4vw,32px)/1.16 var(--display);letter-spacing:-.015em;margin:0 0 14px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--gold)}
+.sub{color:var(--muted);font-size:15.5px;margin:0 0 20px;max-width:40ch}
+.video-card{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 18px 40px -18px rgba(0,0,0,.7);margin:0 0 16px;border:1px solid var(--rule)}
+.video-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.play-veil{position:absolute;inset:0;background:rgba(7,28,63,.25);display:flex;align-items:center;justify-content:center;cursor:pointer;border:0;padding:0;width:100%;transition:opacity .25s}
+.play-veil.hide{opacity:0;pointer-events:none}
+.play-btn{width:68px;height:68px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px -8px rgba(229,168,35,.7)}
+.play-btn svg{width:24px;height:24px;margin-left:4px;fill:var(--bg)}
+.progress-track{position:absolute;left:14px;right:14px;bottom:14px;height:3px;background:rgba(255,255,255,.22);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:var(--gold);transition:width .12s linear}
+.cta-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;text-align:center;background:var(--gold);color:var(--bg);font:800 17px var(--body);padding:16px 20px;border-radius:999px;text-decoration:none;box-shadow:0 10px 24px -10px rgba(229,168,35,.6);min-height:52px}
+.cta-btn svg{width:20px;height:20px;fill:var(--bg)}
+.cta-note{text-align:center;color:var(--muted);font-size:13px;margin:8px 0 34px}
+.sec-h{font:800 21px/1.25 var(--display);margin:0 0 14px;text-wrap:balance}
+.points{display:grid;gap:10px;margin:0 0 30px}
+.pt{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:14px 16px}
+.pt i{font:800 15px var(--display);font-style:normal;width:40px;height:40px;border-radius:12px;background:var(--card2);color:var(--gold);display:flex;align-items:center;justify-content:center}
+.pt b{display:block;font:800 16.5px/1.3 var(--display);margin:0 0 3px}
+.pt p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.45}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 10px}
+.stat{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:14px}
+.stat b{display:block;font:800 30px/1 var(--display);color:var(--gold)}
+.stat span{font-size:13px;color:var(--muted)}
+.foot-note{font-size:12px;color:var(--muted);margin:0 0 30px}
+.split{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:16px;margin:0 0 30px}
+.split .row{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--rule);font-size:15px}
+.split .row:first-of-type{border-top:0}
+.split .row b{font:800 16px var(--display);white-space:nowrap}
+.split .row.g b{color:var(--gold)}
+.bar{display:flex;height:12px;border-radius:6px;overflow:hidden;margin:10px 0 4px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 30px}
+.st{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px 10px;text-align:center}
+.st b{display:block;font:800 22px var(--display);color:var(--gold)}
+.st span{font-size:13px;line-height:1.35;display:block;color:var(--ink)}
+footer{padding:28px 0 40px;color:var(--muted);font-size:12px;line-height:1.6;border-top:1px solid var(--rule);margin-top:30px}
+footer b{color:var(--ink)}
+@media (min-width:460px){.wrap{padding-top:16px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2095035484448635');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2095035484448635&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<script>
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a.cta-btn').forEach(function(b){b.addEventListener('click',function(){if(typeof fbq==='function')fbq('track','Contact',{content_name:'prelander-cohost'})})})});
+</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><img src="assets/logo.png" alt=""><span>Indico<b>Stay</b></span></div>
+  <p class="eyebrow">Para gestores e agentes de alojamentos</p>
+  <h1>Gere alojamentos? <em>A sua parte cai na sua conta</em>, automaticamente</h1>
+  <p class="sub">Mais propriedades, mais organização e regras mais claras. Veja o vídeo de 1 minuto.</p>
+  <div class="video-card">
+    <video id="vid" playsinline preload="metadata" poster="assets/poster.jpg"><source src="assets/video.mp4?v=1" type="video/mp4"></video>
+    <button class="play-veil" id="playVeil" aria-label="Ver o vídeo"><span class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <a class="cta-btn" href="https://wa.me/258865178862?text=Ol%C3%A1%20Sara%2C%20vi%20o%20v%C3%ADdeo%20da%20IndicoStay%20para%20co-hosts%20e%20quero%20marcar%20uma%20conversa%20de%2015%20minutos." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.1z"/></svg>Marcar conversa no WhatsApp</a>
+  <p class="cta-note">Abre o WhatsApp com a Sara, a nossa assistente, para marcar uma conversa de 15 minutos.</p>
+
+  <h2 class="sec-h">Porque estamos a falar consigo</h2>
+  <div class="points">
+    <div class="pt"><i>1</i><div><b>A sua parte cai na sua conta, automaticamente</b><p>A IndicoStay paga a parte do co-host diretamente na sua conta. O proprietário recebe apenas o valor final. Sem acertos de contas à mão.</p></div></div>
+  </div>
+  <div class="split">
+    <div class="row"><span>Reserva (exemplo)</span><b>10.000 MZN</b></div>
+    <div class="row"><span>Comissão IndicoStay (15%)</span><b>1.500 MZN</b></div>
+    <div class="row g"><span>Co-host (10%, combinado com o dono)</span><b>1.000 MZN</b></div>
+    <div class="row"><span>Proprietário recebe</span><b>7.500 MZN</b></div>
+    <div class="bar"><div style="width:15%;background:#8FA0BD"></div><div style="width:10%;background:var(--gold)"></div><div style="width:75%;background:#3F78C7"></div></div>
+    <div class="legend"><span><i style="background:#8FA0BD"></i>IndicoStay</span><span><i style="background:var(--gold)"></i>Co-host</span><span><i style="background:#3F78C7"></i>Proprietário</span></div>
+  </div>
+  <div class="stats"><div class="stat"><b>+100 mil</b><span>visitantes mensais na plataforma*</span></div><div class="stat"><b>+10 M</b><span>de alcance digital combinado*</span></div></div><p class="foot-note">* Visitantes do website da IndicoStay num mês e visualizações acumuladas em 30 dias pelos criadores parceiros. Visualizações não são reservas.</p>
+  <div class="points">
+    <div class="pt"><i>2</i><div><b>Distribuição para todo o portefólio</b><p>Influenciadores, campanhas em Meta e Google e outros canais a trabalhar pela descoberta dos alojamentos que gere.</p></div></div>
+    <div class="pt"><i>3</i><div><b>Regras claras de atribuição</b><p>Cada pedido fica registado com origem, data e imóvel. Proteção baseada em prova, definida por escrito.</p></div></div>
+    <div class="pt"><i>4</i><div><b>Sem exclusividade automática</b><p>O proprietário mantém os seus canais e agentes. Cada reserva tem uma origem identificável.</p></div></div>
+    <div class="pt"><i>5</i><div><b>Vários alojamentos, menos confusão</b><p>Organização por propriedade e responsável, com histórico de reservas para prestar contas a cada dono.</p></div></div>
+    <div class="pt"><i>6</i><div><b>Formação e acompanhamento</b><p>Configuramos o painel consigo, orientamos a gestão de reservas e apoiamos o alinhamento com os proprietários.</p></div></div>
+  </div>
+
+  <a class="cta-btn" href="https://wa.me/258865178862?text=Ol%C3%A1%20Sara%2C%20vi%20o%20v%C3%ADdeo%20da%20IndicoStay%20para%20co-hosts%20e%20quero%20marcar%20uma%20conversa%20de%2015%20minutos." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.1z"/></svg>Marcar conversa no WhatsApp</a>
+  <p class="cta-note" style="margin-bottom:0">Sem compromisso. Só uma conversa para conhecer o seu caso.</p>
+  <footer><b>IndicoStay</b> · indicostay.com · A plataforma de alojamentos focada em Moçambique.<br>Exemplo ilustrativo. A percentagem do co-host é combinada com cada proprietário.</footer>
+</div>
+<script>
+var vid=document.getElementById('vid'),veil=document.getElementById('playVeil'),fill=document.getElementById('progressFill');
+veil.addEventListener('click',function(){vid.play()});
+vid.addEventListener('play',function(){veil.classList.add('hide')});
+vid.addEventListener('pause',function(){if(!vid.ended)veil.classList.remove('hide')});
+vid.addEventListener('click',function(){vid.paused?vid.play():vid.pause()});
+vid.addEventListener('timeupdate',function(){if(vid.duration)fill.style.width=(vid.currentTime/vid.duration*100)+'%'});
+vid.addEventListener('ended',function(){veil.classList.remove('hide');fill.style.width='0%'});
+</script>
+</body>
+</html>
