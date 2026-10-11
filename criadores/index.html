@@ -150,10 +150,6 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
         <input id="nts" type="range" min="1" max="10" step="1">
         <small id="o-val">Cada estadia vale 2 noites × 6.000 MZN = 12.000 MZN.</small>
       </div>
-      <div class="field">
-        <label for="est">Estadias por cliente em 6 meses <output id="o-est"></output></label>
-        <input id="est" type="range" min="1" max="4" step="1">
-      </div>
 
       <div class="late" style="margin:0 0 4px">
         <b>Conheces alguém com casa, lodge ou hotel?</b> Como co-host ganhas uma parte de cada noite reservada, além da tua comissão de criador.
@@ -182,7 +178,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
 
     <section aria-label="Resultado">
       <div class="big">
-        <div class="lbl">Por mês, a partir do 6.º mês</div>
+        <div class="lbl">Num mês normal</div>
         <div class="num" id="r-ano">0 MZN</div>
         <div class="note" id="r-note"></div>
       </div>
@@ -195,7 +191,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
 
       <div class="card">
         <h2>Mês a mês</h2>
-        <p class="sub">A comissão acumula: os clientes de cada mês continuam a pagar-te durante 6 meses, enquanto entram novos.</p>
+        <p class="sub">Cada mês conta os clientes que reservaram nesse mês, uma estadia cada. Em dezembro entra o dobro.</p>
         <div class="chart" id="chart" role="img" aria-label="Gráfico de ganhos por mês"></div>
         <div class="months" id="months"></div>
         <div class="legend"><span><i style="background:var(--navy2)"></i>Clientes do teu link</span></div>
@@ -238,9 +234,9 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 32px}
 
 <script>
 const PRESETS={
-  micro:{seg:25000,ctr:1,conv:2,ppn:6000,nts:2,est:2},
-  medio:{seg:50000,ctr:1,conv:2,ppn:6000,nts:2,est:2},
-  grande:{seg:120000,ctr:1,conv:2,ppn:7500,nts:2,est:2}
+  micro:{seg:25000,ctr:1,conv:2,ppn:6000,nts:2},
+  medio:{seg:50000,ctr:1,conv:2,ppn:6000,nts:2},
+  grande:{seg:120000,ctr:1,conv:2,ppn:7500,nts:2}
 };
 const DEF={start:0,pico:2};
 const FEE=0.15, GUEST=0.03, WIN=6, NAMES=["Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez","Jan"];
@@ -248,7 +244,7 @@ const $=id=>document.getElementById(id);
 const grp=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 const fmt=n=>grp(n)+' MZN';
 const fmtShort=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' M':n>=1e3?Math.round(n/1e3)+' mil':Math.round(n)+'';
-const ids=["seg","ctr","conv","ppn","nts","est","chosts","cmin","cpct","cnights","start","pico"];
+const ids=["seg","ctr","conv","ppn","nts","chosts","cmin","cpct","cnights","start","pico"];
 let TERMS="f";
 function setVals(o){for(const k in o){$(k).value=o[k]}}
 function dec(cal,pico){return NAMES[cal]==="Dez"?pico:1}
@@ -263,11 +259,10 @@ function ladder(v){
 }
 // 12 months from calendar offset s (0 = Nov 2026); terms "f" founder, "l" later
 function simulate(v,s,terms){
-  const newPerMonth=v.seg*v.ctr/100*v.conv/100, staysPerCust=v.est/WIN;
+  const newPerMonth=v.seg*v.ctr/100*v.conv/100;
   const L=ladder(v), months=[];
   let customers=0;
-  for(let m=0;m<12;m++){const cal=s+m;const j=newPerMonth*dec(cal,v.pico);customers+=j;months.push({cal,joined:j,stays:0,link:0,host:0})}
-  months.forEach((c,i)=>{for(let k=i;k<Math.min(12,i+WIN);k++)months[k].stays+=c.joined*staysPerCust});
+  for(let m=0;m<12;m++){const cal=s+m;const j=newPerMonth*dec(cal,v.pico);customers+=j;months.push({cal,joined:j,stays:j,link:0,host:0})}
   let done=0;
   months.forEach(m=>{
     if(terms==="f"){m.link=m.stays*v.val*0.05}
@@ -287,7 +282,6 @@ function render(){
   $("o-convp").innerHTML='<span><b>'+grp(v.seg)+'</b>visualizações</span><i>→</i><span><b>'+grp(clicks)+'</b>cliques no link</span><i>→</i><span class="end"><b>'+grp(cust)+'</b>clientes por mês</span>';
   $("o-ppn").textContent=fmt(v.ppn);$("o-nts").textContent=v.nts;
   $("o-val").textContent="Cada estadia vale "+v.nts+(v.nts>1?" noites":" noite")+" × "+fmt(v.ppn)+" = "+fmt(v.val)+".";
-  $("o-est").textContent=v.est;
   $("o-chosts").textContent=v.chosts;
   $("o-cmin").textContent=fmt(v.cmin);
   $("o-cpct").textContent=v.cpct+"%";
@@ -304,13 +298,13 @@ function render(){
   const total=link+host, stayLo=TERMS==="f"?4*v.ppn:0, stayHi=TERMS==="f"?8*v.ppn:0;
   const best=r.months.reduce((a,m)=>Math.max(a,m.link+m.host),0);
   const perStay=v.val*(TERMS==="f"?0.05:0.05);
-  const perClient=v.est*v.val*0.05, perClientMonth=perClient/WIN;
-  $("how2-text").textContent="Cada cliente do teu link faz "+v.est+(v.est>1?" estadias":" estadia")+" nos 6 meses. Cada estadia vale "+fmt(v.val)+" e a tua comissão é 5%, ou seja "+fmt(perStay)+" por estadia. Cada cliente gera "+fmt(perClient)+" em 6 meses, cerca de "+fmt(perClientMonth)+" por mês. Os clientes vão-se acumulando: no mês 6 ainda contam os dos meses anteriores."+(TERMS==="l"?" Depois das 10 vagas, as tuas primeiras 10 estadias pagam 5% e as seguintes 3%.":"");
-  let rows='<tr><th>Mês</th><th>Clientes novos</th><th>Clientes a gerar comissão</th><th>Comissão do mês</th></tr>';
-  r.months.forEach((m,i)=>{let act=0;for(let j=Math.max(0,i-WIN+1);j<=i;j++)act+=r.months[j].joined;rows+='<tr><td>'+(i+1)+'.º mês ('+NAMES[m.cal]+')</td><td>'+grp(m.joined)+'</td><td>'+grp(act)+'</td><td><b>'+fmt(m.link+m.host)+'</b></td></tr>'});
+  
+  $("how2-text").textContent="Cada cliente que reserva pelo teu link conta como 1 estadia, no mês em que reserva. Cada estadia vale "+fmt(v.val)+" e a tua comissão é 5%, ou seja "+fmt(perStay)+" por estadia. Em dezembro entra o dobro. Se a pessoa voltar a ficar, ganhas mais, e isso não está contado."+(TERMS==="l"?" Depois das 10 vagas, as primeiras 10 estadias pagam 5% e as seguintes 3%.":"");
+  let rows='<tr><th>Mês</th><th>Clientes que reservam</th><th>Comissão do mês</th></tr>';
+  r.months.forEach((m,i)=>{rows+='<tr><td>'+(i+1)+'.º mês ('+NAMES[m.cal]+')</td><td>'+grp(m.joined)+'</td><td><b>'+fmt(m.link+m.host)+'</b></td></tr>'});
   $("how2-table").innerHTML=rows;
   const upto=n=>r.months.slice(0,n).reduce((x,m)=>x+m.link+m.host,0);
-  $("r-ano").textContent=fmt(r.months[5].link+r.months[5].host);
+  const nm=r.months.find(m=>NAMES[m.cal]!=="Dez")||r.months[0];$("r-ano").textContent=fmt(nm.link+nm.host);
   $("r-note").textContent=(TERMS==="f"?"Como fundador, ":"Depois das 10 vagas, ")+"com "+Math.round(v.seg*v.ctr/100*v.conv/100)+" novos clientes por mês pelo teu link. Em 1 ano: "+fmt(total)+".";
   $("r-1").textContent=fmtShort(upto(1));$("r-3").textContent=fmtShort(upto(3));
   $("r-6").textContent=fmtShort(upto(6));$("r-12").textContent=fmtShort(upto(12));
@@ -338,7 +332,7 @@ function render(){
   '<details class="how2" open style="margin-top:10px"><summary>De onde vêm estes valores</summary>'+
   '<table class="ladder" style="margin-top:8px">'+
   '<tr><td>Pessoas que reservam pelo teu link em 12 meses</td><td>'+n(nCust)+'</td></tr>'+
-  '<tr><td>Estadias concluídas por essas pessoas nesses 12 meses ('+v.est+' cada, nos 6 meses)</td><td>'+n(nStays)+'</td></tr>'+
+  '<tr><td>Estadias (1 por cliente que reserva)</td><td>'+n(nStays)+'</td></tr>'+
   '<tr><td>Valor de cada estadia</td><td>'+fmt(v.val)+'</td></tr>'+
   '<tr><td><b>Fundador:</b> '+n(nStays)+' estadias × '+fmt(v.val)+' × 5%</td><td>'+fmt(tot(f))+'</td></tr>'+
   '<tr><td><b>Depois das 10 vagas:</b> '+n(first)+' estadias a 5% ('+fmt(first*v.val*0.05)+') + '+n(rest)+' estadias a 3% ('+fmt(rest*v.val*0.03)+')</td><td>'+fmt(tot(l))+'</td></tr>'+
@@ -352,7 +346,7 @@ document.querySelectorAll(".seg2 button").forEach(b=>b.addEventListener("click",
   document.querySelectorAll(".seg2 button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
   TERMS=b.dataset.t;render();
 }));
-ids.forEach(k=>$(k).addEventListener("input",()=>{if(["seg","ctr","conv","ppn","nts","est"].includes(k))document.querySelectorAll(".presets button").forEach(x=>x.classList.remove("on"));render()}));
+ids.forEach(k=>$(k).addEventListener("input",()=>{if(["seg","ctr","conv","ppn","nts"].includes(k))document.querySelectorAll(".presets button").forEach(x=>x.classList.remove("on"));render()}));
 ["cbaseA","cbaseB"].forEach(k=>$(k).addEventListener("change",render));
 setVals(PRESETS.medio);setVals(DEF);render();
 </script>

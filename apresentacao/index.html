@@ -259,32 +259,32 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
         <div class="fld"><label for="s-nts">Noites por estadia</label><input id="s-nts" type="number" min="1" max="10" step="1" value="2"></div>
       </div>
       <div class="seg" id="s-terms"><button class="on" data-t="f">Fundador</button><button data-t="l">Depois das 10 vagas</button></div>
-      <div class="small" style="line-height:1.4">Cada cliente faz 2 estadias em 6 meses. Em dezembro entra o dobro.</div>
+      <div class="small" style="line-height:1.4">Cada reserva conta como 1 estadia, no mês em que a pessoa reserva. Em dezembro entra o dobro. Se a pessoa voltar a ficar, ganhas mais, e isso não está contado.</div>
     </div>
     <div class="a" style="--d:.35s">
       <div class="path" id="s-path"></div>
       <div class="tiles">
-        <div class="tile"><b id="t1">0</b><span>Ganhas no mês 1</span></div>
-        <div class="tile"><b id="t3">0</b><span>Ganhas no mês 3</span></div>
-        <div class="tile gold"><b id="t6">0</b><span>Ganhas no mês 6</span></div>
+        <div class="tile"><b id="t1">0</b><span>Num mês normal</span></div>
+        <div class="tile"><b id="t3">0</b><span>Em dezembro (dobro)</span></div>
+        <div class="tile gold"><b id="t6">0</b><span>Em 6 meses</span></div>
         <div class="tile"><b id="t12">0</b><span>Total em 12 meses</span></div>
       </div>
       <div class="chart" id="s-chart"></div>
       <div class="mlab" id="s-mlab"></div>
-      <p class="small" style="margin-top:10px">Valores em MZN, comissão de cada mês. Passa o rato numa barra para ver o valor. Não é uma promessa de rendimento.</p>
+      <p class="small" style="margin-top:10px">Valores em MZN, comissão de cada mês (clientes × estadia × 5%). Passa o rato numa barra para ver o valor. Não é uma promessa de rendimento.</p>
     </div>
   </div>
   <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>08</span></div>
 </section>
 
 <!-- 9 -->
-<section class="s dark" data-n="Explica porque o mês 1 é pequeno: só contam os clientes desse mês. No mês 6 contam seis meses de clientes ao mesmo tempo.">
+<section class="s dark" data-n="Cada barra é o total ganho até esse mês. Não escondemos nada: 10 clientes por mês, uma estadia cada, dezembro a dobrar. Se voltarem a ficar, é a mais.">
   <img class="logo" src="img/logo.png" alt="">
-  <p class="k a">Porque cresce todos os meses</p>
-  <h1 class="a" style="--d:.1s;font-size:42px">O mês 6 vale 7 vezes o mês 1</h1>
+  <p class="k a">Como se acumula</p>
+  <h1 class="a" style="--d:.1s;font-size:42px">Cada mês soma ao anterior</h1>
   <div class="gbars" id="g-bars"></div>
   <div class="glab"><span>Mês 1</span><span>Mês 2</span><span>Mês 3</span><span>Mês 4</span><span>Mês 5</span><span>Mês 6</span></div>
-  <p class="lead a" style="--d:.9s;margin-top:18px;font-size:17px">Exemplo: 50 mil visualizações por mês e 10 clientes novos por mês, comissão em MZN. No mês 1 contam só os clientes desse mês. No mês 6 contam seis meses de clientes ao mesmo tempo, porque cada um continua a render durante 6 meses.</p>
+  <p class="lead a" style="--d:.9s;margin-top:18px;font-size:17px">Total ganho até cada mês, em MZN. Exemplo: 50 mil visualizações por mês, 1% clica e 2% reserva, ou seja 10 clientes por mês, uma estadia de 2 noites a 6.000 MZN. Dezembro conta o dobro. Se um cliente voltar a ficar, ganhas mais, e isso não está contado.</p>
   <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span>09</span></div>
 </section>
 
@@ -298,7 +298,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
     <div class="col card a" style="--d:.35s"><h3>Quem entrar depois</h3><p style="font-size:18px">As <b>primeiras 10 estadias</b> pagam 5%. A partir da 11.ª, pagam <b>3%</b>.</p></div>
   </div>
   <div class="panel a" style="--d:.5s;margin-top:18px;background:var(--card);border-color:#27457a;color:#fff">
-    <div class="fld" style="margin-bottom:6px"><label for="f-n" style="color:#fff">Estadias concluídas dos teus clientes no ano (12.000 MZN cada) <b id="f-nv" style="color:var(--gold);font-size:20px">210</b></label><input id="f-n" type="range" min="10" max="600" step="10" value="210"></div>
+    <div class="fld" style="margin-bottom:6px"><label for="f-n" style="color:#fff">Estadias concluídas dos teus clientes no ano (12.000 MZN cada) <b id="f-nv" style="color:var(--gold);font-size:20px">130</b></label><input id="f-n" type="range" min="10" max="600" step="10" value="130"></div>
     <div class="cmp">
       <div class="cbar"><div class="t"><span>Fundador</span><em id="f-a">0</em></div><div class="tr"><div class="fi" id="f-ab"></div></div></div>
       <div class="cbar l"><div class="t"><span>Depois das 10 vagas</span><em id="f-b" style="color:#fff">0</em></div><div class="tr"><div class="fi" id="f-bb"></div></div></div>
@@ -452,20 +452,19 @@ function go(i,fromEnd){
 function next(){var s=slides[cur],n=+s.getAttribute('data-steps')||0;if(step<n){step++;steps(s,step)}else go(cur+1)}
 function prev(){var s=slides[cur];if(step>0){step--;steps(s,step)}else go(cur-1,true)}
 /* sim engine */
-function simulate(o){var c=o.views*o.ctr/100*o.book/100,V=o.ppn*o.nts,per=o.est/6,j=[],st=[],i,k;for(i=0;i<12;i++){j.push(c*(i===1?2:1));st.push(0)}
- for(i=0;i<12;i++)for(k=i;k<Math.min(12,i+6);k++)st[k]+=j[i]*per;
- var cum=0,m=[];st.forEach(function(s){var f=s*V*0.05,l=0;if(o.founder)m.push(f);else{var a=Math.max(0,Math.min(s,10-cum));l=a*V*0.05+(s-a)*V*0.03;m.push(l)}cum+=s});
- return{c:c,months:m,total:m.reduce(function(a,b){return a+b},0),stays:st.reduce(function(a,b){return a+b},0)}}
+function simulate(o){var c=o.views*o.ctr/100*o.book/100,V=o.ppn*o.nts,st=[],i;for(i=0;i<12;i++)st.push(c*(i===1?2:1));
+ var cum=0,m=[];st.forEach(function(n){var f=n*V*0.05;if(o.founder)m.push(f);else{var a=Math.max(0,Math.min(n,10-cum));m.push(a*V*0.05+(n-a)*V*0.03)}cum+=n});
+ return{c:c,months:m,total:m.reduce(function(a,b){return a+b},0),stays:cum}}
 var MON=['Nov','Dez','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out'];
 /* slide 8 */
 var sTerms='f',$=function(id){return document.getElementById(id)};
 (function(){var ch=$('s-chart'),ml=$('s-mlab');for(var i=0;i<12;i++){var b=document.createElement('div');b.className='bar'+(i===1?' dec':'');ch.appendChild(b);var s=document.createElement('span');s.textContent=MON[i];ml.appendChild(s)}})();
 function num(id){var v=parseFloat(String($(id).value).replace(',','.'));return isNaN(v)?0:v}
 function renderSim(){
-  var o={views:num('s-views'),ctr:Math.min(100,Math.max(0,num('s-ctr'))),book:Math.min(100,Math.max(0,num('s-book'))),ppn:num('s-ppn'),nts:Math.max(1,num('s-nts')),est:2,founder:sTerms==='f'};
+  var o={views:num('s-views'),ctr:Math.min(100,Math.max(0,num('s-ctr'))),book:Math.min(100,Math.max(0,num('s-book'))),ppn:num('s-ppn'),nts:Math.max(1,num('s-nts')),founder:sTerms==='f'};
   var r=simulate(o),cl=o.views*o.ctr/100;
   $('s-path').innerHTML='<span>'+grp(o.views)+' visualizações</span>&rarr;<span>'+grp(cl)+' cliques</span>&rarr;<span class="end"><b>'+(r.c<10?String(Math.round(r.c*10)/10).replace('.',','):grp(r.c))+' clientes por mês</b></span>';
-  [['t1',0],['t3',2],['t6',5]].forEach(function(p){tween($(p[0]),r.months[p[1]])});tween($('t12'),r.total);
+  tween($('t1'),r.months[0]);tween($('t3'),r.months[1]);tween($('t6'),r.months.slice(0,6).reduce(function(a,b){return a+b},0));tween($('t12'),r.total);
   var mx=Math.max.apply(null,r.months)||1;
   [].forEach.call($('s-chart').children,function(b,i){b.style.height=(r.months[i]/mx*100)+'%';b.setAttribute('data-v',MON[i]+': '+grp(r.months[i])+' MZN')});
   [].forEach.call(document.querySelectorAll('#presets .chipb'),function(c){c.classList.toggle('on',+c.getAttribute('data-v')===o.views)});
@@ -476,7 +475,7 @@ function tween(el,to){if(reduce){el.textContent=grp(to);return}var from=tw.get(e
 [].forEach.call(document.querySelectorAll('#presets .chipb'),function(c){c.addEventListener('click',function(){$('s-views').value=c.getAttribute('data-v');renderSim()})});
 [].forEach.call(document.querySelectorAll('#s-terms button'),function(b){b.addEventListener('click',function(){sTerms=b.getAttribute('data-t');[].forEach.call(document.querySelectorAll('#s-terms button'),function(x){x.classList.toggle('on',x===b)});renderSim()})});
 /* slide 9 */
-(function(){var w=$('g-bars'),r=simulate({views:50000,ctr:1,book:2,ppn:6000,nts:2,est:2,founder:true});for(var i=0;i<6;i++){var d=document.createElement('div');d.className='gb'+(i===5?' last':'');d.innerHTML='<div class="v">'+grp(r.months[i])+'</div><div class="b" data-h="'+(r.months[i]/r.months[5]*100)+'"></div>';w.appendChild(d)}})();
+(function(){var w=$('g-bars'),r=simulate({views:50000,ctr:1,book:2,ppn:6000,nts:2,founder:true}),cu=0,cs=[];r.months.slice(0,6).forEach(function(v){cu+=v;cs.push(cu)});for(var i=0;i<6;i++){var d=document.createElement('div');d.className='gb'+(i===5?' last':'');d.innerHTML='<div class="v">'+grp(cs[i])+'</div><div class="b" data-h="'+(cs[i]/cs[5]*100)+'"></div>';w.appendChild(d)}})();
 function growBars(){[].forEach.call(document.querySelectorAll('#g-bars .b'),function(b,i){b.style.height='0';setTimeout(function(){b.style.height=(b.getAttribute('data-h')*2.1)+'px'},reduce?0:400+i*220)})}
 /* slide 10 */
 function renderF(){var n=num('f-n'),V=12000,fo=n*V*0.05,la=Math.min(n,10)*V*0.05+Math.max(0,n-10)*V*0.03;$('f-nv').textContent=grp(n);tween($('f-a'),fo);tween($('f-b'),la);tween($('f-d'),fo-la);$('f-ab').style.width='100%';$('f-bb').style.width=(la/fo*100)+'%'}
