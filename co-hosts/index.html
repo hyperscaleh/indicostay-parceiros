@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IndicoStay · Co-hosts</title>
+<meta name="description" content="Apresentação interativa da IndicoStay para co-hosts: portefólio, comissões, atribuição de leads e como integrar.">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{--navy:#071c3f;--navy2:#0b2d5c;--card:#143a6e;--gold:#e5a823;--gold2:#f3c862;--cream:#f6f1e8;--ink:#10213d;--muted:#5d6b82;--soft:#c9d4e6;--line:#e3dccf;--blue:#3f78c7;
+--display:"Archivo","Helvetica Neue",Arial,sans-serif;--body:"Source Sans 3","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#050f22;overflow:hidden;font-family:var(--body);color:var(--ink)}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;overflow:hidden;border-radius:6px;background:var(--navy)}
+.s{position:absolute;inset:0;padding:58px 76px 64px;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility .45s;overflow:hidden}
+.s.on{opacity:1;visibility:visible}
+.dark{background:var(--navy);color:#fff}.navy{background:var(--navy2);color:#fff}.cream{background:var(--cream)}.gold{background:var(--gold);color:var(--navy)}
+.logo{position:absolute;top:34px;right:70px;width:62px;height:62px;border-radius:9px}
+.foot{position:absolute;left:76px;right:76px;bottom:22px;display:flex;justify-content:space-between;font:700 12px var(--body);letter-spacing:.07em;color:#7d8aa3}
+.dark .foot,.navy .foot{color:#8fa0bd}.gold .foot{color:#7a5a12}
+.k{font:700 13px var(--body);letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:0 0 10px}.gold .k{color:var(--navy)}
+h1{font:800 46px/1.06 var(--display);margin:0 0 18px;letter-spacing:-.01em;max-width:960px;text-wrap:balance}
+h1.xl{font-size:68px;line-height:1.02}
+h2,h3{font-family:var(--display);margin:0}
+.lead{font-size:20px;line-height:1.45;color:var(--muted);max-width:820px;margin:0}.dark .lead,.navy .lead{color:var(--soft)}
+.row{display:flex;gap:22px}.col{flex:1 1 0;min-width:0}
+.card{background:#fff;border-radius:18px;padding:24px 26px;transition:transform .25s ease,box-shadow .25s ease}
+.dark .card,.navy .card{background:var(--card);color:#fff}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.18)}
+.card h3{font-size:21px;margin:0 0 8px}.card p{font-size:16px;line-height:1.45;margin:0;color:var(--muted)}.dark .card p,.navy .card p{color:var(--soft)}
+.num{font:800 38px var(--display);color:var(--gold);margin-bottom:6px}
+.chip{display:inline-block;background:var(--gold);color:var(--navy);border-radius:999px;font:800 15px var(--body);padding:8px 20px}
+.tick{list-style:none;padding:0;margin:14px 0 0}.tick li{font-size:17px;margin:0 0 10px;padding-left:26px;position:relative;line-height:1.35}
+.tick li:before{content:"";position:absolute;left:0;top:7px;width:12px;height:12px;border-radius:50%;background:var(--gold)}
+.small{font-size:13px;color:var(--muted)}.dark .small,.navy .small{color:#9fb0cc}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 24px;font:800 16px var(--body);cursor:pointer;background:var(--gold);color:var(--navy);text-decoration:none;transition:transform .2s,filter .2s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:#fff;border:2px solid var(--gold)}
+/* animation */
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes slideL{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes kb{from{transform:scale(1.0)}to{transform:scale(1.08)}}
+.s .a{opacity:0}
+.s.play .a{animation:rise .6s cubic-bezier(.2,.8,.2,1) var(--d,0s) both}
+.s.play .a.pop{animation-name:pop}
+.s.play .a.sl{animation-name:slideL}
+.st{opacity:0;transform:scale(.85);pointer-events:none;transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+.st.show{opacity:1;transform:none;pointer-events:auto}
+/* chrome */
+#bar{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;justify-content:center;gap:14px;color:#9fb0cc;font:700 13px var(--body);opacity:.35;transition:opacity .25s;z-index:5}
+#bar:hover{opacity:1}
+#bar button{background:#10264d;color:#fff;border:1px solid #27457a;border-radius:8px;width:34px;height:30px;cursor:pointer;font-size:15px}
+#bar button:hover{background:#1b3a70}
+#prog{position:fixed;left:0;top:0;height:4px;background:var(--gold);width:0;transition:width .4s;z-index:6}
+#notes{position:fixed;left:50%;transform:translateX(-50%);bottom:54px;max-width:860px;width:calc(100% - 40px);background:rgba(7,28,63,.96);color:#fff;border:1px solid #27457a;border-radius:14px;padding:14px 18px;font:400 16px/1.45 var(--body);display:none;z-index:7}
+#notes.show{display:block}#notes b{color:var(--gold)}
+#hint{position:fixed;right:18px;bottom:56px;background:rgba(7,28,63,.95);color:#c9d4e6;border:1px solid #27457a;border-radius:12px;padding:10px 14px;font:600 13px var(--body);z-index:7;transition:opacity .6s}
+kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-radius:5px;padding:1px 6px;font:700 12px var(--body);color:#fff}
+/* slide specific */
+.hero{position:absolute;right:0;top:0;bottom:0;width:530px;object-fit:cover;animation:kb 14s ease-in-out infinite alternate}
+.herowrap{position:absolute;right:0;top:0;bottom:0;width:530px;overflow:hidden}
+.flow{display:flex;align-items:center;gap:12px}
+.fbox{flex:1;background:var(--card);border-radius:14px;padding:12px 16px;text-align:center}
+.fbox small{display:block;font:700 11px var(--body);color:var(--gold);letter-spacing:.08em}
+.fbox b{font-size:16px;display:block}.fbox em{font:800 16px var(--body);font-style:normal;color:var(--gold)}
+.fop{font:800 26px var(--display);color:var(--gold)}
+.bubbles{display:flex;align-items:center;justify-content:center;gap:20px;height:360px;margin-top:6px}
+.bub{border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--card);border:3px solid var(--blue)}
+.bub b{font:800 12px var(--body);letter-spacing:.08em;color:var(--gold)}.bub strong{font:800 40px/1.05 var(--display)}.bub span{font-size:14px;color:var(--soft);font-weight:600}
+.bub.b2{background:var(--gold);color:var(--navy);border-color:var(--gold2)}.bub.b2 b,.bub.b2 span{color:var(--navy)}
+.bub.b3{border-color:var(--gold)}
+.mult{text-align:center;font:800 14px var(--body);color:var(--gold)}.mult i{display:block;font:800 30px var(--display);font-style:normal;line-height:1}
+.tabs{display:flex;gap:10px;margin:6px 0 14px}
+.tab{border:2px solid #cfc6b4;background:#fff;border-radius:999px;padding:9px 22px;font:800 16px var(--body);color:var(--ink);cursor:pointer}
+.tab.on{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.lv{display:grid;grid-template-columns:200px repeat(3,1fr);gap:0;background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.lv>div{padding:15px 18px;border-bottom:1px solid var(--line);font-size:17px;line-height:1.3;transition:background .3s,color .3s}
+.lv>div:nth-last-child(-n+4){border-bottom:0}
+.lv .h{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lv .rl{font-weight:700;color:var(--navy2)}.lv .rl small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.lv .c.hl{background:#fff4d3}.lv .h.hl{background:var(--gold);color:var(--navy)}
+.sim{display:grid;grid-template-columns:400px 1fr;gap:26px;align-items:start}
+.panel{background:#fff;border-radius:18px;padding:18px 22px;border:1px solid var(--line)}
+.fld{margin-bottom:12px}.fld label{display:flex;justify-content:space-between;font:700 14px var(--body);margin-bottom:4px}
+.fld input[type=number]{width:100%;font:800 20px var(--body);color:var(--navy2);border:2px solid var(--line);border-radius:10px;padding:7px 12px}
+.fld input[type=range]{width:100%;accent-color:var(--gold)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chipb{border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font:800 14px var(--body);cursor:pointer;color:var(--ink)}.chipb.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.seg{display:flex;gap:8px;margin-bottom:12px}.seg button{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px;font:800 14px var(--body);cursor:pointer;color:var(--ink)}
+.seg button.on{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.path{display:flex;align-items:center;gap:8px;font:700 14px var(--body);margin-bottom:12px;flex-wrap:wrap}
+.path span{background:#f3efe6;border:1px solid var(--line);border-radius:10px;padding:6px 12px}.path span.end{background:#fff4d3;border-color:#f0d58f}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}.tile b{display:block;font:800 25px var(--display);color:var(--navy2);white-space:nowrap}.tile span{font-size:13px;color:var(--muted);font-weight:600}
+.tile.gold{background:var(--navy2);border-color:var(--navy2)}.tile.gold b{color:var(--gold)}.tile.gold span{color:var(--soft)}
+.chart{display:flex;align-items:flex-end;gap:6px;height:215px;border-bottom:2px solid var(--line);padding-top:6px}
+.chart .bar{flex:1;background:var(--navy2);border-radius:6px 6px 0 0;height:0;transition:height .6s cubic-bezier(.2,.8,.2,1);position:relative}
+.chart .bar.dec{background:var(--blue)}
+.chart .bar:hover::after{content:attr(data-v);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font:700 12px var(--body);padding:3px 8px;border-radius:6px;white-space:nowrap}
+.mlab{display:flex;gap:6px;margin-top:4px}.mlab span{flex:1;text-align:center;font-size:11px;color:var(--muted)}
+.gbars{display:flex;align-items:flex-end;gap:16px;height:270px;border-bottom:2px solid #3a5a8c;margin-top:8px}
+.gb{flex:1;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.gb .v{font:700 15px var(--body);color:var(--soft);margin-bottom:5px}
+.gb .b{background:var(--blue);border-radius:8px 8px 0 0;height:0;transition:height .9s cubic-bezier(.2,.8,.2,1)}
+.gb.last .b{background:var(--gold)}.gb.last .v{color:var(--gold)}
+.glab{display:flex;gap:16px;margin-top:6px;color:var(--soft);font-size:14px}.glab span{flex:1;text-align:center}
+.cmp{display:grid;grid-template-columns:1fr;gap:12px;margin-top:6px}
+.cbar{background:var(--card);border-radius:14px;padding:12px 18px}
+.cbar .t{display:flex;justify-content:space-between;font:800 15px var(--body);margin-bottom:6px}.cbar .t em{font-style:normal;color:var(--gold);font-size:24px}
+.cbar .tr{height:20px;background:#0d2b57;border-radius:10px;overflow:hidden}.cbar .fi{height:100%;background:var(--gold);width:0;transition:width .5s;border-radius:10px}
+.cbar.l .fi{background:var(--blue)}
+.big3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.qa{background:var(--card);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.qa button{width:100%;text-align:left;background:none;border:0;color:#fff;font:800 17px var(--body);padding:13px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.qa button:after{content:"+";font-size:24px;color:var(--gold);transition:transform .25s}.qa.open button:after{transform:rotate(45deg)}
+.qa div{max-height:0;overflow:hidden;color:var(--soft);font-size:15px;line-height:1.45;padding:0 18px;transition:max-height .35s ease,padding .35s}
+.qa.open div{max-height:130px;padding:0 18px 14px}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.done{display:none;position:absolute;top:12px;right:14px;width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--navy);font:800 16px/28px var(--body);text-align:center}
+.card.chk{cursor:pointer;position:relative;user-select:none}.card.chk.ok .done{display:block}.card.chk.ok{outline:3px solid var(--gold)}
+@media (prefers-reduced-motion:reduce){.s .a,.s.play .a,.st{animation:none!important;opacity:1;transform:none;transition:none}.hero{animation:none}.gb .b,.chart .bar{transition:none}}
+
+/* ---- host deck additions ---- */
+.hubwrap{display:grid;grid-template-columns:560px 1fr;gap:26px;align-items:center;height:520px}
+#hub{width:560px;height:500px;overflow:visible}
+.hn{cursor:pointer;transition:transform .25s}
+.hn circle{fill:#143a6e;stroke:#3f78c7;stroke-width:3;transition:fill .25s,stroke .25s}
+.hn text{fill:#fff;font:800 13px Archivo,Arial,sans-serif;text-anchor:middle;pointer-events:none}
+.hn:hover circle,.hn.on circle{fill:#1b4a8a;stroke:#e5a823}
+.hn.core circle{fill:#e5a823;stroke:#f3c862}.hn.core text{fill:#071c3f}
+.hn.on circle{stroke-width:5}
+.hubl line{animation:dash 1.6s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-22}}
+.hubpanel{background:var(--card);border-radius:18px;padding:24px 26px;min-height:300px}
+.hubpanel h3{font-size:26px;margin:0 0 6px;color:var(--gold)}
+.hubpanel .one{font-size:18px;line-height:1.4;color:#fff;margin:0 0 12px}
+.hubpanel ul{margin:0;padding:0;list-style:none}.hubpanel li{font-size:16px;color:var(--soft);padding:5px 0 5px 22px;position:relative;line-height:1.35}
+.hubpanel li:before{content:"";position:absolute;left:0;top:12px;width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.hubpanel .lk{margin-top:12px;font:700 14px var(--body);color:var(--gold2)}
+.phone{position:absolute;right:140px;top:96px;width:280px;height:540px;border-radius:40px;background:#050f22;border:6px solid #27457a;padding:14px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.pscr{background:#fff;border-radius:28px;height:100%;overflow:hidden;color:var(--ink)}
+.pscr img{width:100%;height:240px;object-fit:cover;display:block}
+.pbody{padding:16px 18px}.pbody b{display:block;font:800 19px var(--display)}.pbody span{font-size:12px;color:var(--muted)}
+.pr{margin:14px 0 10px;font-size:15px;color:var(--muted)}.pr em{font:800 24px var(--display);font-style:normal;color:var(--navy2)}
+.pay{display:flex;gap:8px;margin-bottom:14px}.pay i{font:800 13px var(--body);font-style:normal;background:#fff4d3;border:1px solid #f0d58f;border-radius:999px;padding:5px 12px;color:var(--navy)}
+.pbtn{background:var(--gold);color:var(--navy);text-align:center;font:800 17px var(--body);border-radius:14px;padding:13px}
+.stairs{display:flex;align-items:flex-end;gap:14px;height:450px;margin-top:6px;border-bottom:3px solid var(--line)}
+.stair{flex:1;background:var(--navy2);color:#fff;border-radius:16px 16px 0 0;padding:14px 16px;overflow:hidden}
+.stair b{font:800 30px var(--display);color:var(--gold);display:block;line-height:1}
+.stair h3{font-size:18px;margin:6px 0 4px}.stair p{font-size:14px;line-height:1.35;margin:0;color:var(--soft)}
+.stair.gold{background:var(--gold);color:var(--navy)}.stair.gold b{color:var(--navy)}.stair.gold p{color:var(--navy)}
+.vis{width:100%;height:340px;margin-top:0}
+.vis .cr circle{fill:#143a6e;stroke:#3f78c7;stroke-width:3}.vis .cr text{fill:#fff;font:800 14px Archivo,Arial;text-anchor:middle}
+.vl{fill:#9fb0cc;font:700 14px "Source Sans 3",Arial;text-anchor:middle}
+.flowl path{stroke-dasharray:8 8;animation:dash 1.4s linear infinite}
+.lvc{transition:transform .25s,box-shadow .25s,outline .25s}
+.lvc.hl{outline:4px solid var(--gold);transform:translateY(-6px)}
+.gl{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:4px 0 8px}
+.navy .chipb,.dark .chipb{background:#0d2b57;border-color:#27457a;color:#fff}
+.navy .chipb.on,.dark .chipb.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.navy .path span,.dark .path span{background:#0d2b57;border-color:#27457a;color:#fff}
+.navy .path span.end,.dark .path span.end{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.navy .tile,.dark .tile{background:var(--card);border-color:#27457a}
+.navy .tile b,.dark .tile b{color:#fff}.navy .tile span,.dark .tile span{color:var(--soft)}
+.navy .tile.gold,.dark .tile.gold{background:var(--gold);border-color:var(--gold)}.navy .tile.gold b,.dark .tile.gold b,.navy .tile.gold span,.dark .tile.gold span{color:var(--navy)}
+.navy .panel{background:var(--card);border-color:#27457a;color:#fff}
+.match{background:var(--card);border-radius:18px;padding:22px 24px;border-left:6px solid var(--gold)}
+.match .t{font:700 12px var(--body);letter-spacing:.08em;color:var(--gold);text-transform:uppercase}
+.match h3{font-size:24px;margin:4px 0 8px}.match p{font-size:16px;line-height:1.45;color:var(--soft);margin:0 0 8px}
+.occ{margin-top:6px}.occb{position:relative;height:34px;background:#e9e2d2;border-radius:17px;overflow:hidden}
+.occ1{position:absolute;left:0;top:0;bottom:0;background:var(--gold);width:0;transition:width .5s;border-radius:17px}
+.occ0{position:absolute;left:0;top:0;bottom:0;background:var(--navy2);width:0;transition:width .5s;border-radius:17px;z-index:2}
+.occl{display:flex;justify-content:space-between;font-size:15px;margin-top:6px}
+.split{display:flex;height:46px;border-radius:12px;overflow:hidden;margin-top:6px}
+.split div{transition:width .4s}
+.splitl{display:flex;gap:18px;margin-top:8px;font-size:15px;flex-wrap:wrap}.splitl i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px}.splitl b{color:var(--gold)}
+.ol{margin:10px 0 0;padding-left:22px}.ol li{font-size:16px;margin-bottom:8px;line-height:1.35;color:var(--soft)}
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gi{position:relative;border-radius:14px;overflow:hidden;height:172px;transition:opacity .35s,transform .35s,filter .35s}
+.gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.gi:hover img{transform:scale(1.08)}
+.gi.dim{opacity:.18;filter:grayscale(1);transform:scale(.97)}
+.gi div{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(7,28,63,.92));color:#fff}
+.gi b{display:block;font:800 14px var(--display)}.gi span{font-size:12px;color:var(--gold2)}
+.expg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.expg span{background:#0d2b57;border:1px solid #27457a;border-radius:10px;padding:10px 12px;font:700 14px var(--body)}
+.plan{display:flex;flex-wrap:wrap;gap:10px}
+.plan .chipb{background:#fff;border:2px solid var(--navy);color:var(--navy);font-size:16px;padding:10px 18px}
+.plan .chipb.on{background:var(--navy);color:#fff}
+.cream .card .chipb{background:#fff}
+
+.strip{position:absolute;left:76px;right:76px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:100%;gap:12px;overflow:hidden;border-radius:14px}
+.strip img{width:100%;height:100%;object-fit:cover;border-radius:14px;display:block}
+.strip .il{position:absolute;right:10px;top:8px;background:rgba(7,28,63,.8);color:#fff;font:700 11px var(--body);padding:3px 9px;border-radius:999px}
+
+.vgrid{display:grid;grid-template-columns:470px 1fr;gap:40px;align-items:start}
+.bigstat{font:800 120px/1 var(--display);color:var(--gold);letter-spacing:-.03em;display:flex;align-items:baseline}
+.bs-p{font-size:72px}.bs-m{font-size:88px;margin-left:6px}
+.bs-c{font-size:19px;line-height:1.4;color:#fff;margin:6px 0 14px;max-width:440px}.bs-c b{color:var(--gold)}
+.plats{display:flex;gap:8px}.plats span{background:#0d2b57;border:1px solid #27457a;border-radius:999px;padding:7px 16px;font:800 14px var(--body)}
+.dots{display:flex;gap:8px}.dots i{width:30px;height:30px;border-radius:50%;border:3px solid #3f78c7;display:block}.dots i.on{background:var(--gold);border-color:var(--gold)}
+.stat2{display:flex;align-items:baseline;gap:2px;margin:16px 0 0;font:800 54px/1 var(--display);color:#fff}.s2p,.s2k{color:var(--gold)}.s2c{font:600 16px/1.3 var(--body);color:var(--soft);margin-left:12px;max-width:260px}
+.wantout{font-size:15px;margin:2px 0 4px;color:var(--soft)}.wantout b{color:var(--gold);font-size:19px}
+.autowrap{display:grid;grid-template-columns:500px 1fr;gap:22px;align-items:stretch}
+.autogrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ac{background:var(--card);border:3px solid transparent;border-radius:16px;padding:14px 16px;text-align:left;color:#fff;cursor:pointer;font:inherit;transition:border-color .2s,transform .2s}
+.ac:hover{transform:translateY(-3px)}.ac.on{border-color:var(--gold)}
+.ac b{display:block;font:800 18px var(--display)}.ac span{font-size:13px;color:var(--soft)}
+.autopanel h3{font-size:24px;color:var(--gold);margin:0 0 6px}.autopanel p{font-size:16px;line-height:1.45;color:#fff;margin:0 0 10px}
+.autopanel ul{margin:0 0 12px;padding:0;list-style:none}.autopanel li{font-size:15px;color:var(--soft);padding:4px 0 4px 20px;position:relative}
+.autopanel li:before{content:"";position:absolute;left:0;top:11px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.camp{margin-top:14px;background:var(--gold);color:var(--navy);border-radius:14px;padding:12px 20px;font-size:17px}
+
+.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+.sc{background:#fff;border-radius:18px;padding:20px 20px;min-height:230px;border:1px solid var(--line)}
+.sc b{font:800 40px var(--display);color:var(--gold);display:block;line-height:1;margin-bottom:6px}
+.sc h3{font-size:22px;margin:0 0 8px;color:var(--navy2)}.sc p{font-size:16px;line-height:1.45;color:var(--muted);margin:0}
+.sc.gold{background:var(--navy2)}.sc.gold h3{color:#fff}.sc.gold p{color:var(--soft)}
+.banner{margin-top:22px;background:var(--gold);color:var(--navy);border-radius:14px;padding:14px 22px;font:800 19px var(--body)}
+.tl{display:flex;align-items:stretch;gap:12px;margin-top:22px}
+.tl i{font:800 26px var(--display);color:var(--gold);font-style:normal;align-self:center}
+.tlp{flex:1;background:var(--card);border-radius:14px;padding:16px 18px}
+.tlp b{display:block;font:800 19px var(--display);margin-bottom:4px}.tlp span{font-size:15px;color:var(--soft)}
+.tlp.end{background:var(--gold);color:var(--navy)}.tlp.end span{color:var(--navy)}
+.prog{display:flex;align-items:center;gap:14px;margin-top:14px}
+.progb{flex:1;height:16px;background:#e9e2d2;border-radius:8px;overflow:hidden}.progb div{height:100%;width:0;background:var(--gold);transition:width .4s}
+#doctxt{font:800 16px var(--body);color:var(--navy2);min-width:130px}
+
+/* ---- shared additions for hosts/co-hosts decks ---- */
+.foot .pg{font-variant-numeric:tabular-nums}
+.fn{position:absolute;left:76px;right:76px;bottom:44px;font-size:12.5px;color:#8fa0bd;line-height:1.35}
+.cream .fn{color:var(--muted)}
+.pick{display:grid;gap:14px}
+.pk{background:var(--card);border:3px solid transparent;border-radius:16px;padding:16px 18px;text-align:left;color:#fff;cursor:pointer;font:inherit;transition:border-color .2s,transform .2s}
+.cream .pk{background:#fff;color:var(--ink);border-color:var(--line)}
+.pk:hover{transform:translateY(-3px)}.pk.on{border-color:var(--gold)}
+.pk b{display:block;font:800 19px var(--display)}.pk span{font-size:14px;color:var(--soft)}.cream .pk span{color:var(--muted)}
+.detail{background:var(--card);border-radius:18px;padding:24px 26px;border-left:6px solid var(--gold);min-height:250px}
+.cream .detail{background:#fff;border:1px solid var(--line);border-left:6px solid var(--gold)}
+.detail h3{font-size:26px;margin:0 0 8px;color:var(--gold)}.cream .detail h3{color:var(--navy2)}
+.detail p{font-size:17px;line-height:1.45;margin:0 0 10px;color:var(--soft)}.cream .detail p{color:var(--muted)}
+.detail ul{margin:0;padding:0;list-style:none}.detail li{font-size:16px;padding:5px 0 5px 22px;position:relative;line-height:1.35;color:#fff}
+.cream .detail li{color:var(--ink)}
+.detail li:before{content:"";position:absolute;left:0;top:12px;width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.calc{display:grid;grid-template-columns:420px 1fr;gap:30px;align-items:start}
+.bigv{font:800 46px/1 var(--display);color:var(--navy2)}.navy .bigv,.dark .bigv{color:#fff}
+.res{display:grid;grid-template-columns:1fr;gap:12px}
+.rline{display:flex;justify-content:space-between;align-items:baseline;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:17px}
+.rline b{font:800 26px var(--display);color:var(--navy2)}
+.rline.g{background:var(--navy2);border-color:var(--navy2);color:#fff}.rline.g b{color:var(--gold)}
+.honest{margin-top:14px;background:#fff4d3;border:1px solid #f0d58f;border-radius:12px;padding:10px 14px;font-size:15px;color:var(--navy)}
+.navy .honest,.dark .honest{background:#0d2b57;border-color:#27457a;color:var(--soft)}
+.revl{display:grid;gap:12px;margin-top:10px}
+.rv{display:flex;gap:16px;align-items:center;background:var(--card);border-radius:14px;padding:14px 18px}
+.cream .rv{background:#fff;border:1px solid var(--line)}
+.rv i{font:800 28px var(--display);color:var(--gold);font-style:normal;min-width:36px}
+.rv b{display:block;font:800 19px var(--display)}.rv span{font-size:15px;color:var(--soft)}.cream .rv span{color:var(--muted)}
+.rv.warn{border:2px dashed var(--gold)}
+.matrix{display:grid;grid-template-columns:260px repeat(3,1fr);background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.matrix>div{padding:13px 16px;border-bottom:1px solid var(--line);font-size:16px;display:flex;align-items:center}
+.matrix .h{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:#f6f1e8}
+.matrix .rl{font-weight:700;color:var(--navy2)}
+.matrix .c{justify-content:center;cursor:pointer;transition:background .2s}
+.matrix .c:hover{background:#fff4d3}
+.matrix .c.on{background:var(--gold);color:var(--navy);font-weight:800}
+.matrix .c.on:after{content:"✓";font-weight:800}
+.tri{position:relative;height:430px}
+.tn{position:absolute;width:210px;height:210px;border-radius:50%;background:var(--card);border:4px solid var(--blue);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;transition:border-color .25s,transform .25s;color:#fff;font:inherit}
+.tn:hover{transform:scale(1.04)}.tn.on{border-color:var(--gold);background:#1b4a8a}
+.tn b{font:800 22px var(--display)}.tn span{font-size:13px;color:var(--soft);margin-top:4px;padding:0 18px}
+.tri svg{position:absolute;inset:0}
+.lead-card{background:#fff;border-radius:18px;border:1px solid var(--line);padding:20px 24px;font-family:var(--body)}
+.lead-card .row2{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:17px}
+.lead-card .row2:last-child{border-bottom:0}.lead-card .row2 b{color:var(--navy2)}
+.port{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pc{background:var(--card);border-radius:14px;overflow:hidden;cursor:pointer;border:3px solid transparent;transition:border-color .2s}
+.pc.on{border-color:var(--gold)}
+.pc img{width:100%;height:96px;object-fit:cover;display:block}
+.pc div{padding:10px 12px}.pc b{display:block;font:800 15px var(--display)}.pc span{font-size:12px;color:var(--soft)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.kpi{background:#0d2b57;border:1px solid #27457a;border-radius:14px;padding:12px 14px}
+.kpi b{display:block;font:800 26px var(--display);color:var(--gold)}.kpi span{font-size:13px;color:var(--soft)}
+.chans{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.chan{border:2px solid #27457a;background:#0d2b57;color:#fff;border-radius:999px;padding:9px 18px;font:800 15px var(--body);cursor:pointer}
+.chan.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.stephint{transition:opacity .4s}
+.chan.ix{background:var(--gold);border-color:var(--gold);color:var(--navy);cursor:default}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="stage">
+<section class="s dark" data-n="Abra com a ideia central: mais propriedades, mais organização, regras mais claras. É para gestores, agentes e equipas que já administram alojamentos.">
+ <img class="logo a" src="img/logo.png" alt="">
+ <div style="position:absolute;left:76px;top:70px;width:640px">
+  <p class="k a" style="--d:.1s">IndicoStay · Co-hosts</p>
+  <h1 class="xl a" style="--d:.2s;margin-top:100px;font-size:58px">IndicoStay para co-hosts</h1>
+  <p class="lead a" style="--d:.4s;font-size:22px;max-width:580px">Mais propriedades. Mais organização. Regras mais claras.</p>
+  <ul class="tick a" style="--d:.55s;max-width:560px"><li>Uma parceria para gestores, agentes e equipas que administram alojamentos.</li><li>Um novo canal comercial sem substituir as relações existentes.</li></ul>
+ </div>
+ <div class="herowrap"><img class="hero" src="img/city.jpg" alt=""></div>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg" style="margin-right:560px">01 / 13</span></div>
+</section>
+
+<section class="s navy" data-n="Os números do asterisco: +100 mil visitantes no website num mês e +10 milhões de visualizações acumuladas pelos criadores parceiros em 30 dias. Visualizações, não reservas.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">Porquê ser parceiro?</p>
+ <h1 class="a" style="--d:.05s;font-size:40px">Distribuição de grande escala para o seu portefólio</h1>
+ <div class="row" style="margin-top:20px;gap:40px;align-items:flex-start">
+  <div class="col"><div class="bigstat a" style="--d:.2s;font-size:104px"><span class="bs-p">+</span><span class="bs-n" data-count="100">100</span><span class="bs-m" style="font-size:70px">K</span></div><p class="bs-c a" style="--d:.3s">visitantes mensais na plataforma*</p></div>
+  <div class="col"><div class="bigstat a" style="--d:.35s;font-size:104px"><span class="bs-p">+</span><span class="bs-n" data-count="10">10</span><span class="bs-m" style="font-size:70px">M</span></div><p class="bs-c a" style="--d:.45s">de alcance digital combinado*</p></div>
+ </div>
+ <div class="chans a" style="--d:.6s" id="c2c"></div>
+ <p class="fn">* +100 mil visitantes no website da IndicoStay num mês. +10 milhões de visualizações acumuladas em 30 dias pelos criadores parceiros, no TikTok, Instagram e Facebook. Visualizações não são reservas.</p>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">02 / 13</span></div>
+</section>
+
+<section class="s dark" data-n="Clique em cada parte. Cada uma quer uma coisa diferente, e a transparência protege as três relações.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">O seu maior ativo é a confiança</p>
+ <h1 class="a" style="--d:.05s;font-size:40px">Protegemos relações através de transparência</h1>
+ <div class="row a" style="--d:.2s;gap:30px;align-items:center;margin-top:6px">
+  <div class="tri" style="width:560px;flex:none">
+   <svg viewBox="0 0 560 430"><g stroke="#3f78c7" stroke-width="3" stroke-dasharray="8 8" fill="none" class="flowl"><path d="M280 105 L105 325"/><path d="M280 105 L455 325"/><path d="M105 325 L455 325"/></g></svg>
+   <button class="tn" style="left:175px;top:0" data-t="0"><b>Proprietário</b><span>controlo e visibilidade</span></button>
+   <button class="tn" style="left:0;top:220px" data-t="1"><b>Co-host</b><span>reconhecimento</span></button>
+   <button class="tn" style="left:350px;top:220px" data-t="2"><b>Hóspede</b><span>segurança e clareza</span></button>
+  </div>
+  <div class="detail col" id="c3d"></div>
+ </div>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">03 / 13</span></div>
+</section>
+
+<section class="s cream" data-steps="4" data-n="Avance com a seta. O último ponto é dito com honestidade: não prometemos bloquear totalmente reservas externas.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">O risco das reservas por fora</p>
+ <h1 class="a" style="--d:.05s;font-size:42px">Como reduzir a perda de oportunidades</h1><p class="small stephint" style="font-size:15px;margin:-6px 0 0">Carregue na seta &rarr; para ver cada ponto.</p>
+ <div class="revl" style="margin-top:18px">
+  <div class="rv st" data-step="1"><i>1</i><div><b>Registo de origem</b><span>Registar a origem e o histórico de pedidos gerados na plataforma.</span></div></div>
+  <div class="rv st" data-step="2"><i>2</i><div><b>Contactos protegidos</b><span>Limitar a divulgação de contactos diretos antes da reserva, quando aplicável.</span></div></div>
+  <div class="rv st" data-step="3"><i>3</i><div><b>Regras de atribuição</b><span>Usar regras contratuais de atribuição para leads comprovados.</span></div></div>
+  <div class="rv warn st" data-step="4"><i>!</i><div><b>Com honestidade</b><span>Não prometer bloquear totalmente reservas externas.</span></div></div>
+ </div>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">04 / 13</span></div>
+</section>
+
+<section class="s navy" data-n="Clique nos canais do proprietário. Ele mantém todos. A IndicoStay entra como mais um, e cada reserva tem uma origem identificável.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">E se o proprietário tiver outros agentes?</p>
+ <h1 class="a" style="--d:.05s;font-size:40px">Colaboração sem exclusividade automática</h1>
+ <div class="row a" style="--d:.2s;margin-top:18px;gap:30px;align-items:flex-start">
+  <div class="col">
+   <p class="gl">Canais do proprietário (clique)</p>
+   <div class="chans" id="c5c"></div>
+   <div class="match" style="margin-top:18px"><div class="t">Origem da reserva</div><h3 id="c5o">Cada reserva com uma origem</h3><p id="c5t">Marque os canais e veja como cada reserva fica identificada.</p></div>
+  </div>
+  <div class="col">
+   <ul class="tick" style="margin-top:0"><li>O proprietário mantém outros canais e agentes.</li><li>Cada reserva deve ter uma origem identificável.</li><li>Leads duplicados e conflitos seguem critérios escritos e verificáveis.</li></ul>
+  </div>
+ </div>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">05 / 13</span></div>
+</section>
+
+<section class="s cream" data-n="Faça esta matriz com o co-host na reunião: clique em quem controla cada tarefa. O resultado vai para o acordo, com a autorização do proprietário.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">Quem é responsável por cada reserva?</p>
+ <h1 class="a" style="--d:.05s;font-size:40px">Um processo que evita mal-entendidos</h1>
+ <div class="matrix a" style="--d:.2s;margin-top:16px" id="c6m">
+  <div class="h">Tarefa</div><div class="h" style="justify-content:center">Proprietário</div><div class="h" style="justify-content:center">Co-host</div><div class="h" style="justify-content:center">Os dois</div>
+ </div>
+ <p class="small a" style="--d:.3s;margin-top:10px;font-size:15px">Registar a autorização do proprietário para cada propriedade. Clique para definir quem faz o quê.</p>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">06 / 13</span></div>
+</section>
+
+<section class="s cream" data-n="Escreva o valor de uma reserva e a percentagem que o co-host combinou com o proprietário. A IndicoStay retira primeiro 15%. A remuneração do co-host é negociada separadamente com o proprietário.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">Comissões sem surpresas</p>
+ <h1 class="a" style="--d:.05s;font-size:40px">Distinguir plataforma, proprietário e co-host</h1>
+ <div class="calc a" style="--d:.2s;margin-top:18px">
+  <div class="panel">
+   <div class="fld"><label>Valor da reserva (MZN)</label><input type="number" id="c7n" value="10000" min="0"></div>
+   <div class="fld"><label>Parte do co-host, combinada com o proprietário <span id="c7pv">10%</span></label><input type="range" id="c7p" min="0" max="30" step="1" value="10"></div>
+   <p class="small" style="font-size:13px">A percentagem do co-host é calculada sobre o valor da reserva e sai do saldo do proprietário.</p>
+  </div>
+  <div class="res">
+   <div class="rline"><span>Comissão IndicoStay (15%)</span><b id="c7i">1.500 MZN</b></div>
+   <div class="rline"><span>Saldo de referência</span><b id="c7s">8.500 MZN</b></div>
+   <div class="rline g"><span>Co-host</span><b id="c7c">1.000 MZN</b></div>
+   <div class="rline"><span>Proprietário</span><b id="c7o">7.500 MZN</b></div>
+   <div class="split" id="c7b"></div>
+   <div class="splitl"><span><i style="background:#8fa0bd"></i>IndicoStay</span><span><i style="background:var(--gold)"></i>Co-host</span><span><i style="background:var(--navy2)"></i>Proprietário</span></div>
+  </div>
+ </div>
+ <p class="fn">Exemplo antes de ajustes. Divisão automática de pagamentos apenas se a funcionalidade estiver ativa e contratada.</p>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">07 / 13</span></div>
+</section>
+
+<section class="s dark" data-n="Clique em cada alojamento do portefólio de exemplo. A ideia: organização por propriedade e responsável. Os números são ilustrativos.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">Gestão de vários alojamentos</p>
+ <h1 class="a" style="--d:.05s;font-size:40px">Mais escala com menos confusão operacional</h1>
+ <div class="row a" style="--d:.2s;margin-top:14px;gap:26px;align-items:flex-start">
+  <div style="width:560px;flex:none"><div class="port" id="c8p"></div></div>
+  <div class="col">
+   <div class="match"><div class="t">Propriedade</div><h3 id="c8n"></h3><p id="c8r"></p></div>
+   <div class="kpis" id="c8k"></div>
+   <ul class="tick" style="margin-top:14px"><li style="font-size:15px">Permissões, relatórios e calendários conforme funcionalidades disponíveis.</li><li style="font-size:15px">Histórico de reservas para apoiar prestação de contas.</li></ul>
+  </div>
+ </div>
+ <p class="fn">Portefólio e números ilustrativos.</p>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">08 / 13</span></div>
+</section>
+
+<section class="s navy" data-steps="4" data-n="Avance com a seta: cada campo do pedido aparece. Proteção baseada em prova: sem comissão por mera visualização de anúncio.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">Regras de atribuição de leads</p>
+ <h1 class="a" style="--d:.05s;font-size:40px">Proteção baseada em prova, não em suposições</h1><p class="small stephint" style="font-size:15px;margin:-6px 0 0">Carregue na seta &rarr; para ver cada ponto.</p>
+ <div class="row" style="margin-top:18px;gap:30px;align-items:flex-start">
+  <div class="lead-card a" style="--d:.2s;width:520px;flex:none">
+   <div class="row2 st" data-step="1"><span>Identificador</span><b>Pedido nº 0001</b></div>
+   <div class="row2 st" data-step="1"><span>Data</span><b>dd/mm/aaaa</b></div>
+   <div class="row2 st" data-step="2"><span>Origem</span><b>Co-host</b></div>
+   <div class="row2 st" data-step="2"><span>Imóvel</span><b>Alojamento associado</b></div>
+  </div>
+  <div class="col revl" style="margin-top:0">
+   <div class="rv st" data-step="3"><i>⏱</i><div><b>Prazo e duplicação</b><span>Prazo de proteção e critérios de duplicação definidos em contrato.</span></div></div>
+   <div class="rv st" data-step="3"><i>⚖</i><div><b>Revisão</b><span>Processo de revisão de conflitos e correção de erros.</span></div></div>
+   <div class="rv warn st" data-step="4"><i>!</i><div><b>Sem comissão por visualização</b><span>Sem reivindicar comissão por mera visualização de anúncio.</span></div></div>
+  </div>
+ </div>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">09 / 13</span></div>
+</section>
+
+<section class="s cream" data-n="O marketing reforça o trabalho do co-host. Diga com clareza: alcance não equivale a reservas garantidas.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">Marketing que reforça o seu trabalho</p>
+ <h1 class="a" style="--d:.05s;font-size:40px">Um novo motor de procura para os imóveis que gere</h1>
+ <div class="row" style="margin-top:22px;align-items:stretch">
+  <div class="col card a" style="--d:.2s"><div class="num" style="color:var(--navy2)">1</div><h3>Descoberta</h3><p>Influenciadores e campanhas digitais ampliam a descoberta.</p></div>
+  <div class="col card a" style="--d:.32s"><div class="num" style="color:var(--navy2)">2</div><h3>Condições publicadas</h3><p>Reservas seguem as condições e disponibilidades publicadas.</p></div>
+ </div>
+ <div class="honest a" style="--d:.5s;font-size:18px;margin-top:20px"><b>Com honestidade:</b> alcance não equivale a reservas garantidas.</div>
+ <div class="strip a" style="--d:.6s;top:470px;height:170px"><img src="img/c4.jpg" alt=""><img src="img/c5.jpg" alt=""><img src="img/c6.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">10 / 13</span></div>
+</section>
+
+<section class="s cream" data-n="Uma parceria operacional, não apenas comercial. Três degraus.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">Formação e acompanhamento</p>
+ <h1 class="a" style="--d:.05s;font-size:40px">Uma parceria operacional, não apenas comercial</h1>
+ <div class="stairs" style="height:380px">
+  <div class="stair a" style="--d:.2s;height:55%"><b>1</b><h3>Painel</h3><p>Configuração e demonstração do painel.</p></div>
+  <div class="stair a" style="--d:.35s;height:75%"><b>2</b><h3>Reservas</h3><p>Orientação sobre gestão de reservas e comunicação.</p></div>
+  <div class="stair gold a" style="--d:.5s;height:95%"><b>3</b><h3>Proprietários</h3><p>Apoio no alinhamento com os proprietários.</p></div>
+ </div>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">11 / 13</span></div>
+</section>
+
+<section class="s dark" data-n="A experiência do hóspede também fortalece a reputação do co-host. Serviços com proposta separada.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">Indico Hospitality Solutions</p>
+ <h1 class="a" style="--d:.05s;font-size:38px">A experiência do hóspede também fortalece a sua reputação</h1>
+ <div class="row a" style="--d:.2s;margin-top:16px;gap:24px;align-items:stretch">
+  <div class="pick" id="c12p" style="width:400px;flex:none"></div>
+  <div class="detail col" id="c12d"></div>
+ </div>
+ <p class="fn">Amenidades e kits mediante proposta separada.</p>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">12 / 13</span></div>
+</section>
+
+<section class="s gold" data-n="Comece com as propriedades autorizadas. Peça ao co-host para marcar o que já tem. O botão abre o WhatsApp com a mensagem já escrita.">
+ <img class="logo" src="img/logo.png" alt="">
+ <p class="k a">Vamos integrar o seu portefólio</p>
+ <h1 class="a" style="--d:.05s;font-size:46px">Comece com as propriedades autorizadas</h1>
+ <div class="a" style="--d:.2s;background:#fff;border-radius:18px;padding:22px 26px;margin-top:14px">
+  <p class="gl" style="color:var(--navy2)">O que já está feito? (clique)</p>
+  <div class="plan" id="c13c"></div>
+  <div class="prog"><div class="progb"><div id="c13f"></div></div><span id="c13t" style="font:800 16px var(--body);color:var(--navy2);min-width:130px"></span></div>
+ </div>
+ <div class="a" style="--d:.35s;margin-top:20px;display:flex;gap:14px">
+  <a class="btn" style="background:var(--navy);color:#fff" id="c13w" target="_blank" rel="noopener">Falar connosco no WhatsApp</a>
+  <a class="btn" style="background:#fff;color:var(--navy)" href="https://indicostay.com" target="_blank" rel="noopener">indicostay.com</a>
+ </div>
+<div class="strip a" style="--d:.5s;top:470px;height:170px"><img src="img/c1.jpg" alt=""><img src="img/c3.jpg" alt=""><img src="img/c7.jpg" alt=""><span class="il">Imagens ilustrativas</span></div>
+ <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">13 / 13</span></div>
+</section>
+</div>
+<div id="bar"><button id="prev" aria-label="Anterior">&#9664;</button><span id="ctr">1 / 13</span><button id="next" aria-label="Seguinte">&#9654;</button><button id="fs" aria-label="Ecrã inteiro">&#9974;</button></div>
+<div id="notes"></div>
+<div id="hint">Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> para navegar, <kbd>N</kbd> para notas, <kbd>F</kbd> para ecrã inteiro</div>
+<script>
+(function(){
+
+var slides=[].slice.call(document.querySelectorAll('.s')),total=slides.length,cur=-1,step=0,stage=document.getElementById('stage');
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+var $=function(id){return document.getElementById(id)};
+var grp=function(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.')};
+var WA='258865178862';
+function wa(t){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(t)}
+function fit(){var k=Math.min(innerWidth/1280,(innerHeight-46)/720);stage.style.transform='translate(-50%,-50%) scale('+k+')';stage.style.top='calc(50% - 23px)'}
+addEventListener('resize',fit);fit();
+function steps(s,n){[].forEach.call(s.querySelectorAll('.st'),function(e){e.classList.toggle('show',n>=+e.getAttribute('data-step'))});var h=s.querySelector('.stephint');if(h)h.style.opacity=n>0?0:1}
+function go(i,fromEnd){
+  if(i<0||i>=total||i===cur)return;
+  var s=slides[i];
+  if(cur>=0)slides[cur].classList.remove('on','play');
+  cur=i;step=fromEnd?(+s.getAttribute('data-steps')||0):0;
+  s.classList.remove('play');void s.offsetWidth;s.classList.add('on','play');
+  steps(s,step);
+  [].forEach.call(s.querySelectorAll('[data-count]'),function(c){var to=+c.getAttribute('data-count');if(reduce){c.textContent=to;return}var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/1400);c.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)});
+  $('ctr').textContent=(i+1)+' / '+total;
+  $('prog').style.width=((i+1)/total*100)+'%';
+  $('notes').innerHTML='<b>Notas · slide '+(i+1)+'</b><br>'+(s.getAttribute('data-n')||'');
+  if(location.hash!=='#'+(i+1)){try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+}
+function next(){var s=slides[cur],n=+s.getAttribute('data-steps')||0;if(step<n){step++;steps(s,step)}else go(cur+1)}
+function prev(){var s=slides[cur];if(step>0){step--;steps(s,step)}else go(cur-1,true)}
+var tw=new WeakMap();
+function tween(el,to,fmt){fmt=fmt||grp;if(reduce){el.textContent=fmt(to);return}var from=tw.get(el)||0;tw.set(el,to);var t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/450),e=1-Math.pow(1-p,3);el.textContent=fmt(from+(to-from)*e);if(p<1)requestAnimationFrame(f)})(t0)}
+function num(id){var v=parseFloat(String($(id).value).replace(/\./g,'').replace(',','.'));return isNaN(v)?0:v}
+function mk(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+/* picker: buttons .pk inside [data-pick] fill the target detail panel from a data array */
+function picker(boxId,panelId,data){var box=$(boxId),p=$(panelId);
+ function show(i){[].forEach.call(box.children,function(b,k){b.classList.toggle('on',k===i)});var d=data[i];
+  p.innerHTML='<h3>'+d[0]+'</h3><p>'+d[2]+'</p>'+(d[3]?'<ul>'+d[3].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':'')}
+ data.forEach(function(d,i){var b=mk('button','pk','<b>'+d[0]+'</b><span>'+d[1]+'</span>');b.addEventListener('click',function(){show(i)});box.appendChild(b)});show(0)}
+/* checklist with progress */
+function checklist(boxId,fillId,txtId,items,waId,waPrefix){var b=$(boxId);
+ function upd(){var on=[].filter.call(b.children,function(x){return x.classList.contains('on')});$(fillId).style.width=on.length/items.length*100+'%';$(txtId).textContent=on.length+' de '+items.length+' prontos';
+  if(waId)$(waId).href=wa(waPrefix+(on.length?' Já tenho: '+on.map(function(x){return x.textContent}).join(', ')+'.':''))}
+ items.forEach(function(t){var c=mk('button','chipb',t);c.addEventListener('click',function(){c.classList.toggle('on');upd()});b.appendChild(c)});upd()}
+
+
+['Influenciadores','Meta','Google','Outros canais'].forEach(function(t){$('c2c').appendChild(mk('span','chan ix',t))});
+/* 3 triangle */
+var TR=[['Proprietário','Quer controlo e visibilidade.',['Sabe quem gere o quê','Vê as reservas e os pagamentos','Autoriza cada propriedade']],
+ ['Co-host','Quer reconhecimento pela gestão e pelas reservas geradas.',['Origem de cada reserva registada','Regras de atribuição por escrito','Remuneração combinada com o proprietário']],
+ ['Hóspede','Quer segurança, clareza e facilidade para pagar.',['Preço e políticas antes de pagar','Pagamento pela plataforma','Confirmação e suporte']]];
+function t3(i){[].forEach.call(document.querySelectorAll('.tn'),function(b){b.classList.toggle('on',+b.getAttribute('data-t')===i)});var d=TR[i];
+ $('c3d').innerHTML='<h3>'+d[0]+'</h3><p>'+d[1]+'</p><ul>'+d[2].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
+[].forEach.call(document.querySelectorAll('.tn'),function(b){b.addEventListener('click',function(){t3(+b.getAttribute('data-t'))})});t3(0);
+/* 5 channels */
+var C5=['Agente local','WhatsApp do proprietário','Outra plataforma','Co-host'];
+function r5(){var on=[].filter.call($('c5c').children,function(b){return b.classList.contains('on')&&!b.classList.contains('ix')}).map(function(b){return b.textContent});
+ $('c5o').textContent=(on.length+1)+(on.length?' canais':' canal')+', uma origem por reserva';
+ $('c5t').textContent='IndicoStay'+(on.length?' + '+on.join(' + '):'')+'. Sem exclusividade automática: cada reserva fica registada com o canal de onde veio.'}
+var ix=mk('span','chan ix','IndicoStay');$('c5c').appendChild(ix);
+C5.forEach(function(t){var b=mk('button','chan',t);b.addEventListener('click',function(){b.classList.toggle('on');r5()});$('c5c').appendChild(b)});r5();
+/* 6 matrix */
+var M6=['Preços','Calendário','Confirmações','Cancelamentos','Atendimento ao hóspede','Resolução de problemas'];
+var DEF=[2,1,1,2,1,2];
+M6.forEach(function(t,r){var m=$('c6m');m.appendChild(mk('div','rl',t));[0,1,2].forEach(function(c){var d=mk('div','c'+(DEF[r]===c?' on':''),'');d.addEventListener('click',function(){[].forEach.call(m.querySelectorAll('[data-r="'+r+'"]'),function(x){x.classList.remove('on')});d.classList.add('on')});d.setAttribute('data-r',r);m.appendChild(d)})});
+/* 7 split */
+function r7(){var v=num('c7n'),p=+$('c7p').value,ixv=v*.15,co=v*p/100,ow=v-ixv-co;var m=function(n){return grp(n)+' MZN'};
+ $('c7pv').textContent=p+'%';tween($('c7i'),ixv,m);tween($('c7s'),v-ixv,m);tween($('c7c'),co,m);tween($('c7o'),Math.max(0,ow),m);
+ $('c7b').innerHTML='<div style="width:15%;background:#8fa0bd"></div><div style="width:'+p+'%;background:var(--gold)"></div><div style="width:'+Math.max(0,85-p)+'%;background:var(--navy2)"></div>'}
+$('c7n').addEventListener('input',r7);$('c7p').addEventListener('input',r7);r7();
+/* 8 portfolio */
+var PF=[['Casa de praia','Bilene','c1.jpg','Proprietário A · co-host gere calendário e hóspedes',[6,'reservas no mês'],[78,'% ocupação'],['Co-host','responsável']],
+ ['Apartamento','Maputo','c3.jpg','Proprietário B · co-host gere tudo',[9,'reservas no mês'],[64,'% ocupação'],['Co-host','responsável']],
+ ['Lodge','Inhambane','c5.jpg','Proprietário C · preços com o proprietário',[4,'reservas no mês'],[52,'% ocupação'],['Os dois','responsável']],
+ ['Guest house','Ponta do Ouro','c6.jpg','Proprietário D · co-host gere hóspedes',[7,'reservas no mês'],[70,'% ocupação'],['Co-host','responsável']],
+ ['Chalé','Tofo','c7.jpg','Proprietário E · co-host gere tudo',[5,'reservas no mês'],[58,'% ocupação'],['Co-host','responsável']],
+ ['Vivenda','Macaneta','c8.jpg','Proprietário F · calendário partilhado',[3,'reservas no mês'],[45,'% ocupação'],['Os dois','responsável']]];
+function r8(i){[].forEach.call($('c8p').children,function(c,k){c.classList.toggle('on',k===i)});var d=PF[i];$('c8n').textContent=d[0]+', '+d[1];$('c8r').textContent=d[3];
+ $('c8k').innerHTML=[d[4],d[5],d[6]].map(function(k){return '<div class="kpi"><b>'+String(k[0]).replace('.',',')+'</b><span>'+k[1]+'</span></div>'}).join('')}
+PF.forEach(function(d,i){var c=mk('div','pc','<img src="img/'+d[2]+'" alt=""><div><b>'+d[0]+'</b><span>'+d[1]+'</span></div>');c.addEventListener('click',function(){r8(i)});$('c8p').appendChild(c)});r8(0);
+/* 12 */
+picker('c12p','c12d',[
+ ['Qualidade de serviço','Aconselhamento','Aconselhamento em satisfação e qualidade de serviço.',null],
+ ['Equipas e processos','Formação','Formação de equipas e melhoria de processos.',null],
+ ['Amenidades e kits','Personalizados','Amenidades e kits personalizados, mediante proposta separada.',null]]);
+/* 13 */
+checklist('c13c','c13f','c13t',['Autorização dos proprietários','Regras de comissão','Regras de atribuição','Pagamentos acordados','Imóveis cadastrados','Acessos configurados','Formação agendada'],'c13w','Olá, sou co-host e quero integrar o meu portefólio na IndicoStay.');
+
+
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-go]');if(b)go(+b.getAttribute('data-go')-1)});
+$('next').addEventListener('click',next);$('prev').addEventListener('click',prev);
+function fs(){var d=document.documentElement;if(!document.fullscreenElement){(d.requestFullscreen||function(){}).call(d)}else document.exitFullscreen()}
+$('fs').addEventListener('click',fs);
+addEventListener('keydown',function(e){var t=e.target,tag=t&&t.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'){if(e.key!=='Escape')return}
+ if((tag==='BUTTON'||tag==='A')&&(e.key===' '||e.key==='Enter'))return;
+ var k=e.key;
+ if(k==='ArrowRight'||k==='PageDown'||k===' '){e.preventDefault();next()}
+ else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}
+ else if(k==='Home'){go(0)}else if(k==='End'){go(total-1)}
+ else if(k==='f'||k==='F'){fs()}
+ else if(k==='n'||k==='N'){$('notes').classList.toggle('show')}});
+var tx=null;addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',function(e){if(tx===null)return;var dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>60){dx<0?next():prev()}tx=null},{passive:true});
+addEventListener('hashchange',function(){var n=parseInt((location.hash||'').slice(1),10);if(n>=1&&n<=total)go(n-1)});
+var h0=parseInt((location.hash||'').slice(1),10);go(h0>=1&&h0<=total?h0-1:0);
+setTimeout(function(){$('hint').style.opacity='0'},6000);
+
+})();
+</script>
+</body>
+</html>
