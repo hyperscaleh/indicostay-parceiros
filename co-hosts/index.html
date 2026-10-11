@@ -376,7 +376,7 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">06 / 13</span></div>
 </section>
 
-<section class="s cream" data-n="Escreva o valor de uma reserva e a percentagem que o co-host combinou com o proprietário. A IndicoStay retira primeiro 15%. A remuneração do co-host é negociada separadamente com o proprietário.">
+<section class="s cream" data-n="Escreva o valor de uma reserva e a percentagem que o co-host combinou com o proprietário. A IndicoStay retira primeiro 15%. A parte do co-host vai automaticamente para a conta dele e o proprietário recebe só o valor final. Este é o ponto principal.">
  <img class="logo" src="img/logo.png" alt="">
  <p class="k a">Comissões sem surpresas</p>
  <h1 class="a" style="--d:.05s;font-size:40px">Distinguir plataforma, proprietário e co-host</h1>
@@ -385,17 +385,18 @@ kbd{background:#16305e;border:1px solid #2c4d86;border-bottom-width:2px;border-r
    <div class="fld"><label>Valor da reserva (MZN)</label><input type="number" id="c7n" value="10000" min="0"></div>
    <div class="fld"><label>Parte do co-host, combinada com o proprietário <span id="c7pv">10%</span></label><input type="range" id="c7p" min="0" max="30" step="1" value="10"></div>
    <p class="small" style="font-size:13px">A percentagem do co-host é calculada sobre o valor da reserva e sai do saldo do proprietário.</p>
+   <div class="honest" style="margin-top:10px"><b>Pagamento automático:</b> a IndicoStay paga a parte do co-host diretamente na conta dele. O proprietário recebe só o valor final.</div>
   </div>
   <div class="res">
    <div class="rline"><span>Comissão IndicoStay (15%)</span><b id="c7i">1.500 MZN</b></div>
    <div class="rline"><span>Saldo de referência</span><b id="c7s">8.500 MZN</b></div>
-   <div class="rline g"><span>Co-host</span><b id="c7c">1.000 MZN</b></div>
-   <div class="rline"><span>Proprietário</span><b id="c7o">7.500 MZN</b></div>
+   <div class="rline g"><span>Co-host, pago na conta dele</span><b id="c7c">1.000 MZN</b></div>
+   <div class="rline"><span>Proprietário recebe (valor final)</span><b id="c7o">7.500 MZN</b></div>
    <div class="split" id="c7b"></div>
    <div class="splitl"><span><i style="background:#8fa0bd"></i>IndicoStay</span><span><i style="background:var(--gold)"></i>Co-host</span><span><i style="background:var(--navy2)"></i>Proprietário</span></div>
   </div>
  </div>
- <p class="fn">Exemplo antes de ajustes. Divisão automática de pagamentos apenas se a funcionalidade estiver ativa e contratada.</p>
+ <p class="fn">Exemplo antes de ajustes.</p>
  <div class="foot"><span>INDICOSTAY | MOÇAMBIQUE</span><span class="pg">07 / 13</span></div>
 </section>
 
@@ -538,7 +539,7 @@ function checklist(boxId,fillId,txtId,items,waId,waPrefix){var b=$(boxId);
 ['Influenciadores','Meta','Google','Outros canais'].forEach(function(t){$('c2c').appendChild(mk('span','chan ix',t))});
 /* 3 triangle */
 var TR=[['Proprietário','Quer controlo e visibilidade.',['Sabe quem gere o quê','Vê as reservas e os pagamentos','Autoriza cada propriedade']],
- ['Co-host','Quer reconhecimento pela gestão e pelas reservas geradas.',['Origem de cada reserva registada','Regras de atribuição por escrito','Remuneração combinada com o proprietário']],
+ ['Co-host','Quer reconhecimento pela gestão e pelas reservas geradas.',['Origem de cada reserva registada','Percentagem combinada com o proprietário','Pago automaticamente na sua conta']],
  ['Hóspede','Quer segurança, clareza e facilidade para pagar.',['Preço e políticas antes de pagar','Pagamento pela plataforma','Confirmação e suporte']]];
 function t3(i){[].forEach.call(document.querySelectorAll('.tn'),function(b){b.classList.toggle('on',+b.getAttribute('data-t')===i)});var d=TR[i];
  $('c3d').innerHTML='<h3>'+d[0]+'</h3><p>'+d[1]+'</p><ul>'+d[2].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
